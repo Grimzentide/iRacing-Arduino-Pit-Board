@@ -22,7 +22,7 @@ alt="IMAGE ALT TEXT HERE" width="240" height="180" border="10" /></a>
 #### Arduino Side
 1. Install [Arduino IDE](https://www.arduino.cc)
 2. Install [Adafruit GFX graphics core library](https://github.com/adafruit/Adafruit-GFX-Library)
-3. Install [Adafruit 2.8" TFT display library](https://github.com/adafruit/TFTLCD-Library)\
+3. Install [Adafruit 2.8" TFT display library](https://github.com/adafruit/TFTLCD-Library)
 4. Download the iRacing Arduino Pit Board TFT Front End.ino sketch to your computer
 4. Upload the iRacing Arduino Pit Board TFT sketch onto your Arduino Uno
 
