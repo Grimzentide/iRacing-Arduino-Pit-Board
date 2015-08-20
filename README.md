@@ -9,7 +9,7 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
 2. [PyYaml 3.11](http://pyyaml.org/wiki/PyYAML)
 3. add python directory to your PATH environment variable
 4. Install [Python iRacing SDK](https://github.com/kutu/pyirsdk) by [Mihail Latyshov (aka Kutu)](https://github.com/kutu)
-⋅⋅* pip3 install pyirsk
+⋅⋅1. pip3 install pyirsk
 
 #### Arduino Side
 1. Install [Arduino IDE](https://www.arduino.cc)
