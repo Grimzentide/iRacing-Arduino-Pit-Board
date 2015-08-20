@@ -1,6 +1,10 @@
 ## iRacing-Arduino-Pit-Board
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque sed vehicula urna. Fusce eu elit sed felis auctor malesuada nec et enim. Cras maximus risus ac vehicula ullamcorper. Cras arcu sapien, tristique pharetra convallis nec, congue sed turpis. Maecenas egestas, lorem et eleifend vestibulum, ante metus pretium nibh, quis blandit mi est at odio. Morbi bibendum mauris a pulvinar dignissim. Donec efficitur sit amet diam nec dictum. Nulla accumsan feugiat ipsum, nec rhoncus elit molestie non. Pellentesque et dui porttitor nisl sagittis suscipit ac eu odio. Nam maximus, purus at sagittis maximus, mi dui posuere dui, quis condimentum risus enim a neque. Praesent faucibus eros consectetur, ornare nibh nec, ornare tortor. Quisque efficitur consectetur felis nec vulputate. Vestibulum id tincidunt nunc, sit amet euismod ante.
+Video of v0.3 in action. **Note:** Older version shown
+
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=dhHBOhDyfVM
+" target="_blank"><img src="http://img.youtube.com/vi/dhHBOhDyfVM/0.jpg" 
+alt="IMAGE ALT TEXT HERE" width="240" height="180" border="10" /></a>
 
 ### Software Install Procedure
 
