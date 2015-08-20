@@ -23,8 +23,11 @@ alt="IMAGE ALT TEXT HERE" width="240" height="180" border="10" /></a>
 1. Install [Arduino IDE](https://www.arduino.cc)
 2. Install [Adafruit GFX graphics core library](https://github.com/adafruit/Adafruit-GFX-Library)
 3. Install [Adafruit 2.8" TFT display library](https://github.com/adafruit/TFTLCD-Library)
-4. Download the iRacing Arduino Pit Board TFT Front End.ino sketch to your computer
-4. Upload the iRacing Arduino Pit Board TFT sketch onto your Arduino Uno
+  * Not all TFT's are supported and it may take some work on your behalf to identify and get the above libraries working
+4. Download the iRacing Arduino Pit Board TFT Front End.ino sketch to your computer and open it in the Arduino IDE
+5. Ensure line 58 in the Arduino front end uses the correct identifier for your TFT Screen.  The test sketches in the Adafruit core library will assist with this identification.
+  * eg: uint16_t identifier = 0x9325;
+5. Upload the iRacing Arduino Pit Board TFT sketch onto your Arduino Uno
 
 ### How to use the iRacing Arduino Pit Board
 1. Plug in your Arduino with TFT screen into an available USB port
