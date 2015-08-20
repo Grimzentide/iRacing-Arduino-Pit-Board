@@ -23,6 +23,6 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque sed vehicula ur
 1. Plug in your Arduino with TFT screen into an available USB port
 2. Determine which COM port your Arduino Uno is connected to
 3. Edit the first section of the iRacing Arduino Pit Board Back End python file to ensure the COM port and operating system is correct
-4. Run the python file from a command prompt
+4. Run the python file from a command prompt or set it to auto load from a launcher (eg [iAppStarter](http://www.fulhack.org/iappstarter/))
   1. python "iRacing Arduino Pit Board TFT Back End.py"
 5. Load iRacing Simulator
