@@ -41,7 +41,7 @@ Adafruit_TFTLCD tft(LCD_CS, LCD_CD, LCD_WR, LCD_RD, LCD_RESET);
   String fiveLapAvg = "";        // 5 LAP AVG
   String raceAVG = "";           // RACE AVG
   String str = "";               // INBOUND SERIAL STRING  
-  String infoMessage[5];
+  String infoMessage[5];         // INBOUND INFORMATION STRING 
   int clearFuelRemainingTag = 0;
   int clearLapsUntilEmptyTag = 0;
   
