@@ -29,6 +29,7 @@ alt="IMAGE ALT TEXT HERE" width="240" height="180" border="10" /></a>
 
 ### How to use the iRacing Arduino Pit Board
 **Note:** If you can not get the test scripts in the Adafruit libraries, the iRacing Arduino Pit Board will not work
+
 1. Plug in your Arduino with TFT screen into an available USB port
 2. Determine which COM port your Arduino Uno is connected to
 3. Edit the first section of the iRacing Arduino Pit Board Back End python file to ensure the COM port and operating system is correct
