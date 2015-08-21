@@ -88,7 +88,7 @@ SessionLaps = ir['SessionLaps']                                                 
 
 # Get the full event information and send the details to the Ardunio	
 trackDisplayName = ir['WeekendInfo']['TrackDisplayName']                        # Track Name
-eventType = (ir['WeekendInfo']['EventType'])                                    # Event Type = Race, Practice, Qualify, Offline Testing
+sessionType = (ir['SessionInfo']['Sessions'][0]['SessionType'])                 # Session Type = Race, Practice, Qualify, Offline Testing
 trackTemp = (ir['WeekendInfo']['TrackSurfaceTemp'])                             # Current track temperature
 trackWeatherType = (ir['WeekendInfo']['TrackWeatherType'])                      # Realistic or Constant weather
 trackSkies = (ir['WeekendInfo']['TrackSkies'])                                  # Current cloud cover
@@ -99,11 +99,10 @@ sendInfoMessage("@Sky: " + trackSkies)
 time.sleep(waitAfterSerialWrite)
 sendInfoMessage("@Weather: " + trackWeatherType)
 time.sleep(waitAfterSerialWrite)
-sendInfoMessage("@Session: " + eventType)
+sendInfoMessage("@Session: " + sessionType)
 time.sleep(waitAfterSerialWrite)
 sendInfoMessage("@" + trackDisplayName)
 time.sleep(waitAfterSerialWrite)
-
 
 while True:
 	if ir.startup():	
@@ -196,7 +195,7 @@ while True:
 				lastFuelRemaining = fuelRemaining
 				flagNewLap = 0		
 
-		if (ir['IsInGarage'] == 0 and ir['IsOnTrack'] == 0):
+		if (ir['IsInGarage'] == 0 and ir['IsOnTrack'] == 0 and ir['IsReplayPlaying'] == 0):
 			del fuelBurn[:]
 			boxThisLap = 0
 			sendViaSerial(str = "?!")
@@ -206,12 +205,12 @@ while True:
 				sendInfoMessage("#" + "On Pit Road: Lap " + str(currentLap))       # Display an info message on the arduino in Yellow
 				onPitRoadFlag = 1                                                  # Change the flag status to prevent spamming of the info messages
 
-		if (ir['WeekendInfo']['EventType'] != eventType):                          # If the session changes, print the updated info on the arduino
-			eventType = (ir['WeekendInfo']['EventType'])                           # Re-set the eventType variable
+		if ((ir['SessionInfo']['Sessions'][0]['SessionType']) != sessionType):     # If the session changes, print the updated info on the arduino
+			sessionType = ((ir['SessionInfo']['Sessions'][0]['SessionType']))      # Re-set the sessionType variable
 			del fuelBurn[:]                                                        # Erase current fuel usage data
 			boxThisLap = 0                                                         # Remove the box this lap flag
 			sendViaSerial(str = "?!")                                              # Reset the Arduino screen
-			sendInfoMessage("@Session:" + eventType)                               # If the session goes from practice to qualify, update the info box on the arduino
+			sendInfoMessage("@Session: " + sessionType)                            # If the session goes from practice to qualify, update the info box on the arduino
 
 		if (trackTemp != (ir['WeekendInfo']['TrackSurfaceTemp'])):                 # Code in place for dynamic track temp changes in the future
 			trackTemp = (ir['WeekendInfo']['TrackSurfaceTemp'])                    #
