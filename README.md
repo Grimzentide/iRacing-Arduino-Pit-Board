@@ -13,7 +13,7 @@ alt="IMAGE ALT TEXT HERE" width="240" height="180" border="10" /></a>
 1. Install [Python 3.4.x](https://www.python.org/)
 2. Install [PyYaml 3.11](http://pyyaml.org/wiki/PyYAML)
 3. add python directory to your PATH environment variable
-4. Install [Python iRacing SDK](https://github.com/kutu/pyirsdk) by [Mihail Latyshov (aka Kutu)](https://github.com/kutu)
+4. Install [Python iRacing SDK](https://github.com/kutu/pyirsdk) by [Mihail Latyshov](https://github.com/kutu)
   * pip3 install pyirsk
 5. Download the iRacing Arduino Pit Board Back End python file to your computer
 
