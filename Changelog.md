@@ -3,8 +3,12 @@
 #### Front End (Arduino)
 #### Back End (Python)
 ##### Added
-* Command line argument now used to define Arduino COM port.
-  * ```Python backend.py COM7```
+* Command line argument now used to define Arduino COM port to allow the creation of an .exe in a future version
+* Optional command line argument now used to define the switch to gallons (default\no argument is litres)
+  * ```Python backend.py COM7 -gallons```
+
+##### Deprecated
+* Linux support
 
 ___
 
