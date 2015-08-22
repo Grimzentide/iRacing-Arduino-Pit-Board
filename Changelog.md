@@ -10,6 +10,7 @@
 * Added - "Unlimited" shown as session time in offline testing mode
 * Fixed - Various bug fixes
 * Changed - GUI alignment
+
 #### Back End (Python)
 * Changed - Fuel required now shows the maximum tank size when the required fuel exceeds amount you can fit in
 * Fixed - Various bug fixes
