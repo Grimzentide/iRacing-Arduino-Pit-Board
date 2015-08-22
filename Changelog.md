@@ -1,6 +1,8 @@
 ## Changelog:
 ### Version 0.5 - Unreleased
 #### Front End (Arduino)
+* Nil
+
 #### Back End (Python)
 ##### Added
 * Command line argument now used to define Arduino COM port to allow the creation of an .exe in a future version
