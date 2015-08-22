@@ -6,6 +6,7 @@
 * Command line argument now used to define Arduino COM port to allow the creation of an .exe in a future version
 * Optional command line argument now used to define the switch to gallons (default\no argument is litres)
   * ```Python backend.py COM7 -gallons```
+* Fuel required in a timed session now based on the drivers expected lap time and the time left in the session
 
 ##### Deprecated
 * Linux support
