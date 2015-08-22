@@ -1,9 +1,9 @@
 ## iRacing-Arduino-Pit-Board
 
-Video of v0.3 in action. **Note:** Older version shown
+Video of v0.4 in action.
 
-<a href="http://www.youtube.com/watch?feature=player_embedded&v=dhHBOhDyfVM
-" target="_blank"><img src="http://img.youtube.com/vi/dhHBOhDyfVM/0.jpg" 
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=LYWg47O0CII
+" target="_blank"><img src="http://img.youtube.com/vi/LYWg47O0CII/0.jpg" 
 alt="IMAGE ALT TEXT HERE" width="240" height="180" border="10" /></a>
 
 
