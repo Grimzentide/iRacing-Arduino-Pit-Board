@@ -1,6 +1,6 @@
 ## iRacing-Arduino-Pit-Board
 
-The iRacing Arduino Pit Board is designed to work on a 2.8 inch (320 x 240) TFT or LCD screen that is supported by the Adafruit graphics library.  Screens smaller than 2.8 inches will not work correctly and will crop significant amounts of Pit Board information.
+The iRacing Arduino Pit Board is a small Arduino based device designed to give you live up to date information about your fuel requirements in a race that requires one or more pit stops.  It is designed to work on a 2.8 inch (320 x 240) TFT or LCD screen or shield that is supported by the Adafruit graphics library.  Screens smaller than 2.8 inches will not work correctly and will crop significant amounts of Pit Board information.
 
 ## Hardware
 * [Arduino Uno or Uno Clone](https://www.arduino.cc/en/Main/arduinoBoardUno)
