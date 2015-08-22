@@ -9,7 +9,7 @@
 * Fuel required in a timed session now based on the drivers expected lap time and the time left in the session
 
 ##### Deprecated
-* Linux support
+* Linux support (all this basically means is that the console screen will not clear)
 
 ___
 
