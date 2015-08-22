@@ -9,7 +9,7 @@ Video of v0.4 in action.
 alt="IMAGE ALT TEXT HERE" width="240" height="180" border="10" /></a>
 
 
-### Changelog: ######([Full Changelog](https://github.com/Grimzentide/iRacing-Arduino-Pit-Board/blob/master/Changelog))
+### Changelog: ([Full Changelog](https://github.com/Grimzentide/iRacing-Arduino-Pit-Board/blob/master/Changelog))
 #### Version 0.4
 * Session Laps title changes to Session Time when in a timed session
 * Session Time displayed for timed sessions (previously blank)
