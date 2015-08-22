@@ -2,16 +2,23 @@
 
 The iRacing Arduino Pit Board is designed to work on a 2.8 inch (320 x 240) TFT or LCD screen that is supported by the Adafruit graphics library.  Screens smaller than 2.8 inches will not work correctly and will crop significant amounts of Pit Board information.
 
-Video of v0.4 in action.
+Preview of v0.5 (UNRELEASED)
 
-<a href="http://www.youtube.com/watch?feature=player_embedded&v=LYWg47O0CII
-" target="_blank"><img src="http://img.youtube.com/vi/LYWg47O0CII/0.jpg" 
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=FFvC9X74Tfs
+" target="_blank"><img src="http://img.youtube.com/vi/FFvC9X74Tfs/0.jpg" 
 alt="IMAGE ALT TEXT HERE" width="240" height="180" border="10" /></a>
 
 ___
 
 ### Changelog: ([Full Changelog](https://github.com/Grimzentide/iRacing-Arduino-Pit-Board/blob/master/Changelog.md))
 ### Version 0.4 - 2015-08-22
+
+Version 0.4 in action.
+
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=LYWg47O0CII
+" target="_blank"><img src="http://img.youtube.com/vi/LYWg47O0CII/0.jpg" 
+alt="IMAGE ALT TEXT HERE" width="240" height="180" border="10" /></a>
+
 #### Front End (Arduino)
 ##### Added
 * Session Laps title changes to Session Time when in a timed session
