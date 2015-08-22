@@ -8,7 +8,8 @@ The iRacing Arduino Pit Board is a small Arduino based device designed to give y
 <a href="http://www.youtube.com/watch?feature=player_embedded&v=FFvC9X74Tfs
 " target="_blank"><img src="http://img.youtube.com/vi/FFvC9X74Tfs/0.jpg" 
 alt="IMAGE ALT TEXT HERE" width="240" height="180" border="10" /></a>
-Click to watch the video
+
+Click the above image to watch the video on youtube
 
 ## Hardware
 * [Arduino Uno or Uno Clone](https://www.arduino.cc/en/Main/arduinoBoardUno)
@@ -26,7 +27,8 @@ Version 0.4 in action.
 <a href="http://www.youtube.com/watch?feature=player_embedded&v=LYWg47O0CII
 " target="_blank"><img src="http://img.youtube.com/vi/LYWg47O0CII/0.jpg" 
 alt="IMAGE ALT TEXT HERE" width="240" height="180" border="10" /></a>
-Click to watch the video
+
+Click the above image to watch the video on youtube
 
 ##### Front End (Arduino)
 ###### Added
