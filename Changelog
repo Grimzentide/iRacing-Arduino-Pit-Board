@@ -1,0 +1,9 @@
+## Changelog:
+### Version 0.4
+* Session Laps title changes to Session Time when in a timed session
+* Session Time displayed for timed sessions (previously blank)
+* Remaining Time displayed in timed sessions (previously blank)
+* "Unlimited" shown as session time in offline testing mode
+* Fuel required now shows the maximum tank size when the required fuel exceeds it
+* Various bug fixes
+* Various GUI re-alignment
