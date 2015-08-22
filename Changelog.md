@@ -1,5 +1,10 @@
 ## Changelog:
-### Unreleased
+### Version 0.5 - Unreleased
+#### Front End (Arduino)
+#### Back End (Python)
+##### Added
+* Command line argument now used to define Arduino COM port.
+  * ```Python backend.py COM7```
 
 ___
 
