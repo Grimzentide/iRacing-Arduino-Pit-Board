@@ -1,6 +1,5 @@
 ## Changelog:
-### [Unreleased][unreleased]
-* Fuel required at pitstop based on current lap average and time remaining
+### Unreleased
 
 ___
 
