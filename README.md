@@ -8,6 +8,18 @@ Video of v0.4 in action.
 " target="_blank"><img src="http://img.youtube.com/vi/LYWg47O0CII/0.jpg" 
 alt="IMAGE ALT TEXT HERE" width="240" height="180" border="10" /></a>
 
+
+### Changelog:
+#### Version 0.4
+* Session Laps title changes to Session Time when in a timed session
+* Session Time displayed for timed sessions (previously blank)
+* Remaining Time displayed in timed sessions (previously blank)
+* "Unlimited" shown as session time in offline testing mode
+* Fuel required now shows the maximum tank size when the required fuel exceeds it
+* Various bug fixes
+* Various GUI re-alignment
+
+
 ### Hardware
 * [Arduino Uno or Uno Clone](https://www.arduino.cc/en/Main/arduinoBoardUno)
 * [2.8" TFT Shield via eBay](http://www.ebay.com.au/itm/381238351575?_trksid=p2060353.m2749.l2648&ssPageName=STRK%3AMEBIDX%3AIT) <-- This is the actual TFT I purchased on eBay Australia.
