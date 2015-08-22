@@ -18,6 +18,7 @@ import time                                                                     
 import os                                                                           # Required to clear the console screen
 import irsdk                                                                        # iRacing SDK - https://github.com/kutu/pyirsdk
 import serial                                                                       # Required for the serial connection to the Arduino
+import datetime
 
 ir = irsdk.IRSDK()
 ser = serial.Serial(arduinoSerialPort, arduinoSerialSpeed, timeout=arduinoSerialTimeout) # set up the serial port
@@ -87,11 +88,12 @@ currentLap = ir['Lap']                                                          
 SessionLaps = ir['SessionLaps']                                                     # Set the total number of laps in the session
 
 # Get the full event information and send the details to the Ardunio	
-trackDisplayName = ir['WeekendInfo']['TrackDisplayName']                        # Track Name
-sessionType = (ir['SessionInfo']['Sessions'][0]['SessionType'])                 # Session Type = Race, Practice, Qualify, Offline Testing
-trackTemp = (ir['WeekendInfo']['TrackSurfaceTemp'])                             # Current track temperature
-trackWeatherType = (ir['WeekendInfo']['TrackWeatherType'])                      # Realistic or Constant weather
-trackSkies = (ir['WeekendInfo']['TrackSkies'])                                  # Current cloud cover
+trackDisplayName = ir['WeekendInfo']['TrackDisplayName']                        	# Track Name
+sessionNum = ir['SessionNum']
+sessionType = (ir['SessionInfo']['Sessions'][sessionNum]['SessionType'])        	# Session Type = Race, Practice, Qualify, Offline Testing
+trackTemp = (ir['WeekendInfo']['TrackSurfaceTemp'])                             	# Current track temperature
+trackWeatherType = (ir['WeekendInfo']['TrackWeatherType'])                      	# Realistic or Constant weather
+trackSkies = (ir['WeekendInfo']['TrackSkies'])                                 	 	# Current cloud cover
 
 sendInfoMessage("@Track Temp: " + trackTemp)
 time.sleep(waitAfterSerialWrite)
@@ -102,10 +104,13 @@ time.sleep(waitAfterSerialWrite)
 sendInfoMessage("@Session: " + sessionType)
 time.sleep(waitAfterSerialWrite)
 sendInfoMessage("@" + trackDisplayName)
-time.sleep(waitAfterSerialWrite)
-
+time.sleep(waitAfterSerialWrite)		
+	
+	
 while True:
 	if ir.startup():	
+		sessionNum = ir['SessionNum']
+		
 		currentDistance = ir['LapDistPct']
 
 		fuelRemaining = ir['FuelLevel']
@@ -115,6 +120,39 @@ while True:
 		currentLap = ir['Lap']
 		currentLapVar = ('#' + str(format(currentLap, '.0f') + '!'))
 		sendViaSerial(str = currentLapVar)
+		
+		if ((ir['SessionInfo']['Sessions'][sessionNum]['SessionLaps']) == "unlimited"):				# Unlimited laps?
+
+			if ((ir['SessionInfo']['Sessions'][sessionNum]['SessionTime']) == "unlimited"):			# Unlimted time?  
+				sessionTime = 604800
+				m, s = divmod(sessionTime, 60)
+				h, m = divmod(m, 60)
+				
+				sessionLapsVar =('@Unlimited!')
+				sendViaSerial(str = sessionLapsVar);
+				time.sleep(waitAfterSerialWrite)
+			else:
+				sessionTime = (ir['SessionInfo']['Sessions'][sessionNum]['SessionTime'])         	# Get the amount of time in seconds for this session
+				sessionTime = float(sessionTime[:-4])
+				m, s = divmod(sessionTime, 60)
+				h, m = divmod(m, 60)
+				
+				sessionLapsVar = ('@' + "%d:%02d" % (h, m) + '!')
+				sendViaSerial(str = sessionLapsVar);
+				time.sleep(waitAfterSerialWrite)				
+			
+			if ((ir['SessionTimeRemain']) == "unlimited"):										 	# Unlimted session time?  
+				sessionTimeRemainVar = ('$Unlimited!')
+				sendViaSerial(str = sessionTimeRemainVar);
+				time.sleep(waitAfterSerialWrite)
+			else:
+				sessionTimeRemain = int(ir['SessionTimeRemain'])         						 	# Get the amount of time in seconds for this session time remaining
+				m, s = divmod(sessionTimeRemain, 60)
+				h, m = divmod(m, 60)
+				
+				sessionTimeRemainVar = ('$' + "%d:%02d" % (h, m) + '!')
+				sendViaSerial(str = sessionTimeRemainVar);
+				time.sleep(waitAfterSerialWrite)	
 		
 		if 0.00 <= currentDistance <= 0.100:
 			if flagNewLap == 0 and flag90pct == 1:
@@ -201,24 +239,24 @@ while True:
 			sendViaSerial(str = "?!")
 
 		if (ir['OnPitRoad'] == 1 and ir['IsOnTrack'] == 1):
-			if onPitRoadFlag == 0 and currentLap >= 1:                             # If I have already sent the pit lane message once, ignore that I am on pit road
-				sendInfoMessage("#" + "On Pit Road: Lap " + str(currentLap))       # Display an info message on the arduino in Yellow
-				onPitRoadFlag = 1                                                  # Change the flag status to prevent spamming of the info messages
+			if onPitRoadFlag == 0 and currentLap >= 1:                                  # If I have already sent the pit lane message once, ignore that I am on pit road
+				sendInfoMessage("#" + "On Pit Road: Lap " + str(currentLap))       		# Display an info message on the arduino in Yellow
+				onPitRoadFlag = 1                                                  		# Change the flag status to prevent spamming of the info messages
 
-		if ((ir['SessionInfo']['Sessions'][0]['SessionType']) != sessionType):     # If the session changes, print the updated info on the arduino
-			sessionType = ((ir['SessionInfo']['Sessions'][0]['SessionType']))      # Re-set the sessionType variable
-			del fuelBurn[:]                                                        # Erase current fuel usage data
-			boxThisLap = 0                                                         # Remove the box this lap flag
-			sendViaSerial(str = "?!")                                              # Reset the Arduino screen
-			sendInfoMessage("@Session: " + sessionType)                            # If the session goes from practice to qualify, update the info box on the arduino
+		if ((ir['SessionInfo']['Sessions'][sessionNum]['SessionType']) != sessionType): # If the session changes, print the updated info on the arduino
+			sessionType = ((ir['SessionInfo']['Sessions'][sessionNum]['SessionType']))  # Re-set the sessionType variable
+			del fuelBurn[:]                                                        		# Erase current fuel usage data
+			boxThisLap = 0                                                        		# Remove the box this lap flag
+			sendViaSerial(str = "?!")                                             		# Reset the Arduino screen
+			sendInfoMessage("@Session: " + sessionType)                         	    # If the session goes from practice to qualify, update the info box on the arduino
+		
+		if (trackTemp != (ir['WeekendInfo']['TrackSurfaceTemp'])):             		    # Code in place for dynamic track temp changes in the future
+			trackTemp = (ir['WeekendInfo']['TrackSurfaceTemp'])               		    #
+			sendInfoMessage("@Track Temp: " + trackTemp)                      		    # If the track temp changes mid race, update the info box on the arduino            	
 
-		if (trackTemp != (ir['WeekendInfo']['TrackSurfaceTemp'])):                 # Code in place for dynamic track temp changes in the future
-			trackTemp = (ir['WeekendInfo']['TrackSurfaceTemp'])                    #
-			sendInfoMessage("@Track Temp: " + trackTemp)                           # If the track temp changes mid race, update the info box on the arduino            	
-
-		if (trackSkies != (ir['WeekendInfo']['TrackSkies'])):                      # Code in place for dynamic weather changes in the future 
-			trackSkies = (ir['WeekendInfo']['TrackSkies'])                         #
-			sendInfoMessage("@Sky: " + trackSkies)                                 # If the cloud cover changes mid race, update the info box on the arduino            
+		if (trackSkies != (ir['WeekendInfo']['TrackSkies'])):                		    # Code in place for dynamic weather changes in the future 
+			trackSkies = (ir['WeekendInfo']['TrackSkies'])                   		    #
+			sendInfoMessage("@Sky: " + trackSkies)                           		    # If the cloud cover changes mid race, update the info box on the arduino            
 
 		if ir['IsInGarage'] == 1:
 			del fuelBurn[:]
@@ -237,7 +275,12 @@ while True:
 			sendViaSerial(str = fuelRemainingVar);
 
 		if remainingLap < 10000:
+			remainingLap = ir['SessionLapsRemain']
+			remainingLapVar = ('$' + str(format(remainingLap, '.0f') + '!'))
 			sendViaSerial(str = remainingLapVar);
+			
+			SessionLaps = ir['SessionLaps']
+			SessionLapsVar = ('@' + str(SessionLaps) + '!')
 			sendViaSerial(str = SessionLapsVar);
 
 		if len(fuelBurn) >= 2:            
