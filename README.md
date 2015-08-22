@@ -8,6 +8,7 @@ Video of v0.4 in action.
 " target="_blank"><img src="http://img.youtube.com/vi/LYWg47O0CII/0.jpg" 
 alt="IMAGE ALT TEXT HERE" width="240" height="180" border="10" /></a>
 
+___
 
 ### Changelog: ([Full Changelog](https://github.com/Grimzentide/iRacing-Arduino-Pit-Board/blob/master/Changelog))
 ### Version 0.4 - 2015-08-22
@@ -23,12 +24,14 @@ alt="IMAGE ALT TEXT HERE" width="240" height="180" border="10" /></a>
 * Changed - Fuel required now shows the maximum tank size when the required fuel exceeds amount you can fit in
 * Fixed - Various bug fixes
 
+___
 
 ### Hardware
 * [Arduino Uno or Uno Clone](https://www.arduino.cc/en/Main/arduinoBoardUno)
 * [2.8" TFT Shield via eBay](http://www.ebay.com.au/itm/381238351575?_trksid=p2060353.m2749.l2648&ssPageName=STRK%3AMEBIDX%3AIT) <-- This is the actual TFT I purchased on eBay Australia.
   * [The underside of the TFT screen looks like this](http://i.imgur.com/zYKCSf8.jpg)
 
+___
 
 ### Software Install Procedure
 
@@ -49,6 +52,8 @@ alt="IMAGE ALT TEXT HERE" width="240" height="180" border="10" /></a>
 5. Ensure line 58 in the Arduino front end uses the correct identifier for your TFT Screen.  The test sketches in the Adafruit core library will assist with this identification.
   * eg: uint16_t identifier = 0x9325;
 5. Upload the iRacing Arduino Pit Board TFT sketch onto your Arduino Uno
+
+___
 
 ### How to use the iRacing Arduino Pit Board
 **Note:** If you can not get the test scripts in the Adafruit libraries to display the test graphics screens, the iRacing Arduino Pit Board will not work at all.
