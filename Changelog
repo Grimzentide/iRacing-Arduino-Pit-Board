@@ -1,5 +1,5 @@
 ## Changelog:
-### Version 0.4
+### Version 0.4 - 2015-08-22
 * Session Laps title changes to Session Time when in a timed session
 * Session Time displayed for timed sessions (previously blank)
 * Remaining Time displayed in timed sessions (previously blank)
