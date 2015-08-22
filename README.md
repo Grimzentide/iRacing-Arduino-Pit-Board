@@ -10,14 +10,17 @@ alt="IMAGE ALT TEXT HERE" width="240" height="180" border="10" /></a>
 
 
 ### Changelog: ([Full Changelog](https://github.com/Grimzentide/iRacing-Arduino-Pit-Board/blob/master/Changelog))
-#### Version 0.4 - 2015-08-22
+### Version 0.4 - 2015-08-22
+#### Front End (Arduino)
 * Session Laps title changes to Session Time when in a timed session
 * Session Time displayed for timed sessions (previously blank)
 * Remaining Time displayed in timed sessions (previously blank)
 * "Unlimited" shown as session time in offline testing mode
-* Fuel required now shows the maximum tank size when the required fuel exceeds it
 * Various bug fixes
 * Various GUI re-alignment
+#### Back End (Python)
+* Fuel required now shows the maximum tank size when the required fuel exceeds amount you can fit in
+* Various bug fixes
 
 
 ### Hardware
