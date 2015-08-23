@@ -1,27 +1,53 @@
 #!/usr/bin/env python3.3
 #!python3
 
-# Variables that can be modified
-#####################################################################################
-isLinux = 0                                                                         # 0 = Windows; 1 = Linux
-arduinoSerialPort = 'COM7'                                                          # Arduino serial port
-arduinoSerialSpeed = 250000                                                         # Arduino connection speed (must match speed in Arduino code)
-arduinoSerialTimeout = 0                                                            # Timeout length when trying to establish serial connection
-waitAfterSerialWrite = .3                                                           # Time delay to ensure the data is written to the Arduino - Suggest not going below 0.2
-fuelMultiplier = 1                                                                  # 1 = metric (litres); 0.264172 = imperial (gallons)
-#####################################################################################
-
-
-# Nothing below this line should require modification
-#####################################################################################
 import time                                                                         # Required for time.sleep function
 import os                                                                           # Required to clear the console screen
 import irsdk                                                                        # iRacing SDK - https://github.com/kutu/pyirsdk
 import serial                                                                       # Required for the serial connection to the Arduino
-import datetime
+import datetime																		# Required to convert session times in human readable form
+import sys																			# Requried for command line arguments and to clear the console screen
+
+arduinoSerialSpeed = 250000                                                         # Arduino connection speed (must match speed in Arduino code)
+arduinoSerialTimeout = 0                                                            # Timeout length when trying to establish serial connection
+waitAfterSerialWrite = .3                                                           # Time delay to ensure the data is written to the Arduino - Suggest not going below 0.2
+fuelMultiplier = 1																	# Use litres by default.  Changing this to 0.264172 will make Gallons the default and remove the need for the -gallons argument
 
 ir = irsdk.IRSDK()
-ser = serial.Serial(arduinoSerialPort, arduinoSerialSpeed, timeout=arduinoSerialTimeout) # set up the serial port
+
+try:
+	if (str(sys.argv[1])):															# Has a commandline argument been supplied?
+		comPort = str(sys.argv[1])
+		if (comPort[:3].upper() != "COM"):											# Are the first 3 letters of the argument 'COM'
+			os.system('cls')
+			print ("Incorrect Arguments")
+			print()
+			print ("Usage: python ArduinoPitBoard.py <COM Port> [-gallons]")
+			print()
+			print ("Example 1: python ArduinoPitBoard.py COM7")
+			print("or")
+			print ("Example 2: python ArduinoPitBoard.py COM7 -gallons")
+			sys.exit()			
+		print("Attempting connection to the Arduino on",comPort)
+		ser = serial.Serial(comPort, arduinoSerialSpeed, timeout=arduinoSerialTimeout) # set up the serial port
+except IndexError:
+	os.system('cls')
+	print ("Insufficient Arguments")
+	print()
+	print ("Usage: python ArduinoPitBoard.py <COM Port> [-gallons]")
+	print()
+	print ("Example 1: python ArduinoPitBoard.py COM7")
+	print("or")
+	print ("Example 2: python ArduinoPitBoard.py COM7 -gallons")
+	sys.exit()
+
+try:
+	if (str(sys.argv[2])):
+		if (str(sys.argv[2]) == "-gallons"):
+			fuelMultiplier = 0.264172
+except IndexError:
+	os.system('cls')
+
 estimatedLaps = 0
 flagNewLap = 0
 flag10pct = 0
@@ -35,22 +61,21 @@ flag80pct = 0
 flag90pct = 0
 boxThisLap = 0
 onPitRoadFlag = 0
-# Clear the console screen function for Windows and *nix in offline testing mode
+isTimedSession = 0
+
+# Clear the command prompt \ console screen function in Windows
 #####################################################################################
-def clearScreen(int):
-    if int == 0:
-        os.system('cls')
-    else:
-        os.system('clear')
+def clearScreen():
+    os.system('cls')
 
 
 # Check if the iRacing service is running
 #####################################################################################
 while True:
-	clearScreen(int = isLinux)
+	clearScreen()
 	count = 5
 	if ir.startup():
-		print("Live...")
+		print("Loading iRacing Arduino Pit Board...")
 		time.sleep(2)
 		break
 	else:
@@ -58,7 +83,7 @@ while True:
 			print ("iRacing is currently not running. Retrying connection in " + str(count) + " seconds")
 			time.sleep(1)
 			count -= 1
-			clearScreen(int = isLinux)
+			clearScreen()
 
 	
 # Send to serial port (ie. Ardunio)
@@ -70,15 +95,13 @@ def sendViaSerial(str):                                                         
 		
 # Setup information message and send to serial port (ie. Ardunio)
 #####################################################################################
-def sendInfoMessage(str):                                                           #
+def sendInfoMessage(str):                                                           # Function to construct an informational message and limit the characters to 26
     # 1st char in str (set elswhere) defines the colour on the Arduino end          # @ = White; # = Yellow; $ = Red
     infoMessageVar = ('-' + str[:26] + '!')                                         # '-' tells the Arduino that it is an info message, '!' tells the arduino that its the end of the message
     sendViaSerial(str = infoMessageVar);                                            # Send the string to the Ardunio using the sendViaSerial function
 
 	
-# Ok, lets start this... 
-#####################################################################################	
-clearScreen(int = isLinux)                                                          # Clear the console screen
+clearScreen()                                                          				# Clear the console screen
 fuelBurn = []                                                                       # Fuel burn array used for 5 lap and race fuel burn average
 fuelRemaining = ir['FuelLevel']                                                     # Read the current fuel level
 lastFuelRemaining = ir['FuelLevel']                                                 # Set the last fuel reading to the current level
@@ -89,71 +112,36 @@ SessionLaps = ir['SessionLaps']                                                 
 
 # Get the full event information and send the details to the Ardunio	
 trackDisplayName = ir['WeekendInfo']['TrackDisplayName']                        	# Track Name
-sessionNum = ir['SessionNum']
+sessionNum = ir['SessionNum']														# Current session number
 sessionType = (ir['SessionInfo']['Sessions'][sessionNum]['SessionType'])        	# Session Type = Race, Practice, Qualify, Offline Testing
 trackTemp = (ir['WeekendInfo']['TrackSurfaceTemp'])                             	# Current track temperature
 trackWeatherType = (ir['WeekendInfo']['TrackWeatherType'])                      	# Realistic or Constant weather
 trackSkies = (ir['WeekendInfo']['TrackSkies'])                                 	 	# Current cloud cover
 
-sendInfoMessage("@Track Temp: " + trackTemp)
+sendInfoMessage("@Track Temp: " + trackTemp)										# Send the track temperature as an information message in white text
 time.sleep(waitAfterSerialWrite)
-sendInfoMessage("@Sky: " + trackSkies)
+sendInfoMessage("@Sky: " + trackSkies)												# Send the cloud cover as an information message in white text
 time.sleep(waitAfterSerialWrite)
-sendInfoMessage("@Weather: " + trackWeatherType)
-time.sleep(waitAfterSerialWrite)
-sendInfoMessage("@Session: " + sessionType)
-time.sleep(waitAfterSerialWrite)
-sendInfoMessage("@" + trackDisplayName)
+sendInfoMessage("@Weather: " + trackWeatherType)									# Send the Weather as an information message in white text (Constant or Realistic)
 time.sleep(waitAfterSerialWrite)		
-	
+sendInfoMessage("@Session: " + sessionType)											# Send the current session as an information message in white text (Offline Testing, Practice, Qualify, Race)
+time.sleep(waitAfterSerialWrite)
+sendInfoMessage("@" + trackDisplayName)												# Send the track name as an information message in white text
+time.sleep(waitAfterSerialWrite)		
 	
 while True:
 	if ir.startup():	
-		sessionNum = ir['SessionNum']
 		
+		sessionNum = ir['SessionNum']		
 		currentDistance = ir['LapDistPct']
-
 		fuelRemaining = ir['FuelLevel']
 		fuelRemainingVar = ('*' + str(format(fuelRemaining*fuelMultiplier, '.2f') + '!'))
 		sendViaSerial(str = fuelRemainingVar)
 		
 		currentLap = ir['Lap']
 		currentLapVar = ('#' + str(format(currentLap, '.0f') + '!'))
-		sendViaSerial(str = currentLapVar)
-		
-		if ((ir['SessionInfo']['Sessions'][sessionNum]['SessionLaps']) == "unlimited"):				# Unlimited laps?
-
-			if ((ir['SessionInfo']['Sessions'][sessionNum]['SessionTime']) == "unlimited"):			# Unlimted time?  
-				sessionTime = 604800
-				m, s = divmod(sessionTime, 60)
-				h, m = divmod(m, 60)
-				
-				sessionLapsVar =('@Unlimited!')
-				sendViaSerial(str = sessionLapsVar);
-				time.sleep(waitAfterSerialWrite)
-			else:
-				sessionTime = (ir['SessionInfo']['Sessions'][sessionNum]['SessionTime'])         	# Get the amount of time in seconds for this session
-				sessionTime = float(sessionTime[:-4])
-				m, s = divmod(sessionTime, 60)
-				h, m = divmod(m, 60)
-				
-				sessionLapsVar = ('@' + "%d:%02d" % (h, m) + '!')
-				sendViaSerial(str = sessionLapsVar);
-				time.sleep(waitAfterSerialWrite)				
-			
-			if ((ir['SessionTimeRemain']) == "unlimited"):										 	# Unlimted session time?  
-				sessionTimeRemainVar = ('$Unlimited!')
-				sendViaSerial(str = sessionTimeRemainVar);
-				time.sleep(waitAfterSerialWrite)
-			else:
-				sessionTimeRemain = int(ir['SessionTimeRemain'])         						 	# Get the amount of time in seconds for this session time remaining
-				m, s = divmod(sessionTimeRemain, 60)
-				h, m = divmod(m, 60)
-				
-				sessionTimeRemainVar = ('$' + "%d:%02d" % (h, m) + '!')
-				sendViaSerial(str = sessionTimeRemainVar);
-				time.sleep(waitAfterSerialWrite)	
-		
+		sendViaSerial(str = currentLapVar)		
+	
 		if 0.00 <= currentDistance <= 0.100:
 			if flagNewLap == 0 and flag90pct == 1:
 				fuelBurn.append(lastFuelRemaining - fuelRemaining)
@@ -273,8 +261,45 @@ while True:
 
 			sendViaSerial(str = currentLapVar);
 			sendViaSerial(str = fuelRemainingVar);
+	
+	
+		if ((ir['SessionInfo']['Sessions'][sessionNum]['SessionLaps']) == "unlimited"):				# Unlimited laps?
+	
+			isTimedSession = 1
 
-		if remainingLap < 10000:
+			if ((ir['SessionInfo']['Sessions'][sessionNum]['SessionTime']) == "unlimited"):			# Unlimted time?  
+				sessionTime = 604800
+				m, s = divmod(sessionTime, 60)
+				h, m = divmod(m, 60)
+				
+				sessionLapsVar =('@Unlimited!')
+				sendViaSerial(str = sessionLapsVar);
+				time.sleep(waitAfterSerialWrite)
+			else:
+				sessionTime = (ir['SessionInfo']['Sessions'][sessionNum]['SessionTime'])         	# Get the amount of time in seconds for this session
+				sessionTime = float(sessionTime[:-4])
+				m, s = divmod(sessionTime, 60)
+				h, m = divmod(m, 60)
+				
+				sessionLapsVar = ('@' + "%d:%02d" % (h, m) + '!')
+				sendViaSerial(str = sessionLapsVar);
+				time.sleep(waitAfterSerialWrite)				
+			
+			if ((ir['SessionTimeRemain']) == "unlimited"):										 	# Unlimted session time?  
+				sessionTimeRemainVar = ('$Unlimited!')
+				sendViaSerial(str = sessionTimeRemainVar);
+				time.sleep(waitAfterSerialWrite)
+			else:
+				sessionTimeRemain = int(ir['SessionTimeRemain'])         						 	# Get the amount of time in seconds for this session time remaining
+				m, s = divmod(sessionTimeRemain, 60)
+				h, m = divmod(m, 60)
+				
+				sessionTimeRemainVar = ('$' + "%d:%02d" % (h, m) + '!')
+				sendViaSerial(str = sessionTimeRemainVar);
+				time.sleep(waitAfterSerialWrite)			
+				
+				remainingLap = (sessionTimeRemain / ir['DriverInfo']['DriverCarEstLapTime'])
+		else:
 			remainingLap = ir['SessionLapsRemain']
 			remainingLapVar = ('$' + str(format(remainingLap, '.0f') + '!'))
 			sendViaSerial(str = remainingLapVar);
@@ -283,9 +308,10 @@ while True:
 			SessionLapsVar = ('@' + str(SessionLaps) + '!')
 			sendViaSerial(str = SessionLapsVar);
 
+			
 		if len(fuelBurn) >= 2:            
 			averageFuelBurnRace = (sum(fuelBurn)/len(fuelBurn)*10)
-			averageFuelBurn5Lap = (sum(fuelBurn[-50:])/len(fuelBurn[-50:])*10)	
+			averageFuelBurn5Lap = (sum(fuelBurn[-50:])/len(fuelBurn[-50:])*10)
 			estimatedLaps = (fuelRemaining / averageFuelBurn5Lap)				
 
 			averageFuelBurn5LapVar = ('(' + str(format(averageFuelBurn5Lap*fuelMultiplier, '.2f') + '!'))
@@ -296,12 +322,16 @@ while True:
 			sendViaSerial(str = averageFuelBurnRaceVar);
 			sendViaSerial(str = estimatedLapsVar);
 
+			
 			if (estimatedLaps <= remainingLap):
+
 				fuelRequiredAtPitstop = (((remainingLap * float(averageFuelBurn5Lap))-fuelRemaining) + (float(averageFuelBurn5Lap) /2))			
 				pitOnLapVar = ('%' + str(int((currentLap + estimatedLaps) - 1)) + '!')
 				fuelTankCapacity = ((ir['FuelLevel'] / ir['FuelLevelPct']))
 				if fuelRequiredAtPitstop > fuelTankCapacity:
 					fuelRequiredAtPitstopVar = ('^' + str(format(fuelTankCapacity*fuelMultiplier,'.2f')) + '!')
+				else:
+					fuelRequiredAtPitstopVar = ('^' + str(format(fuelRequiredAtPitstop*fuelMultiplier,'.2f')) + '!')
 				sendViaSerial(str = pitOnLapVar);
 				sendViaSerial(str = fuelRequiredAtPitstopVar);
 
