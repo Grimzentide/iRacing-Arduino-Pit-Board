@@ -1,5 +1,5 @@
 ### Changelog:
-#### Version 0.5 - Unreleased
+#### Version 0.5 - 2015-08-23
 ##### Front End (Arduino)
 - [ ] Nil
 
