@@ -27,5 +27,7 @@ ___
 2. Determine which COM port your Arduino Uno is connected to
 3. Edit the first section of the iRacing Arduino Pit Board Back End python file to ensure the COM port and operating system is correct
 4. Run the python file from a command prompt or set it to auto load from a launcher (eg [iAppStarter](http://www.fulhack.org/iappstarter/))
-  1. ![iAppStarter How-To](http://i.imgur.com/OhlaBj6.png)
+  1. ```python arduinopitboard_v0.5.py COM7```
+  2. ```python arduinopitboard_v0.5.py COM7 -gallons```
+  3.  ![iAppStarter How-To](http://i.imgur.com/OhlaBj6.png)
 5. Load iRacing Simulator
