@@ -1,4 +1,14 @@
 ### Changelog:
+#### Version 0.6 - UNRELEASED
+##### Front End (Arduino)
+- [ ] Nil
+
+##### Back End (Python)
+###### Added
+- [x] Fuel Required now uses tank capacity and the maximum fuel percentage for the vehicle class
+
+___
+
 #### Version 0.5 - 2015-08-23
 ##### Front End (Arduino)
 - [ ] Nil
