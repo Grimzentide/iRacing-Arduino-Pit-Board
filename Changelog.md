@@ -1,4 +1,14 @@
 ### Changelog:
+#### Version 0.7 - UNRELEASED
+##### Front End (Arduino)
+- [ ] Nil
+
+##### Back End (Python)
+###### Added
+- [x] .exe file now used to run the program removing the need to install python and the requried libraries
+
+___
+
 #### Version 0.6 - 2015-08-29
 ##### Front End (Arduino)
 - [ ] Nil
