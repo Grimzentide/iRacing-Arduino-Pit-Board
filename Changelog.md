@@ -6,6 +6,7 @@
 ##### Back End (Python)
 ###### Added
 - [x] Fuel Required now uses tank capacity and the maximum fuel percentage for the vehicle class
+- [x] Version Number is now displayed on the screen during load
 
 ___
 
