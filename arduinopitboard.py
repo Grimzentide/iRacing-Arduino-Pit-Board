@@ -8,6 +8,12 @@ import serial                                                                   
 import datetime																		# Required to convert session times in human readable form
 import sys																			# Requried for command line arguments and to clear the console screen
 
+
+#####################################################################################
+versionNumber = 0.6
+#####################################################################################
+
+
 arduinoSerialSpeed = 250000                                                         # Arduino connection speed (must match speed in Arduino code)
 arduinoSerialTimeout = 0                                                            # Timeout length when trying to establish serial connection
 waitAfterSerialWrite = .3                                                           # Time delay to ensure the data is written to the Arduino - Suggest not going below 0.2
@@ -103,7 +109,9 @@ def sendInfoMessage(str):                                                       
 	
 clearScreen()                                                          				# Clear the console screen
 fuelBurn = []                                                                       # Fuel burn array used for 5 lap and race fuel burn average
-fuelRemaining = ir['FuelLevel']                                                     # Read the current fuel level
+fuelRemaining = ir['FuelLevel']   													# Read the current fuel level
+carClassMaxFuel = float(str(ir['DriverInfo']['Drivers'][0]['CarClassMaxFuel'])[:-2])# Get the class maximum fuel percentage
+fuelTankCapacity = ((ir['FuelLevel'] / ir['FuelLevelPct'])*carClassMaxFuel)         # Calculate the fuel tank capacity
 lastFuelRemaining = ir['FuelLevel']                                                 # Set the last fuel reading to the current level
 remainingLap = ir['SessionLapsRemain']                                              # Set the remaining laps in the current session
 currentDistance = ir['LapDistPct']                                                  # Set the current location of the car on the track (10%, 20%, 30%, etc)
@@ -111,27 +119,36 @@ currentLap = ir['Lap']                                                          
 SessionLaps = ir['SessionLaps']                                                     # Set the total number of laps in the session
 
 # Get the full event information and send the details to the Ardunio	
-trackDisplayName = ir['WeekendInfo']['TrackDisplayName']                        	# Track Name
+trackDisplayName = (ir['WeekendInfo']['TrackDisplayName'])                       	# Track Name
 sessionNum = ir['SessionNum']														# Current session number
 sessionType = (ir['SessionInfo']['Sessions'][sessionNum]['SessionType'])        	# Session Type = Race, Practice, Qualify, Offline Testing
 trackTemp = (ir['WeekendInfo']['TrackSurfaceTemp'])                             	# Current track temperature
 trackWeatherType = (ir['WeekendInfo']['TrackWeatherType'])                      	# Realistic or Constant weather
 trackSkies = (ir['WeekendInfo']['TrackSkies'])                                 	 	# Current cloud cover
 
+sendInfoMessage("@     By Brock Cremer")									
+time.sleep(waitAfterSerialWrite)
+sendInfoMessage("@")									
+time.sleep(waitAfterSerialWrite)
+sendInfoMessage("@      Version: " + str(versionNumber))									
+time.sleep(waitAfterSerialWrite)
+sendInfoMessage("@iRacing Arduino Pit Board")									
+time.sleep(5)
+
 sendInfoMessage("@Track Temp: " + trackTemp)										# Send the track temperature as an information message in white text
 time.sleep(waitAfterSerialWrite)
 sendInfoMessage("@Sky: " + trackSkies)												# Send the cloud cover as an information message in white text
 time.sleep(waitAfterSerialWrite)
 sendInfoMessage("@Weather: " + trackWeatherType)									# Send the Weather as an information message in white text (Constant or Realistic)
-time.sleep(waitAfterSerialWrite)		
+time.sleep(waitAfterSerialWrite)
 sendInfoMessage("@Session: " + sessionType)											# Send the current session as an information message in white text (Offline Testing, Practice, Qualify, Race)
 time.sleep(waitAfterSerialWrite)
-sendInfoMessage("@" + trackDisplayName)												# Send the track name as an information message in white text
+sendInfoMessage("@" + trackDisplayName)     										# Send the track name as an information message in white text
 time.sleep(waitAfterSerialWrite)		
 	
 while True:
 	if ir.startup():	
-		
+				
 		sessionNum = ir['SessionNum']		
 		currentDistance = ir['LapDistPct']
 		fuelRemaining = ir['FuelLevel']
@@ -221,7 +238,7 @@ while True:
 				lastFuelRemaining = fuelRemaining
 				flagNewLap = 0		
 
-		if (ir['IsInGarage'] == 0 and ir['IsOnTrack'] == 0 and ir['IsReplayPlaying'] == 0):
+		if (ir['IsInGarage'] == 0 and ir['IsOnTrack'] == 0):
 			del fuelBurn[:]
 			boxThisLap = 0
 			sendViaSerial(str = "?!")
@@ -326,8 +343,7 @@ while True:
 			if (estimatedLaps <= remainingLap):
 
 				fuelRequiredAtPitstop = (((remainingLap * float(averageFuelBurn5Lap))-fuelRemaining) + (float(averageFuelBurn5Lap) /2))			
-				pitOnLapVar = ('%' + str(int((currentLap + estimatedLaps) - 1)) + '!')
-				fuelTankCapacity = ((ir['FuelLevel'] / ir['FuelLevelPct']))
+				pitOnLapVar = ('%' + str(int((currentLap + estimatedLaps) - 1)) + '!')				
 				if fuelRequiredAtPitstop > fuelTankCapacity:
 					fuelRequiredAtPitstopVar = ('^' + str(format(fuelTankCapacity*fuelMultiplier,'.2f')) + '!')
 				else:
