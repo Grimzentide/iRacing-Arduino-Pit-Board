@@ -29,7 +29,7 @@ ___
 
 ##### Back End (Python)
 ###### Added
-- [x] .exe file now used to run the program removing the need to install python and the requried libraries
+- [x] .exe file now used to run the program removing the need to install python and the requried libraries and is available in the [releases section](https://github.com/Grimzentide/iRacing-Arduino-Pit-Board/releases)
 
 ###### Fixed
 - [x] Issue #8 - Telemetry property 'CarClassMaxFuel' is renamed to 'CarClassMaxFuelPct'.
