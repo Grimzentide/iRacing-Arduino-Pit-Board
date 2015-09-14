@@ -1,11 +1,14 @@
 ### Changelog:
-#### Version 0.7 - UNRELEASED
+#### Version 0.7 - 2015-09-14
 ##### Front End (Arduino)
 - [ ] Nil
 
 ##### Back End (Python)
 ###### Added
 - [x] .exe file now used to run the program removing the need to install python and the requried libraries
+
+###### Fixed
+- [x] Issue #8 - Telemetry property 'CarClassMaxFuel' is renamed to 'CarClassMaxFuelPct'.
 
 ___
 
