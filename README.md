@@ -23,16 +23,11 @@ Click the above image to watch the video on youtube
 ___
 
 #### Changelog: ([Full Changelog](https://github.com/Grimzentide/iRacing-Arduino-Pit-Board/blob/master/Changelog.md))
-#### Version 0.5 - 2015-08-23
+#### Version 0.6 - 2015-08-29
 ##### Front End (Arduino)
 - [ ] Nil
 
 ##### Back End (Python)
 ###### Added
-- [x] Command line argument now used to define Arduino COM port to allow the creation of an .exe in a future version
-- [x] Optional command line argument now used to define the switch to gallons (default\no argument is litres)
-  - [x] ```Python arduinopitboard.py COM7 -gallons```
-- [x] Fuel required in a timed session now based on the drivers expected lap time and the time left in the session
-
-###### Deprecated
-- [x] Linux support (all this basically means is that the console screen will not clear)
+- [x] Fuel Required now uses tank capacity and the maximum fuel percentage for the vehicle class
+- [x] Version Number is now displayed on the screen during load
