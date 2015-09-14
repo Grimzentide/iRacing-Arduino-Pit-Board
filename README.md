@@ -23,11 +23,13 @@ Click the above image to watch the video on youtube
 ___
 
 #### Changelog: ([Full Changelog](https://github.com/Grimzentide/iRacing-Arduino-Pit-Board/blob/master/Changelog.md))
-#### Version 0.6 - 2015-08-29
+#### Version 0.7 - 2015-09-14
 ##### Front End (Arduino)
 - [ ] Nil
 
 ##### Back End (Python)
 ###### Added
-- [x] Fuel Required now uses tank capacity and the maximum fuel percentage for the vehicle class
-- [x] Version Number is now displayed on the screen during load
+- [x] .exe file now used to run the program removing the need to install python and the requried libraries
+
+###### Fixed
+- [x] Issue #8 - Telemetry property 'CarClassMaxFuel' is renamed to 'CarClassMaxFuelPct'.
