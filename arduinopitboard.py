@@ -10,7 +10,7 @@ import sys																			# Requried for command line arguments and to clear 
 
 
 #####################################################################################
-versionNumber = 0.6
+versionNumber = 0.7
 #####################################################################################
 
 
@@ -110,7 +110,7 @@ def sendInfoMessage(str):                                                       
 clearScreen()                                                          				# Clear the console screen
 fuelBurn = []                                                                       # Fuel burn array used for 5 lap and race fuel burn average
 fuelRemaining = ir['FuelLevel']   													# Read the current fuel level
-carClassMaxFuel = float(str(ir['DriverInfo']['Drivers'][0]['CarClassMaxFuel'])[:-2])# Get the class maximum fuel percentage
+carClassMaxFuel = float(str(ir['DriverInfo']['Drivers'][0]['CarClassMaxFuelPct'])[:-2])# Get the class maximum fuel percentage
 fuelTankCapacity = ((ir['FuelLevel'] / ir['FuelLevelPct'])*carClassMaxFuel)         # Calculate the fuel tank capacity
 lastFuelRemaining = ir['FuelLevel']                                                 # Set the last fuel reading to the current level
 remainingLap = ir['SessionLapsRemain']                                              # Set the remaining laps in the current session
