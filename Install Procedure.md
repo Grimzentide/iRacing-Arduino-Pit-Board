@@ -35,5 +35,5 @@ Note: Once successfully installing and seeing the basic layout, the Arduino IDE 
 4. Open a command prompt and run the exe file with the com port argument
   * eg: arduinopitboard_v0.8.exe com7
   * eg: arduinopitboard_v0.8.exe com7 -gallons
-  * It is also possible to use iAppStarter to launch the pitboard back end [link](http://i.imgur.com/2VIN3TU.png)
+  * It is also possible to use [iAppStarter](http://www.fulhack.org/iappstarter/) to launch the pitboard back end [link](http://i.imgur.com/2VIN3TU.png)
 5. Launch iRacing
