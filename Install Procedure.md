@@ -36,4 +36,7 @@ Note: Once successfully installing and seeing the basic layout, the Arduino IDE 
   * eg: arduinopitboard_v0.8.exe com7
   * eg: arduinopitboard_v0.8.exe com7 -gallons
   * It is also possible to use [iAppStarter](http://www.fulhack.org/iappstarter/) to launch the pitboard back end [link](http://i.imgur.com/2VIN3TU.png)
-5. Launch iRacing
+
+#### What to do to actually use it all the time.
+1. If using iAppStarter, simply ensure the arduino is plugged into a USB port and launch iRacing
+2. If using a command prompt, run the exe (as shown in step 4 above) and launch iRacing.
