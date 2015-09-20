@@ -10,7 +10,7 @@ import sys																			# Requried for command line arguments and to clear 
 
 
 #####################################################################################
-versionNumber = 0.7
+versionNumber = 0.8
 #####################################################################################
 
 
@@ -109,14 +109,12 @@ def sendInfoMessage(str):                                                       
 	
 clearScreen()                                                          				# Clear the console screen
 fuelBurn = []                                                                       # Fuel burn array used for 5 lap and race fuel burn average
-fuelRemaining = ir['FuelLevel']   													# Read the current fuel level
 carClassMaxFuel = float(str(ir['DriverInfo']['Drivers'][0]['CarClassMaxFuelPct'])[:-2])# Get the class maximum fuel percentage
-fuelTankCapacity = ((ir['FuelLevel'] / ir['FuelLevelPct'])*carClassMaxFuel)         # Calculate the fuel tank capacity
 lastFuelRemaining = ir['FuelLevel']                                                 # Set the last fuel reading to the current level
-remainingLap = ir['SessionLapsRemain']                                              # Set the remaining laps in the current session
-currentDistance = ir['LapDistPct']                                                  # Set the current location of the car on the track (10%, 20%, 30%, etc)
-currentLap = ir['Lap']                                                              # Set the current lap you are on
-SessionLaps = ir['SessionLaps']                                                     # Set the total number of laps in the session
+#remainingLap = ir['SessionLapsRemain']                                              # Set the remaining laps in the current session
+#currentDistance = ir['LapDistPct']                                                  # Set the current location of the car on the track (10%, 20%, 30%, etc)
+#currentLap = ir['Lap']                                                              # Set the current lap you are on
+#SessionLaps = ir['SessionLaps']                                                     # Set the total number of laps in the session
 
 # Get the full event information and send the details to the Ardunio	
 trackDisplayName = (ir['WeekendInfo']['TrackDisplayName'])                       	# Track Name
@@ -158,6 +156,10 @@ while True:
 		currentLap = ir['Lap']
 		currentLapVar = ('#' + str(format(currentLap, '.0f') + '!'))
 		sendViaSerial(str = currentLapVar)		
+		
+		if(ir['IsOnTrack'] == 1):
+			fuelTankCapacity = ((ir['FuelLevel'] / ir['FuelLevelPct'])*carClassMaxFuel)         # Calculate the fuel tank capacity
+
 	
 		if 0.00 <= currentDistance <= 0.100:
 			if flagNewLap == 0 and flag90pct == 1:
@@ -241,7 +243,7 @@ while True:
 		if (ir['IsInGarage'] == 0 and ir['IsOnTrack'] == 0):
 			del fuelBurn[:]
 			boxThisLap = 0
-			sendViaSerial(str = "?!")
+			#sendViaSerial(str = "?!")
 
 		if (ir['OnPitRoad'] == 1 and ir['IsOnTrack'] == 1):
 			if onPitRoadFlag == 0 and currentLap >= 1:                                  # If I have already sent the pit lane message once, ignore that I am on pit road
