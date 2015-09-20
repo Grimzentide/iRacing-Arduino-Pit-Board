@@ -12,7 +12,8 @@
 2. Install [Adafruit GFX graphics core library](https://github.com/adafruit/Adafruit-GFX-Library) to \Arduino\Sketchbook\libraries
 3. Install [Adafruit 2.8" TFT display library](https://github.com/adafruit/TFTLCD-Library) to \Arduino\Sketchbook\libraries
   * Not all TFT's are supported and it may take some work on your behalf to identify and get the above libraries working
-4. Open the Adafruit TFT example sketch
+4. Launch Arduino IDE program
+5. Open the Adafruit TFT example sketch
   * File > Examples > TFTLCD > GraphicsTest
 5. Ensure the COM port is correct for the Arduino
 6. Upload Adafruit TFTLCD sketch to your Arduino
