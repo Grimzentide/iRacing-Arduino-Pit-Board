@@ -23,13 +23,10 @@ Click the above image to watch the video on youtube
 ___
 
 #### Changelog: ([Full Changelog](https://github.com/Grimzentide/iRacing-Arduino-Pit-Board/blob/master/Changelog.md))
-#### Version 0.7 - 2015-09-14
+#### Version 0.8 - 2015-09-20
 ##### Front End (Arduino)
 - [ ] Nil
 
 ##### Back End (Python)
-###### Added
-- [x] .exe file now used to run the program removing the need to install python and the requried libraries and is available in the [releases section](https://github.com/Grimzentide/iRacing-Arduino-Pit-Board/releases)
-
 ###### Fixed
-- [x] Issue #8 - Telemetry property 'CarClassMaxFuel' is renamed to 'CarClassMaxFuelPct'.
+- [x] Issue #9 - Fuel required error
