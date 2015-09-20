@@ -1,4 +1,27 @@
 ### Changelog:
+#### Version 0.9 - UNRELEASED
+##### Front End (Arduino)
+- [ ] Nil
+
+##### Back End (Python)
+###### Added
+- [x] .exe file now used to run the program removing the need to install python and the requried libraries
+
+###### Fixed
+- [x] Issue #8 - Telemetry property 'CarClassMaxFuel' is renamed to 'CarClassMaxFuelPct'.
+
+___
+
+#### Version 0.8 - 2015-09-20
+##### Front End (Arduino)
+- [ ] Nil
+
+##### Back End (Python)
+###### Fixed
+- [x] Issue #9 - Fuel required error
+
+___
+
 #### Version 0.7 - 2015-09-14
 ##### Front End (Arduino)
 - [ ] Nil
