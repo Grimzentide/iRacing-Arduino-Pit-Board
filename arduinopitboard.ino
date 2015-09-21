@@ -206,11 +206,11 @@ void updateCompletedLaps(String completedLaps, String pitOnLap)
 
   if (completedLaps.toInt() > pitOnLap.toInt())
   {
-    int pixelsReqForString = (6 * (6 * textSize));  
+    int pixelsReqForString = (8 * (6 * textSize));  
     int stringStartPos = (((fieldLimitRight - fieldLimitLeft) - pixelsReqForString) /2);
 
     tft.setCursor(fieldLimitLeft + stringStartPos, 19);
-    tft.println("      ");
+    tft.println("        ");
   }
 
   int pixelsReqForString = (completedLaps.length() * (6 * textSize));  
@@ -240,11 +240,11 @@ void updateRemainingLaps(String remainingLaps)
     {
     tft.setTextColor(WHITE, BLACK);
     
-    int pixelsReqForString = (6 * (6 * textSize));  
+    int pixelsReqForString = (8 * (6 * textSize));  
     int stringStartPos = (((fieldLimitRight - fieldLimitLeft) - pixelsReqForString) /2);
 
     tft.setCursor(fieldLimitLeft + stringStartPos, 19);
-    tft.println("      ");
+    tft.println("        ");
     } 
   }
   int pixelsReqForString = (remainingLaps.length() * (6 * textSize));  
@@ -301,11 +301,11 @@ int updateLapsUntilEmpty(String lapsUntilEmpty, int clearlapsUntilEmptyTag)
   {
     tft.setTextColor(WHITE, BLACK);
     
-    int pixelsReqForString = (6 * (6 * textSize));  
+    int pixelsReqForString = (8 * (6 * textSize));  
     int stringStartPos = (((fieldLimitRight - fieldLimitLeft) - pixelsReqForString) /2);
 
     tft.setCursor(fieldLimitLeft + stringStartPos, 72);
-    tft.println("      ");
+    tft.println("        ");
     clearLapsUntilEmptyTag = 1;
 
   }
@@ -343,11 +343,11 @@ int updateFuelRemaining(String fuelRemaining, float fiveLapAvg, int clearFuelRem
   {
     tft.setTextColor(WHITE, BLACK);
     
-    int pixelsReqForString = (6 * (6 * textSize));  
+    int pixelsReqForString = (8 * (6 * textSize));  
     int stringStartPos = (((fieldLimitRight - fieldLimitLeft) - pixelsReqForString) /2);
 
     tft.setCursor(fieldLimitLeft + stringStartPos, 209);
-    tft.println("      ");
+    tft.println("        ");
     
     clearFuelRemainingTag = 1;
   }
