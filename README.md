@@ -23,10 +23,15 @@ Click the above image to watch the video on youtube
 ___
 
 #### Changelog: ([Full Changelog](https://github.com/Grimzentide/iRacing-Arduino-Pit-Board/blob/master/Changelog.md))
-#### Version 0.8 - 2015-09-20
+#### Version 0.8 - 2015-09-21
 ##### Front End (Arduino)
-- [ ] Nil
+###### New
+- [X] Auto centering text for all fields
 
+###### Fixed
+- [X] Issue #2 - Fuel Required sometimes has a 3rd decimal point
+- [X] Issue #6 - Character display issues when going from a double digit + decimal to a single digit + decimal
+ 
 ##### Back End (Python)
 ###### Fixed
 - [x] Issue #9 - Fuel required error
