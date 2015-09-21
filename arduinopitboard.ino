@@ -151,10 +151,24 @@ void loop(void)
 
 int updateSessionLaps(String sessionLaps, int updateTitleSessionTime)
 {
-  // TELEMETRY VALUE DEFAULTS
   tft.setTextColor(WHITE, BLACK);
-  tft.setTextSize(2);
-  tft.setCursor(40, 19);
+  int textSize = 2;
+  tft.setTextSize(textSize);
+  
+  int fieldLimitLeft = 4;
+  int fieldLimitRight = 100;
+
+  int pixelsReqForString = (sessionLaps.length() * (6 * textSize));  
+  int stringStartPos = (((fieldLimitRight - fieldLimitLeft) - pixelsReqForString) /2);
+
+  if (fieldLimitLeft + stringStartPos < 5)
+  {
+    tft.setCursor(5, 19);
+  }
+  else
+  {
+    tft.setCursor(fieldLimitLeft + stringStartPos, 19);
+  }
   
   // SESSION LAPS
   int isTimeNotLaps = sessionLaps.indexOf(':');
@@ -173,40 +187,10 @@ int updateSessionLaps(String sessionLaps, int updateTitleSessionTime)
       tft.setTextSize(2);
       updateTitleSessionTime = 1;
     } 
-    else if (isTimeNotLaps == 1)                        // Timed race under 10 hours. eg: 1:34
-    {
-      tft.setCursor(30, 19);
-      tft.println(sessionLaps); 
-    }
-    else if (isTimeNotLaps == 2)                        // Timed race over 10 hours. eg: 23:59
-    {
-      tft.setCursor(20, 19);
-      tft.println(remainingLaps); 
-    }
-    else if (isTimeNotLaps == 3)                        // Timed race over 99 hours. eg: 123:59
-    {
-      tft.setCursor(10, 19);
-      tft.println(sessionLaps);  
-    }
-    else
-    {      
-      tft.setCursor(5, 19);
-      tft.println(sessionLaps); 
-    }    
   }   
-  else                                                  // Unlimited or None
-  {
-    if (sessionLaps = "Unlimited")
-    {
-      tft.setCursor(5, 19);
-    }
-    else if (sessionLaps = "None")
-    {
-      tft.setCursor(25, 19);
-    }
-    tft.println(sessionLaps);
-  }
-    return updateTitleSessionTime;    
+      
+  tft.println(sessionLaps);   
+  return updateTitleSessionTime;    
 }
 
 
@@ -240,44 +224,34 @@ void updateCompletedLaps(String completedLaps, String pitOnLap)
 
 void updateRemainingLaps(String remainingLaps)
 {
-  // TELEMETRY VALUE DEFAULTS
   tft.setTextColor(WHITE, BLACK);
-  tft.setTextSize(2);
-  
+  int textSize = 2;
+  tft.setTextSize(textSize);
+
+  int fieldLimitLeft = 212;
+  int fieldLimitRight = 318; 
+
+ 
   // REMAINING LAPS
   int isTimeNotLaps = remainingLaps.indexOf(':');
   if (isTimeNotLaps == -1)                            // ':' does not exist in remaining laps. eg: Unlimited or an Int
   {
     if (remainingLaps.toInt() == 9)                   // 9 laps remaining in the race
     {
-      tft.setTextColor(BLACK, BLACK);
-      tft.println(remainingLaps +1);
-      tft.setTextColor(WHITE, BLACK);
-      tft.setCursor(255, 19);    
-    }                   
-    tft.setCursor(255, 19);
-    tft.println(remainingLaps);                       // Print laps remaining
+    tft.setTextColor(WHITE, BLACK);
+    
+    int pixelsReqForString = (6 * (6 * textSize));  
+    int stringStartPos = (((fieldLimitRight - fieldLimitLeft) - pixelsReqForString) /2);
+
+    tft.setCursor(fieldLimitLeft + stringStartPos, 19);
+    tft.println("      ");
+    } 
   }
-  else if (isTimeNotLaps == 1)                        // Timed race under 10 hours. eg: 1:34
-  {
-    tft.setCursor(245, 19);
-    tft.println(remainingLaps); 
-  }
-  else if (isTimeNotLaps == 2)                        // Timed race over 10 hours. eg: 23:59
-  {
-    tft.setCursor(235, 19);
-    tft.println(remainingLaps); 
-  }
-  else if (isTimeNotLaps == 3)                        // Timed race over 99 hours. eg: 123:59
-  {
-    tft.setCursor(225, 19);
-    tft.println(remainingLaps); 
-  }
-  else
-  {
-    tft.setCursor(245, 19);
-    tft.println(remainingLaps);
-  }
+  int pixelsReqForString = (remainingLaps.length() * (6 * textSize));  
+  int stringStartPos = (((fieldLimitRight - fieldLimitLeft) - pixelsReqForString) /2);
+  
+  tft.setCursor(fieldLimitLeft + stringStartPos, 19);
+  tft.println(remainingLaps);
 }
 
 
