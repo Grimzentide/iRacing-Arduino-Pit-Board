@@ -16,11 +16,11 @@ ___
 
 ###### Fixed
 - [x] Issue #2 - Fuel Required sometimes has a 3rd decimal point
-- [x] Issue #8 - Telemetry property 'CarClassMaxFuel' is renamed to 'CarClassMaxFuelPct'.
 - [x] Issue #6 - Character display issues when going from a double digit + decimal to a single digit + decimal
  
 ##### Back End (Python)
 ###### Fixed
+- [x] Issue #8 - Telemetry property 'CarClassMaxFuel' is renamed to 'CarClassMaxFuelPct'.
 - [x] Issue #9 - Fuel required error
 - [x] .exe file now used to run the program removing the need to install python and the requried libraries
 
