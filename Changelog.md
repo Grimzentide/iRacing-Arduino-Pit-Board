@@ -11,13 +11,13 @@ ___
 
 #### Version 0.8 - 2015-09-21
 ##### Front End (Arduino)
-###### Added
-- [x] Auto centering text for all fields
-
 ###### Fixed
 - [x] Issue #2 - Fuel Required sometimes has a 3rd decimal point
 - [x] Issue #6 - Character display issues when going from a double digit + decimal to a single digit + decimal
  
+###### Added
+- [x] Auto centering text for all fields
+
 ##### Back End (Python)
 ###### Fixed
 - [x] Issue #8 - Telemetry property 'CarClassMaxFuel' is renamed to 'CarClassMaxFuelPct'.
