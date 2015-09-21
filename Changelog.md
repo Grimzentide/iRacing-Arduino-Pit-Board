@@ -27,6 +27,7 @@ ___
 ##### Other
 ###### Updated
 - [x] Installation Guide
+
 ___
 
 #### Version 0.7 - 2015-09-14
