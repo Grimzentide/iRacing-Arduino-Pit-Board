@@ -36,6 +36,8 @@ ___
 ###### Fixed
 - [x] Issue #8 - Telemetry property 'CarClassMaxFuel' is renamed to 'CarClassMaxFuelPct'.
 - [x] Issue #9 - You must be in the car or the app crashes (Fuel required error)
+
+###### Added
 - [x] .exe file now used to run the program removing the need to install python and the requried libraries
 
 ##### Other
