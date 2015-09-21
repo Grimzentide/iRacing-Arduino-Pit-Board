@@ -55,7 +55,7 @@ void setup(void)
   uint16_t identifier = 0x9325;
   tft.begin(identifier);
   tft.setRotation(3);
-  resetScreen();  
+  resetScreen(); 
 }
 
 void loop(void) 
@@ -77,7 +77,7 @@ void loop(void)
     {
       str.remove(0, 1);
       completedLaps = str;       // COMPLETED LAPS
-      updateCompletedLaps(completedLaps.toInt(), pitOnLap.toInt());
+      updateCompletedLaps(completedLaps, pitOnLap);
     }
 
     if (str.charAt(0) == '$')
@@ -91,42 +91,43 @@ void loop(void)
     {
       str.remove(0, 1);
       pitOnLap = str;            // PIT ON LAP  
-      updatePitOnLap(pitOnLap.toInt());
+      updatePitOnLap(pitOnLap);
     }
     
     if (str.charAt(0) == '^')
     {
       str.remove(0, 1);
       fuelRequired = str;      // FUEL REQUIRED
-      updateFuelRequired(fuelRequired.toFloat());
+      updateFuelRequired(fuelRequired);
     }
     
     if (str.charAt(0) == '&')
     {
       str.remove(0, 1);
       lapsUntilEmpty = str;   // LAPS UNTIL EMPTY
-      clearLapsUntilEmptyTag = updateLapsUntilEmpty(lapsUntilEmpty.toFloat(), clearLapsUntilEmptyTag);
+      clearLapsUntilEmptyTag = updateLapsUntilEmpty(lapsUntilEmpty, clearLapsUntilEmptyTag);
     }
     
     if (str.charAt(0) == '*')
     {
       str.remove(0, 1);
       fuelRemaining = str;    // FUEL REMAINING
-      clearFuelRemainingTag = updateFuelRemaining(fuelRemaining.toFloat(), fiveLapAvg.toFloat(), clearFuelRemainingTag);
+      clearFuelRemainingTag = updateFuelRemaining(fuelRemaining, fiveLapAvg.toFloat(), clearFuelRemainingTag);
     }
     
     if (str.charAt(0) == '(')
     {
       str.remove(0, 1);
       fiveLapAvg = str;       // 5 LAP AVG
-      updateFiveLapAvg(fiveLapAvg.toFloat());
+      updateFiveLapAvg(fiveLapAvg);
     }
     
     if (str.charAt(0) == ')')
     {
       str.remove(0, 1);
       raceAVG = str;          // RACE AVG
-      updateRaceAVG(raceAVG.toFloat());
+      //updateRaceAVG(raceAVG.toFloat());
+      updateRaceAVG(raceAVG);
     } 
 
     if (str.charAt(0) == '?')
@@ -209,25 +210,30 @@ int updateSessionLaps(String sessionLaps, int updateTitleSessionTime)
 }
 
 
-void updateCompletedLaps(int completedLaps, int pitOnLap)
+void updateCompletedLaps(String completedLaps, String pitOnLap)
 {
   // TELEMETRY VALUE DEFAULTS
   tft.setTextColor(WHITE, BLACK);
-  tft.setTextSize(2);
+  int textSize = 2;
+  tft.setTextSize(textSize);
 
-  if (completedLaps > pitOnLap)
+  int fieldLimitLeft = 101;
+  int fieldLimitRight = 211;
+
+  if (completedLaps.toInt() > pitOnLap.toInt())
   {
-    tft.setCursor(145, 72);
-    tft.setTextColor(BLACK, BLACK);
-    tft.println(pitOnLap);
-    tft.setCursor(25, 72);
-    tft.setTextColor(WHITE, BLACK);
-    tft.println("     ");
+    int pixelsReqForString = (6 * (6 * textSize));  
+    int stringStartPos = (((fieldLimitRight - fieldLimitLeft) - pixelsReqForString) /2);
+
+    tft.setCursor(fieldLimitLeft + stringStartPos, 19);
+    tft.println("      ");
   }
-  
+
+  int pixelsReqForString = (completedLaps.length() * (6 * textSize));  
+  int stringStartPos = (((fieldLimitRight - fieldLimitLeft) - pixelsReqForString) /2);
   
   // COMPLETED LAPS
-  tft.setCursor(145, 19);
+  tft.setCursor(fieldLimitLeft + stringStartPos, 19);
   tft.println(completedLaps);
 }
 
@@ -275,44 +281,62 @@ void updateRemainingLaps(String remainingLaps)
 }
 
 
-void updatePitOnLap(int pitOnLap)
+void updatePitOnLap(String pitOnLap)
 {
-  // TELEMETRY VALUE DEFAULTS
   tft.setTextColor(YELLOW, BLACK);
-  tft.setTextSize(2);  
+  int textSize = 2;
+  tft.setTextSize(textSize);
   
-  // PIT ON LAP
-  tft.setCursor(145, 72);
+  int fieldLimitLeft = 101;
+  int fieldLimitRight = 211;
+  
+  int pixelsReqForString = (pitOnLap.length() * (6 * textSize));  
+  int stringStartPos = (((fieldLimitRight - fieldLimitLeft) - pixelsReqForString) /2);
+  
+  tft.setCursor(fieldLimitLeft + stringStartPos, 72);
   tft.println(pitOnLap);
 }
 
-void updateFuelRequired(float fuelRequired)
+void updateFuelRequired(String fuelRequired)
 {
-  // TELEMETRY VALUE DEFAULTS
   tft.setTextColor(WHITE, BLACK);
-  tft.setTextSize(2);
+  int textSize = 2;
+  tft.setTextSize(textSize);
 
-  // FUEL REQUIRED
-  tft.setCursor(25, 72);
+  int fieldLimitLeft = 4;
+  int fieldLimitRight = 100;
+  
+  int pixelsReqForString = (fuelRequired.length() * (6 * textSize));  
+  int stringStartPos = (((fieldLimitRight - fieldLimitLeft) - pixelsReqForString) /2);
+  
+  tft.setCursor(fieldLimitLeft + stringStartPos, 72);
   tft.println(fuelRequired);
 }  
 
 
-int updateLapsUntilEmpty(float lapsUntilEmpty, int clearlapsUntilEmptyTag)
+int updateLapsUntilEmpty(String lapsUntilEmpty, int clearlapsUntilEmptyTag)
 {
-  // TELEMETRY VALUE DEFAULTS
-  tft.setTextSize(2);
-  tft.setCursor(234, 72);
+  tft.setTextColor(WHITE, BLACK);
+  int textSize = 2;
+  tft.setTextSize(textSize);
 
-    if (lapsUntilEmpty < 10 && clearlapsUntilEmptyTag != 1)
+  int fieldLimitLeft = 209;
+  int fieldLimitRight = 317;
+
+  if (lapsUntilEmpty.toFloat() < 10 && clearlapsUntilEmptyTag != 1)
   {
     tft.setTextColor(WHITE, BLACK);
-    tft.println("     ");
+    
+    int pixelsReqForString = (6 * (6 * textSize));  
+    int stringStartPos = (((fieldLimitRight - fieldLimitLeft) - pixelsReqForString) /2);
+
+    tft.setCursor(fieldLimitLeft + stringStartPos, 72);
+    tft.println("      ");
     clearLapsUntilEmptyTag = 1;
-    tft.setCursor(234, 72);
+
   }
   
-  if (lapsUntilEmpty < 4)
+  if (lapsUntilEmpty.toFloat() < 4)
   {
     tft.setTextColor(RED, BLACK);    
   }
@@ -320,28 +344,41 @@ int updateLapsUntilEmpty(float lapsUntilEmpty, int clearlapsUntilEmptyTag)
   {
     tft.setTextColor(WHITE, BLACK);
   }
+
+  int pixelsReqForString = (lapsUntilEmpty.length() * (6 * textSize));  
+  int stringStartPos = (((fieldLimitRight - fieldLimitLeft) - pixelsReqForString) /2);
   
   // LAPS UNTIL EMPTY
- tft.println(lapsUntilEmpty);
- return clearLapsUntilEmptyTag;
+  tft.setCursor(fieldLimitLeft + stringStartPos, 72);
+  tft.println(lapsUntilEmpty);
+  return clearLapsUntilEmptyTag;
 }
 
   
-int updateFuelRemaining(float fuelRemaining, float fiveLapAvg, int clearFuelRemainingTag)
+int updateFuelRemaining(String fuelRemaining, float fiveLapAvg, int clearFuelRemainingTag)
 {
   // TELEMETRY VALUE DEFAULTS
-  tft.setTextSize(2);
-  tft.setCursor(20, 209);
+  tft.setTextColor(WHITE, BLACK);
+  int textSize = 2;
+  tft.setTextSize(textSize);
 
-  if (fuelRemaining < 10 && clearFuelRemainingTag != 1)
+  int fieldLimitLeft = 4;
+  int fieldLimitRight = 100;
+  
+  if (fuelRemaining.toFloat() < 10 && clearFuelRemainingTag != 1)
   {
     tft.setTextColor(WHITE, BLACK);
-    tft.println("     ");
-    tft.setCursor(20, 209);
+    
+    int pixelsReqForString = (6 * (6 * textSize));  
+    int stringStartPos = (((fieldLimitRight - fieldLimitLeft) - pixelsReqForString) /2);
+
+    tft.setCursor(fieldLimitLeft + stringStartPos, 209);
+    tft.println("      ");
+    
     clearFuelRemainingTag = 1;
   }
-  
-  if (fuelRemaining < (fiveLapAvg * 4))
+ 
+  if (fuelRemaining.toFloat() < (fiveLapAvg * 4))
   {
     tft.setTextColor(RED, BLACK);
   }
@@ -349,34 +386,47 @@ int updateFuelRemaining(float fuelRemaining, float fiveLapAvg, int clearFuelRema
   {
     tft.setTextColor(WHITE, BLACK);
   }
+
+  int pixelsReqForString = (fuelRemaining.length() * (6 * textSize));  
+  int stringStartPos = (((fieldLimitRight - fieldLimitLeft) - pixelsReqForString) /2);
   
-  
-  // FUEL REMAINING  
+  tft.setCursor(fieldLimitLeft + stringStartPos, 209);
   tft.println(fuelRemaining);
+
   return clearFuelRemainingTag;
 }  
 
 
-void updateFiveLapAvg(float fiveLapAvg)
+void updateFiveLapAvg(String fiveLapAvg)
 {
-  // TELEMETRY VALUE DEFAULTS
   tft.setTextColor(WHITE, BLACK);
-  tft.setTextSize(2);
+  int textSize = 2;
+  tft.setTextSize(textSize);
   
-  // FIVE LAP AVG
-  tft.setCursor(130, 209);
-  tft.println(fiveLapAvg);
-}
-  
+  int fieldLimitLeft = 101;
+  int fieldLimitRight = 211;
 
-void updateRaceAVG(float raceAVG)
+  int pixelsReqForString = (fiveLapAvg.length() * (6 * textSize));  
+  int stringStartPos = (((fieldLimitRight - fieldLimitLeft) - pixelsReqForString) /2);
+  
+  tft.setCursor(fieldLimitLeft + stringStartPos, 209);
+  tft.println(fiveLapAvg);
+} 
+
+void updateRaceAVG(String raceAVG)
 {
   // TELEMETRY VALUE DEFAULTS
   tft.setTextColor(WHITE, BLACK);
-  tft.setTextSize(2);
+  int textSize = 2;
+  tft.setTextSize(textSize);
+
+  int fieldLimitLeft = 212;
+  int fieldLimitRight = 318;  
+
+  int pixelsReqForString = (raceAVG.length() * (6 * textSize));  
+  int stringStartPos = (((fieldLimitRight - fieldLimitLeft) - pixelsReqForString) /2);
   
-  // RACE AVG
-  tft.setCursor(240, 209);
+  tft.setCursor(fieldLimitLeft + stringStartPos, 209);
   tft.println(raceAVG);
 }
 
