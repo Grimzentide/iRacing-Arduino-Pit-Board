@@ -31,6 +31,7 @@ ___
  
 ###### Added
 - [x] Auto centering text for all fields
+- [x] Issue #10 - Auto centering text for headers
 
 ##### Back End (Python)
 ###### Fixed
