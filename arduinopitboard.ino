@@ -43,8 +43,12 @@ Adafruit_TFTLCD tft(LCD_CS, LCD_CD, LCD_WR, LCD_RD, LCD_RESET);
   String str = "";               // INBOUND SERIAL STRING  
   String infoMessage[5];
   int clearFuelRemainingTag = 0;
+  int clearFuelRequiredTag = 0;
   int clearLapsUntilEmptyTag = 0;
+  int clearFiveLapAvgTag = 0;
+  int clearRaceAvgTag = 0;
   int updateTitleSessionTime = 0;
+
   
 void setup(void) 
 {
@@ -151,16 +155,13 @@ void loop(void)
 
 int updateSessionLaps(String sessionLaps, int updateTitleSessionTime)
 {
-  tft.setTextColor(WHITE, BLACK);
-  int textSize = 2;
-  tft.setTextSize(textSize);
   
   int fieldLimitLeft = 4;
   int fieldLimitRight = 100;
-
-  int pixelsReqForString = (sessionLaps.length() * (6 * textSize));  
-  int stringStartPos = (((fieldLimitRight - fieldLimitLeft) - pixelsReqForString) /2);
-
+  int textSize;
+  int pixelsReqForString;  
+  int stringStartPos;
+  
   if (fieldLimitLeft + stringStartPos < 5)
   {
     tft.setCursor(5, 19);
@@ -168,7 +169,7 @@ int updateSessionLaps(String sessionLaps, int updateTitleSessionTime)
   else
   {
     tft.setCursor(fieldLimitLeft + stringStartPos, 19);
-  }
+  } 
   
   // SESSION LAPS
   int isTimeNotLaps = sessionLaps.indexOf(':');
@@ -176,19 +177,30 @@ int updateSessionLaps(String sessionLaps, int updateTitleSessionTime)
   {
     if (updateTitleSessionTime == 0)                    // Change default title from 'Session Laps' to 'Session Time'
     {
-      tft.setTextColor(BLACK);
-      tft.setTextSize(1);
-      tft.setCursor(15, 2);
-      tft.println("SESSION LAPS"); 
-      tft.setCursor(15, 2);
-      tft.setTextColor(LIGHTGREY);
-      tft.println("SESSION TIME"); 
-      tft.setTextColor(WHITE, BLACK);
-      tft.setTextSize(2);
-      updateTitleSessionTime = 1;
-    } 
-  }   
+
+      tft.setTextColor(LIGHTGREY, BLACK);
+      textSize = 1;
+      tft.setTextSize(textSize);
+    
+      String titleString;
       
+      titleString = "SESSION TIME";
+      pixelsReqForString = (titleString.length() * (6 * textSize));  
+      stringStartPos = (((fieldLimitRight - fieldLimitLeft) - pixelsReqForString) /2);
+      tft.setCursor(fieldLimitLeft + stringStartPos, 2);
+      tft.println(titleString); 
+      
+      updateTitleSessionTime = 1;  
+    } 
+  }
+
+  tft.setTextColor(WHITE, BLACK);
+  textSize = 2;
+  tft.setTextSize(textSize);
+  pixelsReqForString = (sessionLaps.length() * (6 * textSize));  
+  stringStartPos = (((fieldLimitRight - fieldLimitLeft) - pixelsReqForString) /2);    
+  tft.setCursor(fieldLimitLeft + stringStartPos, 19);
+  
   tft.println(sessionLaps);   
   return updateTitleSessionTime;    
 }
@@ -279,6 +291,23 @@ void updateFuelRequired(String fuelRequired)
 
   int fieldLimitLeft = 4;
   int fieldLimitRight = 100;
+
+  if (fuelRequired.toFloat() < 10 && clearFuelRequiredTag != 1)
+  {
+    tft.setTextColor(WHITE, BLACK);
+    
+    int pixelsReqForString = (8 * (6 * textSize));  
+    int stringStartPos = (((fieldLimitRight - fieldLimitLeft) - pixelsReqForString) /2);
+
+    tft.setCursor(fieldLimitLeft + stringStartPos, 72);
+    tft.println("        ");
+    clearFuelRequiredTag = 1;
+  }
+
+  if (fuelRequired.toFloat() >= 10 && clearFuelRequiredTag == 1)
+  {
+    clearFuelRequiredTag = 0;
+  }
   
   int pixelsReqForString = (fuelRequired.length() * (6 * textSize));  
   int stringStartPos = (((fieldLimitRight - fieldLimitLeft) - pixelsReqForString) /2);
@@ -307,7 +336,11 @@ int updateLapsUntilEmpty(String lapsUntilEmpty, int clearlapsUntilEmptyTag)
     tft.setCursor(fieldLimitLeft + stringStartPos, 72);
     tft.println("        ");
     clearLapsUntilEmptyTag = 1;
+  }
 
+  if (lapsUntilEmpty.toFloat() >= 10 && clearlapsUntilEmptyTag == 1)
+  {
+    clearLapsUntilEmptyTag = 0;
   }
   
   if (lapsUntilEmpty.toFloat() < 4)
@@ -351,6 +384,11 @@ int updateFuelRemaining(String fuelRemaining, float fiveLapAvg, int clearFuelRem
     
     clearFuelRemainingTag = 1;
   }
+
+  if (fuelRemaining.toFloat() >= 10 && clearFuelRemainingTag == 1)
+  {
+    clearFuelRemainingTag = 0;
+  }
  
   if (fuelRemaining.toFloat() < (fiveLapAvg * 4))
   {
@@ -380,6 +418,24 @@ void updateFiveLapAvg(String fiveLapAvg)
   int fieldLimitLeft = 101;
   int fieldLimitRight = 211;
 
+  if (fiveLapAvg.toFloat() < 10 && clearFiveLapAvgTag != 1)
+  {
+    tft.setTextColor(WHITE, BLACK);
+    
+    int pixelsReqForString = (8 * (6 * textSize));  
+    int stringStartPos = (((fieldLimitRight - fieldLimitLeft) - pixelsReqForString) /2);
+
+    tft.setCursor(fieldLimitLeft + stringStartPos, 209);
+    tft.println("        ");
+    
+    clearFiveLapAvgTag = 1;
+  }
+
+  if (fiveLapAvg.toFloat() >= 10 && clearFiveLapAvgTag == 1)
+  {
+    clearFiveLapAvgTag = 0;
+  }
+
   int pixelsReqForString = (fiveLapAvg.length() * (6 * textSize));  
   int stringStartPos = (((fieldLimitRight - fieldLimitLeft) - pixelsReqForString) /2);
   
@@ -396,6 +452,24 @@ void updateRaceAVG(String raceAVG)
 
   int fieldLimitLeft = 212;
   int fieldLimitRight = 318;  
+
+  if (raceAVG.toFloat() < 10 && clearRaceAvgTag != 1)
+  {
+    tft.setTextColor(WHITE, BLACK);
+    
+    int pixelsReqForString = (8 * (6 * textSize));  
+    int stringStartPos = (((fieldLimitRight - fieldLimitLeft) - pixelsReqForString) /2);
+
+    tft.setCursor(fieldLimitLeft + stringStartPos, 209);
+    tft.println("        ");
+    
+    clearFiveLapAvgTag = 1;
+  }
+
+  if (raceAVG.toFloat() >= 10 && clearRaceAvgTag == 1)
+  {
+    clearRaceAvgTag = 0;
+  }
 
   int pixelsReqForString = (raceAVG.length() * (6 * textSize));  
   int stringStartPos = (((fieldLimitRight - fieldLimitLeft) - pixelsReqForString) /2);
@@ -509,7 +583,17 @@ void updateInfoMessage(String infoMessage1, String infoMessage2, String infoMess
 
 
 void resetScreen()
-{
+{    
+  tft.setTextColor(LIGHTGREY, BLACK);
+  int textSize = 1;
+  tft.setTextSize(textSize);
+
+  int fieldLimitLeft;
+  int fieldLimitRight;
+  String titleString;
+  int pixelsReqForString;  
+  int stringStartPos;
+  
   // BACKGROUND COLOUR
   tft.fillScreen(BLACK);
 
@@ -525,57 +609,86 @@ void resetScreen()
   tft.drawFastVLine(101, 190, 50, DARKGREY);
   tft.drawFastVLine(207, 190, 50, DARKGREY);
 
-  // SESSION LAPS
-  tft.setTextColor(LIGHTGREY); 
-  tft.setTextSize(1);
-  tft.setCursor(15, 2);
-  tft.println("SESSION LAPS"); 
 
+  // SESSION LAPS
+  titleString = "SESSION LAPS";
+  fieldLimitLeft = 4;
+  fieldLimitRight = 100;  
+  pixelsReqForString = (titleString.length() * (6 * textSize));  
+  stringStartPos = (((fieldLimitRight - fieldLimitLeft) - pixelsReqForString) /2);
+  tft.setCursor(fieldLimitLeft + stringStartPos, 2);
+  tft.println(titleString);   
+  
   // COMPLETED
-  tft.setTextColor(LIGHTGREY); 
-  tft.setTextSize(1);
-  tft.setCursor(130, 2);
-  tft.println("COMPLETED"); 
+  titleString = "COMPLETED";
+  fieldLimitLeft = 101;
+  fieldLimitRight = 211;  
+  pixelsReqForString = (titleString.length() * (6 * textSize));  
+  stringStartPos = (((fieldLimitRight - fieldLimitLeft) - pixelsReqForString) /2);
+  tft.setCursor(fieldLimitLeft + stringStartPos, 2);
+  tft.println(titleString);   
+  
 
   // REMAINING
-  tft.setTextColor(LIGHTGREY); 
-  tft.setTextSize(1);
-  tft.setCursor(237, 2);
-  tft.println("REMAINING"); 
+  titleString = "REMAINING";
+  fieldLimitLeft = 212;
+  fieldLimitRight = 318;  
+  pixelsReqForString = (titleString.length() * (6 * textSize));  
+  stringStartPos = (((fieldLimitRight - fieldLimitLeft) - pixelsReqForString) /2);
+  tft.setCursor(fieldLimitLeft + stringStartPos, 2);
+  tft.println(titleString);  
 
   // FUEL REQUIRED
-  tft.setTextColor(LIGHTGREY); 
-  tft.setTextSize(1);
-  tft.setCursor(12, 55);
-  tft.println("FUEL REQUIRED"); 
+  titleString = "FUEL REQUIRED";
+  fieldLimitLeft = 4;
+  fieldLimitRight = 100;  
+  pixelsReqForString = (titleString.length() * (6 * textSize));  
+  stringStartPos = (((fieldLimitRight - fieldLimitLeft) - pixelsReqForString) /2);
+  tft.setCursor(fieldLimitLeft + stringStartPos, 55);
+  tft.println(titleString); 
 
   // PIT ON LAP
-  tft.setTextColor(LIGHTGREY); 
-  tft.setTextSize(1);
-  tft.setCursor(127, 55);
-  tft.println("PIT ON LAP"); 
+  titleString = "PIT ON LAP";
+  fieldLimitLeft = 101;
+  fieldLimitRight = 211;  
+  pixelsReqForString = (titleString.length() * (6 * textSize));  
+  stringStartPos = (((fieldLimitRight - fieldLimitLeft) - pixelsReqForString) /2);
+  tft.setCursor(fieldLimitLeft + stringStartPos, 55);
+  tft.println(titleString);  
 
   // LAPS UNTIL EMPTY
-  tft.setTextColor(LIGHTGREY); 
-  tft.setTextSize(1);
-  tft.setCursor(215, 55);
-  tft.println("LAPS UNTIL EMPTY"); 
+  titleString = "LAPS UNTIL EMPTY";
+  fieldLimitLeft = 212;
+  fieldLimitRight = 318;  
+  pixelsReqForString = (titleString.length() * (6 * textSize));  
+  stringStartPos = (((fieldLimitRight - fieldLimitLeft) - pixelsReqForString) /2);
+  tft.setCursor(fieldLimitLeft + stringStartPos, 55);
+  tft.println(titleString);  
 
   // FUEL REMAINING
-  tft.setTextColor(LIGHTGREY); 
-  tft.setTextSize(1);
-  tft.setCursor(9, 192);
-  tft.println("FUEL REMAINING"); 
+  titleString = "FUEL REMAINING";
+  fieldLimitLeft = 4;
+  fieldLimitRight = 100;  
+  pixelsReqForString = (titleString.length() * (6 * textSize));  
+  stringStartPos = (((fieldLimitRight - fieldLimitLeft) - pixelsReqForString) /2);
+  tft.setCursor(fieldLimitLeft + stringStartPos, 192);
+  tft.println(titleString); 
 
   // 5 LAP AVG
-  tft.setTextColor(LIGHTGREY); 
-  tft.setTextSize(1);
-  tft.setCursor(125, 192);
-  tft.println("5 LAP AVG"); 
+  titleString = "5 LAP AVG";
+  fieldLimitLeft = 101;
+  fieldLimitRight = 211;  
+  pixelsReqForString = (titleString.length() * (6 * textSize));  
+  stringStartPos = (((fieldLimitRight - fieldLimitLeft) - pixelsReqForString) /2);
+  tft.setCursor(fieldLimitLeft + stringStartPos, 192);
+  tft.println(titleString);  
 
   // RACE AVG
-  tft.setTextColor(LIGHTGREY); 
-  tft.setTextSize(1);
-  tft.setCursor(239, 192);
-  tft.println("RACE AVG");   
+  titleString = "RACE AVG";
+  fieldLimitLeft = 212;
+  fieldLimitRight = 318;  
+  pixelsReqForString = (titleString.length() * (6 * textSize));  
+  stringStartPos = (((fieldLimitRight - fieldLimitLeft) - pixelsReqForString) /2);
+  tft.setCursor(fieldLimitLeft + stringStartPos, 192);
+  tft.println(titleString);   
 }
