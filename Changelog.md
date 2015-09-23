@@ -1,12 +1,13 @@
 ### Changelog:
 #### Version 0.9 - UNRELEASED
 ##### Front End (Arduino)
-- [ ] Nil
+###### Updated
+- [x] 'Pit on Lap' changed to 'Pit Window' to show the earliest and latest you can now pit
 
 ##### Back End (Python)
 ###### Added
-- [ ] Nil
-
+- [x] Pit window functionality
+- [x] If the pit window is open from the start of the session, only the latest you can stop is shown
 ___
 
 #### Version 0.8 - 2015-09-21
