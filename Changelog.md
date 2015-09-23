@@ -6,8 +6,8 @@
 
 ##### Back End (Python)
 ###### Added
-- [x] Pit window functionality
-- [x] If the pit window is open from the start of the session, only the latest you can stop is shown
+- [x] Pit window functionality showing the earliest and latest you can stop and still make it to the end. 
+  - [x] If the pit window is open from the start of the session, only the latest you can stop is shown
 
 ___
 
