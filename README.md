@@ -2,7 +2,7 @@
 
 The iRacing Arduino Pit Board is a small Arduino based device designed to give you live up to date information about your fuel requirements in any session online or offline including races that require one or more pit stops.  It works with both timed and lap based sessions up to 24 hours in length. It is designed to work on a 2.8 inch (320 x 240) TFT or LCD screen or shield that is supported by the Adafruit graphics library and works out to be around $12 to $13 in hardware costs.
 
-<img src="http://i.imgur.com/MFo0aRz.png">
+<img src="http://i.imgur.com/MtPBUsV.png">
 
 If you have a feature request or an problem with the code, please [create an entry in the issue section](https://github.com/Grimzentide/iRacing-Arduino-Pit-Board/issues)
 
