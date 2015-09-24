@@ -35,6 +35,7 @@ Adafruit_TFTLCD tft(LCD_CS, LCD_CD, LCD_WR, LCD_RD, LCD_RESET);
   String completedLaps = "";     // COMPLETED LAPS
   String remainingLaps = "";     // REMAINING LAPS
   String pitOnLap = "";          // PIT ON LAP     
+  String lastPitOnLap = "default";      // LAST PIT ON LAP     
   String fuelRequired = "";      // FUEL REQUIRED
   String lapsUntilEmpty = "";    // LAPS UNTIL EMPTY
   String fuelRemaining = "";     // FUEL REMAINING
@@ -81,7 +82,7 @@ void loop(void)
     {
       str.remove(0, 1);
       completedLaps = str;       // COMPLETED LAPS
-      updateCompletedLaps(completedLaps, pitOnLap);
+      updateCompletedLaps(completedLaps);
     }
 
     if (str.charAt(0) == '$')
@@ -95,7 +96,7 @@ void loop(void)
     {
       str.remove(0, 1);
       pitOnLap = str;            // PIT ON LAP  
-      updatePitOnLap(pitOnLap);
+      lastPitOnLap = updatePitOnLap(pitOnLap, lastPitOnLap);
     }
     
     if (str.charAt(0) == '^')
@@ -206,7 +207,7 @@ int updateSessionLaps(String sessionLaps, int updateTitleSessionTime)
 }
 
 
-void updateCompletedLaps(String completedLaps, String pitOnLap)
+void updateCompletedLaps(String completedLaps)
 {
   // TELEMETRY VALUE DEFAULTS
   tft.setTextColor(WHITE, BLACK);
@@ -214,16 +215,7 @@ void updateCompletedLaps(String completedLaps, String pitOnLap)
   tft.setTextSize(textSize);
 
   int fieldLimitLeft = 101;
-  int fieldLimitRight = 211;
-
-  if (completedLaps.toInt() > pitOnLap.toInt())
-  {
-    int pixelsReqForString = (8 * (6 * textSize));  
-    int stringStartPos = (((fieldLimitRight - fieldLimitLeft) - pixelsReqForString) /2);
-
-    tft.setCursor(fieldLimitLeft + stringStartPos, 19);
-    tft.println("        ");
-  }
+  int fieldLimitRight = 211; 
 
   int pixelsReqForString = (completedLaps.length() * (6 * textSize));  
   int stringStartPos = (((fieldLimitRight - fieldLimitLeft) - pixelsReqForString) /2);
@@ -267,20 +259,35 @@ void updateRemainingLaps(String remainingLaps)
 }
 
 
-void updatePitOnLap(String pitOnLap)
+String updatePitOnLap(String pitOnLap, String lastPitOnLap)
 {
   tft.setTextColor(YELLOW, BLACK);
   int textSize = 2;
   tft.setTextSize(textSize);
   
+  int pixelsReqForString;  
+  int stringStartPos;
+  
   int fieldLimitLeft = 101;
   int fieldLimitRight = 211;
+
+
+  if (pitOnLap != lastPitOnLap)
+  {
+    pixelsReqForString = (8 * (6 * textSize));  
+    stringStartPos = (((fieldLimitRight - fieldLimitLeft) - pixelsReqForString) /2);
+
+    tft.setCursor(fieldLimitLeft + stringStartPos, 72);
+    tft.println("        ");
+  }
   
-  int pixelsReqForString = (pitOnLap.length() * (6 * textSize));  
-  int stringStartPos = (((fieldLimitRight - fieldLimitLeft) - pixelsReqForString) /2);
+  pixelsReqForString = (pitOnLap.length() * (6 * textSize));  
+  stringStartPos = (((fieldLimitRight - fieldLimitLeft) - pixelsReqForString) /2);
   
   tft.setCursor(fieldLimitLeft + stringStartPos, 72);
   tft.println(pitOnLap);
+
+  return pitOnLap;
 }
 
 void updateFuelRequired(String fuelRequired)
@@ -463,7 +470,7 @@ void updateRaceAVG(String raceAVG)
     tft.setCursor(fieldLimitLeft + stringStartPos, 209);
     tft.println("        ");
     
-    clearFiveLapAvgTag = 1;
+    clearRaceAvgTag = 1;
   }
 
   if (raceAVG.toFloat() >= 10 && clearRaceAvgTag == 1)
@@ -648,7 +655,7 @@ void resetScreen()
   tft.println(titleString); 
 
   // PIT ON LAP
-  titleString = "PIT ON LAP";
+  titleString = "PIT WINDOW";
   fieldLimitLeft = 101;
   fieldLimitRight = 211;  
   pixelsReqForString = (titleString.length() * (6 * textSize));  
