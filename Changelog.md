@@ -1,13 +1,21 @@
 ### Changelog:
 #### Version 0.9 - UNRELEASED
 ##### Front End (Arduino)
-###### Updated
+###### Changed
 - [x] 'Pit on Lap' changed to 'Pit Window' to show the earliest and latest you can now pit
+
+###### Fixed
+- [x] Graphical errors when the pit window data updates
 
 ##### Back End (Python)
 ###### Added
-- [x] Pit window functionality showing the earliest and latest you can stop and still make it to the end. 
-  - [x] If the pit window is open from the start of the session, only the latest you can stop is shown
+- [x] Pit window functionality showing the earliest and latest you can stop if you can make it to the end. 
+  - [x] If multiple stops are requried to get to the end, only the latest you can stop is shown.
+
+###### Fixed  
+- [x] Pit window is cleared if you conserve enough fuel to remove the need to stop
+- [x] Fuel requried is cleared if you conserve enough fuel to remove the need to stop
+- [x] Removed a double up of delays when writing information messages to the device
 
 ___
 
@@ -98,6 +106,3 @@ ___
 
 ###### Changed
 - [x] Fuel required now shows the maximum tank size when the required fuel exceeds amount you can fit in
-
-
-___
