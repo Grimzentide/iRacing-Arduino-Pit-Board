@@ -2,11 +2,11 @@
 
 The iRacing Arduino Pit Board is a small Arduino based device designed to give you live up to date information about your fuel requirements in any session online or offline including races that require one or more pit stops.  It works with both timed and lap based sessions up to 24 hours in length. It is designed to work on a 2.8 inch (320 x 240) TFT or LCD screen or shield that is supported by the Adafruit graphics library and works out to be around $12 to $13 in hardware costs.
 
-<img src="http://i.imgur.com/UEEd8sn.png">
+<img src="http://i.imgur.com/MFo0aRz.png">
 
 If you have a feature request or an problem with the code, please [create an entry in the issue section](https://github.com/Grimzentide/iRacing-Arduino-Pit-Board/issues)
 
-#### Demonstration of v0.9 - [UNRELEASED]
+#### Demonstration of v0.9
 
 <a href="http://www.youtube.com/watch?feature=player_embedded&v=jrubmpEYgn8
 " target="_blank"><img src="http://img.youtube.com/vi/jrubmpEYgn8/0.jpg" 
@@ -23,24 +23,20 @@ Click the above image to watch the video on youtube
 ___
 
 #### Changelog: ([Full Changelog](https://github.com/Grimzentide/iRacing-Arduino-Pit-Board/blob/master/Changelog.md))
-#### Version 0.8 - 2015-09-21
+#### Version 0.9 - 2015-09-24
 ##### Front End (Arduino)
+###### Changed
+- [x] 'Pit on Lap' changed to 'Pit Window' to show the earliest and latest you can now pit
+
 ###### Fixed
-- [x] Issue #2 - Fuel Required sometimes has a 3rd decimal point
-- [x] Issue #6 - Character display issues when going from a double digit + decimal to a single digit + decimal
- 
-###### Added
-- [x] Auto centering text for all fields
-- [x] Issue #10 - Auto centering text for headers
+- [x] Graphical errors when the pit window data updates
 
 ##### Back End (Python)
-###### Fixed
-- [x] Issue #8 - Telemetry property 'CarClassMaxFuel' is renamed to 'CarClassMaxFuelPct'.
-- [x] Issue #9 - You must be in the car or the app crashes (Fuel required error)
-
 ###### Added
-- [x] .exe file now used to run the program removing the need to install python and the requried libraries
+- [x] Pit window functionality showing the earliest and latest you can stop if you can make it to the end. 
+  - [x] If multiple stops are requried to get to the end, only the latest you can stop is shown.
 
-##### Other
-###### Updated
-- [x] Installation Guide
+###### Fixed  
+- [x] Pit window is cleared if you conserve enough fuel to remove the need to stop
+- [x] Fuel requried is cleared if you conserve enough fuel to remove the need to stop
+- [x] Removed a double up of delays when writing information messages to the device
