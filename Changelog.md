@@ -1,5 +1,5 @@
 ### Changelog:
-#### Version 0.9 - UNRELEASED
+#### Version 0.9 - 2015-09-24
 ##### Front End (Arduino)
 ###### Changed
 - [x] 'Pit on Lap' changed to 'Pit Window' to show the earliest and latest you can now pit
