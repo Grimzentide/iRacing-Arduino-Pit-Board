@@ -1,4 +1,4 @@
-### Software Install Procedure
+### Install Procedure
 
 #### Hardware
 1. Clip TFT screen into Arduino Uno
