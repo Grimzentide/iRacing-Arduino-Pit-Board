@@ -3,6 +3,9 @@
 #### Hardware
 1. Clip TFT screen into Arduino Uno
 2. Insert USB cable into device and computer
+ 
+![Arduino Uno and TFT Shield Apart](http://imgur.com/gJoKIZf)
+![Arduino Uno and TFT Shield Together](http://imgur.com/XTel5Fp)
 
 #### Arduino Side
 1. Install the [Arduino IDE](https://www.arduino.cc) software
