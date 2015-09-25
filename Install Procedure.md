@@ -29,7 +29,7 @@
 11. Upload the iRacing Arduino Pit Board TFT sketch onto your Arduino Uno
 12. If successful, you should see the basic layout of the device (lines, headings, etc) without any numbers
 
-Note: Once successfully installing and seeing the basic layout, the Arduino IDE will only be required for future software updates.
+Note: Once successfully installing and seeing the basic layout, the Arduino IDE will only be required for future front-end software updates.
 
 #### Backend (Based on Python)
 1. Download the current executable file from the [releases section](https://github.com/Grimzentide/iRacing-Arduino-Pit-Board/releases)
@@ -43,3 +43,4 @@ Note: Once successfully installing and seeing the basic layout, the Arduino IDE 
 #### What to do to actually use it all the time.
 1. If using iAppStarter, simply ensure the arduino is plugged into a USB port and launch iRacing
 2. If using a command prompt, run the exe (as shown in step 4 above) and launch iRacing.
+![iAppStarter](http://i.imgur.com/C6O29zl.png)
