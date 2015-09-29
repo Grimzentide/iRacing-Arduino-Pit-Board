@@ -10,6 +10,10 @@
 #### Arduino Side
 1. Install the [Arduino IDE](https://www.arduino.cc) software
 2. Install [Adafruit GFX graphics core library](https://github.com/adafruit/Adafruit-GFX-Library) to \Arduino\Sketchbook\libraries
+  * There is a reference in the TFT library that requires un-commenting to ensure it works with TFT/LCD shields
+  * // **** IF USING THE LCD BREAKOUT BOARD, COMMENT OUT THIS NEXT LINE. ****
+  * // **** IF USING THE LCD SHIELD, LEAVE THE LINE ENABLED:             ****
+  * #define USE_ADAFRUIT_SHIELD_PINOUT 1"
 3. Install [Adafruit 2.8" TFT display library](https://github.com/adafruit/TFTLCD-Library) to \Arduino\Sketchbook\libraries
   * Not all TFT's are supported and it may take some work on your behalf to identify and get the above libraries working
 4. Launch Arduino IDE program
