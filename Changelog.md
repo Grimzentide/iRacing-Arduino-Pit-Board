@@ -1,4 +1,20 @@
 ### Changelog:
+#### Version 1.0 - UNRELEASED
+##### Front End (Arduino)
+###### Fixed  
+- [x] Issue #13 - "Unlimited" changed to "Infinite" to remove overlapping into other cells
+- [x] Continual refreshing of screen when in the garage
+
+##### Back End (Python)
+###### Fixed  
+- [x] Lap percentage not resetting after tow causing fuel burn averages to be incorrect
+- [x] 5 Lap AVG now correctly reset after a tow
+- [x] Race AVG now correctly reset after a tow
+- [x] Time remaining now shows as "Infinite" instead of 168:00 if in an offline test session 
+- [x] Remaining laps in offline testing mode now correctly calculated given the unlimited/infinite time for the session
+
+___
+
 #### Version 0.9 - 2015-09-24
 ##### Front End (Arduino)
 ###### Changed
