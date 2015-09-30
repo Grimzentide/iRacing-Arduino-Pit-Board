@@ -2,11 +2,11 @@
 #### Version 1.0 - UNRELEASED
 ##### Front End (Arduino)
 ###### Fixed  
-- [x] Issue #13 - "Unlimited" changed to "Infinite" to remove overlapping into other cells
 - [x] Continual refreshing of screen when in the garage
 
 ##### Back End (Python)
 ###### Fixed 
+- [x] Issue #13 - "Unlimited" changed to "Infinite" to remove overlapping into other cells
 - [x] Issue #11 - Track temperature not shown in Fahrenheit
   - Use -gallons argument to enable gallons and fahrenheit temperatures
 - [x] Issue #7 - Not all figures are reset when the session changes type
