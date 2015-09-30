@@ -9,13 +9,17 @@ Features:
 * fuel remaining
 * laps until you run out of fuel
 * how much fuel you will need to add at the next stop
+* imperial and metric fuel calculations
 * 5 lap average fuel burn
 * race fuel burn
 * which lap you should pit on
 * pit windows to make it to the end with only one more stop
 * weather and session information
-* Information on when your last stop was
+* information on when your last stop was
 
+**Note:** The calculations for required fuel automatically includes an extra half of a lap to ensure you can cross the finish line. 
+
+Concept:  
 <img src="http://i.imgur.com/MtPBUsV.png">
 
 If you have a feature request or an problem with the code, please [create an entry in the issue section](https://github.com/Grimzentide/iRacing-Arduino-Pit-Board/issues)
