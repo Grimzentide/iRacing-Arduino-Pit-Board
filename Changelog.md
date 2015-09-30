@@ -9,6 +9,7 @@
 ###### Fixed 
 - [x] Issue #11 - Track temperature not shown in Fahrenheit
   - Use -gallons argument to enable gallons and fahrenheit temperatures
+- [x] Issue #7 - Not all figures are reset when the session changes type
 - [x] Lap percentage not resetting after tow causing fuel burn averages to be incorrect
 - [x] 5 Lap AVG now correctly reset after a tow
 - [x] Race AVG now correctly reset after a tow
