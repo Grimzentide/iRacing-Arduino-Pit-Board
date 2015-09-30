@@ -6,6 +6,10 @@
 - [x] Continual refreshing of screen when in the garage
 
 ##### Back End (Python)
+###### Added 
+- [x] Issue #11 - Track temperature not shown in Fahrenheit
+  - Use -gallons argument to enable gallons and fahrenheit temperatures
+
 ###### Fixed  
 - [x] Lap percentage not resetting after tow causing fuel burn averages to be incorrect
 - [x] 5 Lap AVG now correctly reset after a tow
