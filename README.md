@@ -17,7 +17,7 @@ Features:
 * weather and session information
 * information on when your last stop was
 
-**Note:** The calculations for required fuel automatically includes an extra half of a lap to ensure you can cross the finish line. 
+**Note:** The calculations for required fuel automatically includes an extra half of a lap to ensure you can cross the finish line. The half lap fuel addition is calculated using half of the current 5 lap average fuel burn rate and is automatically included in the required fuel figure.
 
 Concept:  
 <img src="http://i.imgur.com/MtPBUsV.png">
