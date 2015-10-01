@@ -16,7 +16,7 @@ There are no updates to the front end Arduino code in this release which means y
 - [x] Time remaining now shows as "Infinite" instead of 168:00 if in an offline test session 
 - [x] Remaining laps in offline testing mode now correctly calculated given the unlimited/infinite time for the session
 - [x] Fixed a call that continually refreshed the screen when in the garage
-- 
+
 ___
 
 #### Version 0.9 - 2015-09-24
