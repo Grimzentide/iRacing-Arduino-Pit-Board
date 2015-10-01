@@ -10,7 +10,7 @@ import sys                                                                      
  
  
 #####################################################################################
-versionNumber = 0.9
+versionNumber = 1.0
 #####################################################################################
  
  
@@ -105,7 +105,7 @@ def sendViaSerial(str):                                                         
 def sendInfoMessage(str):                                                           # Function to construct an informational message and limit the characters to 26
     # 1st char in str (set elswhere) defines the colour on the Arduino end          # @ = White; # = Yellow; $ = Red
     infoMessageVar = ('-' + str[:26] + '!')                                         # '-' tells the Arduino that it is an info message, '!' tells the arduino that its the end of the message
-    time.sleep(waitAfterSerialWrite)                                            # A delay after sending the string via serial to the Arduino prevents the arduino from getting confused
+    time.sleep(waitAfterSerialWrite)                                                # A delay after sending the string via serial to the Arduino prevents the arduino from getting confused
     sendViaSerial(str = infoMessageVar);                                            # Send the string to the Ardunio using the sendViaSerial function
  
      
@@ -118,9 +118,17 @@ lastFuelRemaining = ir['FuelLevel']                                             
 trackDisplayName = (ir['WeekendInfo']['TrackDisplayName'])                          # Track Name
 sessionNum = ir['SessionNum']                                                       # Current session number
 sessionType = (ir['SessionInfo']['Sessions'][sessionNum]['SessionType'])            # Session Type = Race, Practice, Qualify, Offline Testing
-trackTemp = (ir['WeekendInfo']['TrackSurfaceTemp'])                                 # Current track temperature
 trackWeatherType = (ir['WeekendInfo']['TrackWeatherType'])                          # Realistic or Constant weather
 trackSkies = (ir['WeekendInfo']['TrackSkies'])                                      # Current cloud cover
+try:
+    if (str(sys.argv[2])):
+        if (str(sys.argv[2]) == "-gallons"):  
+            trackTemp = (ir['WeekendInfo']['TrackSurfaceTemp'])                                 # Current track temperature
+            trackTemp = trackTemp[:-2]
+            trackTemp = (float(trackTemp) * 9/5) + 32
+            trackTemp = "%.2f" % round(trackTemp,2) + " F"			
+except IndexError:
+    trackTemp = (ir['WeekendInfo']['TrackSurfaceTemp'])                                 # Current track temperature
  
 sendInfoMessage("@     By Brock Cremer")                                    
 sendInfoMessage("@")                                    
@@ -232,8 +240,32 @@ while True:
  
         if (ir['IsInGarage'] == 0 and ir['IsOnTrack'] == 0):
             del fuelBurn[:]
+            boxThisLap = 0                                                              # Remove the box this lap flag
+            pitWindowOpen = 0
+            estimatedLaps = 0
+            flagNewLap = 0
+            flag10pct = 0
+            flag20pct = 0
+            flag30pct = 0
+            flag40pct = 0
+            flag50pct = 0
+            flag60pct = 0
+            flag70pct = 0
+            flag80pct = 0
+            flag90pct = 0
             boxThisLap = 0
             pitWindowOpen = 0
+            onPitRoadFlag = 0
+            fuelRemaining = ir['FuelLevel']
+            lastFuelRemaining = ir['FuelLevel']
+            fuelRemainingVar = ('*' + str(format(fuelRemaining*fuelMultiplier, '.2f') + '!'))
+            sendViaSerial(str = currentLapVar);
+            sendViaSerial(str = fuelRemainingVar);     
+            sendViaSerial('(       !')
+            sendViaSerial(')       !')
+            sendViaSerial('%       !')
+            sendViaSerial('^       !')
+            sendViaSerial('&       !')
  
         if (ir['OnPitRoad'] == 1 and ir['IsOnTrack'] == 1):
             if onPitRoadFlag == 0 and currentLap >= 1:                                  # If I have already sent the pit lane message once, ignore that I am on pit road
@@ -260,68 +292,73 @@ while True:
             pitWindowOpen = 0
             onPitRoadFlag = 0
             isTimedSession = 0
-            sendViaSerial(str = "?!")                                                   # Reset the Arduino screen
-            sendInfoMessage("@Session: " + sessionType)                                 # If the session goes from practice to qualify, update the info box on the arduino
-         
-        if (trackTemp != (ir['WeekendInfo']['TrackSurfaceTemp'])):                      # Code in place for dynamic track temp changes in the future
-            trackTemp = (ir['WeekendInfo']['TrackSurfaceTemp'])                         #
-            sendInfoMessage("@Track Temp: " + trackTemp)                                # If the track temp changes mid race, update the info box on the arduino                
- 
-        if (trackSkies != (ir['WeekendInfo']['TrackSkies'])):                           # Code in place for dynamic weather changes in the future 
-            trackSkies = (ir['WeekendInfo']['TrackSkies'])                              #
-            sendInfoMessage("@Sky: " + trackSkies)                                      # If the cloud cover changes mid race, update the info box on the arduino            
+            sendViaSerial('%       !')
+            sendViaSerial('^       !')
+            sendViaSerial('(       !')
+            sendViaSerial(')       !')
+            sendInfoMessage("@Session: " + sessionType)                                 # If the session goes from practice to qualify, update the info box on the arduino  
+  
  
         if ir['IsInGarage'] == 1:
             del fuelBurn[:]
-            remainingLap = ir['SessionLapsRemain']
-            SessionLaps = ir['SessionLaps']
+            boxThisLap = 0                                                              # Remove the box this lap flag
+            pitWindowOpen = 0
+            estimatedLaps = 0
+            flagNewLap = 0
+            flag10pct = 0
+            flag20pct = 0
+            flag30pct = 0
+            flag40pct = 0
+            flag50pct = 0
+            flag60pct = 0
+            flag70pct = 0
+            flag80pct = 0
+            flag90pct = 0
+            boxThisLap = 0
+            pitWindowOpen = 0
+            onPitRoadFlag = 0
             fuelRemaining = ir['FuelLevel']
             lastFuelRemaining = ir['FuelLevel']
-            sendViaSerial(str = "?!");
- 
-            SessionLapsVar = ('@' + str(SessionLaps) + '!')
-            currentLapVar = ('#' + str(format(currentLap, '.0f') + '!'))
-            remainingLapVar = ('$' + str(format(remainingLap, '.0f') + '!'))
             fuelRemainingVar = ('*' + str(format(fuelRemaining*fuelMultiplier, '.2f') + '!'))
- 
             sendViaSerial(str = currentLapVar);
-            sendViaSerial(str = fuelRemainingVar);
-     
+            sendViaSerial(str = fuelRemainingVar);     
+            sendViaSerial('(       !')
+            sendViaSerial(')       !')
+            sendViaSerial('%       !')
+            sendViaSerial('^       !')
+            sendViaSerial('&       !')
      
         if ((ir['SessionInfo']['Sessions'][sessionNum]['SessionLaps']) == "unlimited"):             # Unlimited laps?
      
             isTimedSession = 1
+            sessionTimeRemain = int(ir['SessionTimeRemain'])                                    # Get the amount of time in seconds for this session time remaining
+            m, s = divmod(sessionTimeRemain, 60)
+            h, m = divmod(m, 60)
  
             if ((ir['SessionInfo']['Sessions'][sessionNum]['SessionTime']) == "unlimited"):         # Unlimted time?  
                 sessionTime = 604800
                 m, s = divmod(sessionTime, 60)
-                h, m = divmod(m, 60)
-                 
-                sessionLapsVar =('@Unlimited!')
-                sendViaSerial(str = sessionLapsVar);
+                h, m = divmod(m, 60)                 
+                sessionLapsVar =('@Infinite!')
+                sendViaSerial(str = sessionLapsVar);                
             else:
                 sessionTime = (ir['SessionInfo']['Sessions'][sessionNum]['SessionTime'])            # Get the amount of time in seconds for this session
                 sessionTime = float(sessionTime[:-4])
                 m, s = divmod(sessionTime, 60)
-                h, m = divmod(m, 60)
-                 
+                h, m = divmod(m, 60)                 
                 sessionLapsVar = ('@' + "%d:%02d" % (h, m) + '!')
-                sendViaSerial(str = sessionLapsVar);
-     
-             
-            if ((ir['SessionTimeRemain']) == "unlimited"):                                          # Unlimted session time?  
-                sessionTimeRemainVar = ('$Unlimited!')
+                sendViaSerial(str = sessionLapsVar); 
+                
+            if (sessionTimeRemain == 604800): 
+                sessionTimeRemainVar = ('$Infinite!')
                 sendViaSerial(str = sessionTimeRemainVar);
- 
+                remainingLap = (sessionTimeRemain / ir['DriverInfo']['DriverCarEstLapTime'])				
             else:
                 sessionTimeRemain = int(ir['SessionTimeRemain'])                                    # Get the amount of time in seconds for this session time remaining
                 m, s = divmod(sessionTimeRemain, 60)
-                h, m = divmod(m, 60)
-                 
+                h, m = divmod(m, 60)                 
                 sessionTimeRemainVar = ('$' + "%d:%02d" % (h, m) + '!')
                 sendViaSerial(str = sessionTimeRemainVar);
-         
-                 
                 remainingLap = (sessionTimeRemain / ir['DriverInfo']['DriverCarEstLapTime'])
         else:
             remainingLap = ir['SessionLapsRemain']
