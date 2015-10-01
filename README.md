@@ -45,20 +45,20 @@ A number of people are coming up with creative ways to mount the device includin
 ___
 
 #### Changelog: ([Full Changelog](https://github.com/Grimzentide/iRacing-Arduino-Pit-Board/blob/master/Changelog.md))
-#### Version 0.9 - 2015-09-24
+#### Version 1.0 - 2015-10-01
 ##### Front End (Arduino)
-###### Changed
-- [x] 'Pit on Lap' changed to 'Pit Window' to show the earliest and latest you can now pit
 
-###### Fixed
-- [x] Graphical errors when the pit window data updates
+There are no updates to the front end Arduino code in this release which means you do not need to re-upload the code to the arduino device.  Only the back end files in the release section need to be updated by you.
 
 ##### Back End (Python)
-###### Added
-- [x] Pit window functionality showing the earliest and latest you can stop if you can make it to the end. 
-  - [x] If multiple stops are requried to get to the end, only the latest you can stop is shown.
-
-###### Fixed  
-- [x] Pit window is cleared if you conserve enough fuel to remove the need to stop
-- [x] Fuel requried is cleared if you conserve enough fuel to remove the need to stop
-- [x] Removed a double up of delays when writing information messages to the device
+###### Fixed 
+- [x] Issue #13 - "Unlimited" changed to "Infinite" to remove overlapping into other cells
+- [x] Issue #11 - Track temperature not shown in Fahrenheit
+  - Use -gallons argument to enable gallons and fahrenheit temperatures
+- [x] Issue #7 - Not all figures are reset when the session changes type
+- [x] Lap percentage not resetting after tow causing fuel burn averages to be incorrect
+- [x] 5 Lap AVG now correctly reset after a tow
+- [x] Race AVG now correctly reset after a tow
+- [x] Time remaining now shows as "Infinite" instead of 168:00 if in an offline test session 
+- [x] Remaining laps in offline testing mode now correctly calculated given the unlimited/infinite time for the session
+- [x] Fixed a call that continually refreshed the screen when in the garage
