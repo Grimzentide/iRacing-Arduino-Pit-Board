@@ -45,20 +45,13 @@ A number of people are coming up with creative ways to mount the device includin
 ___
 
 #### Changelog: ([Full Changelog](https://github.com/Grimzentide/iRacing-Arduino-Pit-Board/blob/master/Changelog.md))
-#### Version 1.0 - 2015-10-01
+### Changelog:
+#### Version 1.1 - 2015-10-03
 ##### Front End (Arduino)
 
 There are no updates to the front end Arduino code in this release which means you do not need to re-upload the code to the arduino device.  Only the back end files in the release section need to be updated by you.
 
 ##### Back End (Python)
 ###### Fixed 
-- [x] Issue #13 - "Unlimited" changed to "Infinite" to remove overlapping into other cells
-- [x] Issue #11 - Track temperature not shown in Fahrenheit
-  - Use -gallons argument to enable gallons and fahrenheit temperatures
-- [x] Issue #7 - Not all figures are reset when the session changes type
-- [x] Lap percentage not resetting after tow causing fuel burn averages to be incorrect
-- [x] 5 Lap AVG now correctly reset after a tow
-- [x] Race AVG now correctly reset after a tow
-- [x] Time remaining now shows as "Infinite" instead of 168:00 if in an offline test session 
-- [x] Remaining laps in offline testing mode now correctly calculated given the unlimited/infinite time for the session
-- [x] Fixed a call that continually refreshed the screen when in the garage
+- [x] Fields correctly reset when going from one session to another eg. Qualify to Race
+- [x] Minor bug fixes
