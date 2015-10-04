@@ -1,4 +1,17 @@
 ### Changelog:
+#### Version 1.2 - UNRELEASED
+##### Front End (Arduino)
+
+There are no updates to the front end Arduino code in this release which means you do not need to re-upload the code to the arduino device.  Only the back end files in the release section need to be updated by you.
+
+##### Back End (Python)
+###### Fixed 
+- [x] The reset car button in iRacing now resets the current fuel stats.
+- [x] Information messages when running the backend without arguments now reflects .exe release
+- [x] Delay after writing to screen has been reduced from .3 to .25
+
+___
+
 #### Version 1.1 - 2015-10-03
 ##### Front End (Arduino)
 
