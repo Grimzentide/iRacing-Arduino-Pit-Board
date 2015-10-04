@@ -10,7 +10,7 @@ import sys                                                                      
  
  
 #####################################################################################
-versionNumber = 1.0
+versionNumber = 1.1
 #####################################################################################
  
  
@@ -145,7 +145,8 @@ sendInfoMessage("@" + trackDisplayName)                                         
 while True:
     if ir.startup():        
  
-        sessionNum = ir['SessionNum']       
+        sessionNum = ir['SessionNum']
+        lastCurrentDistance = currentDistance		
         currentDistance = ir['LapDistPct']
         fuelRemaining = ir['FuelLevel']
         fuelRemainingVar = ('*' + str(format(fuelRemaining*fuelMultiplier, '.2f') + '!'))
@@ -292,10 +293,14 @@ while True:
             pitWindowOpen = 0
             onPitRoadFlag = 0
             isTimedSession = 0
-            sendViaSerial('%       !')
-            sendViaSerial('^       !')
-            sendViaSerial('(       !')
-            sendViaSerial(')       !')
+            sendViaSerial('@       !') # session laps
+            sendViaSerial('#       !') # completed laps
+            sendViaSerial('$       !') # remaining laps
+            sendViaSerial('^       !') # fuel required
+            sendViaSerial('%       !') # pit window
+            sendViaSerial('&       !') # laps until empty
+            sendViaSerial('(       !') # 5 lap avg
+            sendViaSerial(')       !') # race avg
             sendInfoMessage("@Session: " + sessionType)                                 # If the session goes from practice to qualify, update the info box on the arduino  
   
  
@@ -365,7 +370,7 @@ while True:
             remainingLapVar = ('$' + str(format(remainingLap, '.0f') + '!'))
             sendViaSerial(str = remainingLapVar);
              
-            SessionLaps = ir['SessionLaps']
+            SessionLaps = (ir['SessionInfo']['Sessions'][sessionNum]['SessionLaps'])
             SessionLapsVar = ('@' + str(SessionLaps) + '!')
             sendViaSerial(str = SessionLapsVar);
  
