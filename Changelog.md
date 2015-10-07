@@ -6,14 +6,17 @@ There are no updates to the front end Arduino code in this release which means y
 
 ##### Back End (Python)
 ###### Fixed 
-- [x] The reset car button in iRacing now resets the current fuel stats.
+- [x] Issue #18:The reset car button in iRacing now resets the current fuel stats.
 - [x] Information messages when running the backend without arguments now reflects .exe release
 - [x] Delay after writing to screen has been reduced from .3 to .25
-- [x] Backend will automatically retry re-connection when iRacing resets to a new session
+- [x] Issue #17: Fixed issue which causes a hard crash when going from practice directly to a race session
 - [x] Fixed issue where car details and class were picking up the wrong car 
+- [x] Issue #15: Incorrect data when going from a timed to lap session
 
 ###### Added
-- [x] Logging of all statistics to a unique local file fo each session is now enabled by default
+- [x] Logging of all statistics to a unique local file for each session
+- [x] Information message is displayed on the screen when connection is lost to iRacing
+- [x] Backend will automatically retry re-connection when iRacing closes or forces you into a new race session
 
 ___
 
