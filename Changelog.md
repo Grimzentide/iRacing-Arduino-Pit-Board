@@ -9,6 +9,7 @@ There are no updates to the front end Arduino code in this release which means y
 - [x] The reset car button in iRacing now resets the current fuel stats.
 - [x] Information messages when running the backend without arguments now reflects .exe release
 - [x] Delay after writing to screen has been reduced from .3 to .25
+- [x] Backend will automatically retry re-connection when iRacing resets to a new session
 
 ___
 
