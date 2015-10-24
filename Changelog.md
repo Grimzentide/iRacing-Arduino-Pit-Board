@@ -1,4 +1,17 @@
 ### Changelog:
+#### Version 1.3 - UNRELEASED
+##### Front End (Arduino)
+
+There are no updates to the front end Arduino code in this release which means you do not need to re-upload the code to the arduino device.  Only the back end files in the release section need to be updated by you.
+
+##### Back End (Python)
+###### Fixed 
+- [x] Issue #21: Backend crashes when trying to display special characters eg. Autódromo José Carlos Pace
+
+###### Added
+
+___
+
 #### Version 1.2 - 2015-10-08
 ##### Front End (Arduino)
 
