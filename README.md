@@ -45,13 +45,14 @@ A number of people are coming up with creative ways to mount the device includin
 ___
 
 #### Changelog: ([Full Changelog](https://github.com/Grimzentide/iRacing-Arduino-Pit-Board/blob/master/Changelog.md))
-### Changelog:
-#### Version 1.1 - 2015-10-03
+#### Version 1.3 - 2015-11-01
 ##### Front End (Arduino)
 
 There are no updates to the front end Arduino code in this release which means you do not need to re-upload the code to the arduino device.  Only the back end files in the release section need to be updated by you.
 
 ##### Back End (Python)
 ###### Fixed 
-- [x] Fields correctly reset when going from one session to another eg. Qualify to Race
-- [x] Minor bug fixes
+- [x] Issue #21: Backend crashes when trying to display special characters eg. Autódromo José Carlos Pace
+
+###### Added
+
