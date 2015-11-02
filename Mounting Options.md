@@ -11,7 +11,7 @@ by [James Robbie](http://members.iracing.com/jforum/user/profile/186674.page)
 
 ---
 
-Mountable box
+**Mountable box**
 by [Brock Cremer](http://members.iracing.com/jforum/user/profile/173054.page)
 
 ![](http://i.imgur.com/BLbXsZA.png)
