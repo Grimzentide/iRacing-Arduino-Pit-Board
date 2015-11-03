@@ -12,7 +12,7 @@ There are no updates to the front end Arduino code in this release which means y
 
 ###### Changed
 - [x] Enhanced logging to help with analysis
-- 
+
 ___
 
 #### Version 1.3 - 2015-11-01
