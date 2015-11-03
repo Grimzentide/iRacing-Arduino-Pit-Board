@@ -1,4 +1,19 @@
 ### Changelog:
+#### Version 1.4 - UNRELEASED
+##### Front End (Arduino)
+
+There are no updates to the front end Arduino code in this release which means you do not need to re-upload the code to the arduino device.  Only the back end files in the release section need to be updated by you.
+
+##### Back End (Python)
+###### Fixed 
+
+###### Added
+- [x] Issue 20 - Show the amount that should be in your tank when you leave the pits
+
+###### Changed
+- [x] Enhanced logging to help with analysis
+___
+
 #### Version 1.3 - 2015-11-01
 ##### Front End (Arduino)
 
