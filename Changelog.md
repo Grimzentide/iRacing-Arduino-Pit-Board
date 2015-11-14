@@ -6,6 +6,8 @@ There are no updates to the front end Arduino code in this release which means y
 
 ##### Back End (Python)
 ###### Fixed 
+- [x] Fixed an issue where a log file would not be created when going from qualify to race
+- [x] Removed a duplicate "On Pit Road" information message
 
 ###### Added
 - [x] Issue 20 - Show the amount that should be in your tank when you leave the pits
