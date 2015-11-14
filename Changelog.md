@@ -2,7 +2,11 @@
 #### Version 1.4 - UNRELEASED
 ##### Front End (Arduino)
 
-There are no updates to the front end Arduino code in this release which means you do not need to re-upload the code to the arduino device.  Only the back end files in the release section need to be updated by you.
+Note: The front update is not optional.  If you use v1.4 of the backend without updating the Arduino front end, it may crash when green information messages are received.
+
+###### Added
+- [x] Green text information messages can now be used
+- [x] Screen lines now flash red and orange to indicate a critical (red) information message
 
 ##### Back End (Python)
 ###### Fixed 
@@ -12,6 +16,8 @@ There are no updates to the front end Arduino code in this release which means y
 ###### Added
 - [x] Issue 20 - Show the amount that should be in your tank when you leave the pits
 - [x] Target burn rate added if you require a stop to add less than 1 lap worth of fuel
+- [x] Green information message indicates you are under your target burn
+- [x] Yellow information message indicates over your target burn
 
 ###### Changed
 - [x] Enhanced logging to help with analysis
