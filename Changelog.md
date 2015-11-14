@@ -11,6 +11,7 @@ There are no updates to the front end Arduino code in this release which means y
 
 ###### Added
 - [x] Issue 20 - Show the amount that should be in your tank when you leave the pits
+- [x] Target burn rate added if you require a stop to add less than 1 lap worth of fuel
 
 ###### Changed
 - [x] Enhanced logging to help with analysis
