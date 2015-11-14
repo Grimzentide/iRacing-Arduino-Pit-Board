@@ -2,7 +2,7 @@
 #### Version 1.4 - UNRELEASED
 ##### Front End (Arduino)
 
-Note: The front update is not optional.  If you use v1.4 of the backend without updating the Arduino front end, it may crash when green information messages are received.
+***Note: The front update is not optional.  If you use v1.4 of the backend without updating the Arduino front end, it may crash when green information messages are received.***
 
 ###### Added
 - [x] Green text information messages can now be used
