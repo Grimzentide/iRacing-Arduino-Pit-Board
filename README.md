@@ -16,6 +16,9 @@ The iRacing Arduino Pit Board is an Arduino based device that can help with pit 
 * pit windows to make it to the end with only one more stop
 * weather and session information
 * information on when your last stop was
+* shows the amount that should be in your tank when you leave the pits
+* target burn rate if you need a splash and dash for less than 1 lap worth of fuel
+* Warning flashes to help inform the driver that something critical has happened
 
 **Note:** The calculations for required fuel automatically includes an extra half of a lap to ensure you can cross the finish line. The half lap fuel addition is calculated using half of the current 5 lap average fuel burn rate and is automatically included in the required fuel figure.
 
@@ -44,15 +47,46 @@ A number of people are coming up with creative ways to mount the device includin
 ![](http://i1201.photobucket.com/albums/bb350/jdrobbie41/24081267-400a-43a6-a625-b680936a3782_zpsetkzyjey.jpg)![](http://i.imgur.com/HT7e6C7m.jpg)
 ___
 
-#### Changelog: ([Full Changelog](https://github.com/Grimzentide/iRacing-Arduino-Pit-Board/blob/master/Changelog.md))
-#### Version 1.3 - 2015-11-01
-##### Front End (Arduino)
+### Changelog: ([Full Changelog](https://github.com/Grimzentide/iRacing-Arduino-Pit-Board/blob/master/Changelog.md))
 
-There are no updates to the front end Arduino code in this release which means you do not need to re-upload the code to the arduino device.  Only the back end files in the release section need to be updated by you.
+#### Front End (Arduino)
+##### Version 1.0 - 2015-11-15
 
-##### Back End (Python)
-###### Fixed 
-- [x] Issue #21: Backend crashes when trying to display special characters eg. Autódromo José Carlos Pace
+**WARNING: The latest front end update is not optional for this release.**  *If you use v1.4 of the backend without updating the Arduino front end to v1.0, it will most likely crash when green information messages are received.*
 
 ###### Added
+- [x] Green text information messages can now be used
+- [x] Issue 19: Make the screen flash to grab your attention when the BOX BOX BOX message comes up
+  - [x] Screen lines now flash red and orange to indicate a critical (aka red) information message
+  - [x] Works for all critical (aka red) messages
 
+###### Changed
+- [x] 'FUEL REQUIRED' cell title has now been changed to 'FUEL TO ADD'
+
+
+#### Back End
+##### Version 1.4 - 2015-11-15
+###### Fixed 
+- [x] Fixed an issue where a log file would not be created when going from qualify to race
+- [x] Removed a duplicate "On Pit Road" information message
+- [x] Issue 23: Fuel required in a timed race was incorrect
+  - [x] It was possible for a negative burn rate to be used causing all average calculations to be incorrect
+- [x] Issue 14: Earliest stop number in pit window often in the past when first calculated 
+  - [x] The earliest lap to stop increments each lap if you do not stop for fuel
+
+###### Added
+- [x] Issue 20 - Show the amount that should be in your tank when you leave the pits (added as information message)
+  - [x] An information message will be displayed once you enter pit lane.
+- [x] Target burn rate added if you require a stop to add less than 1 lap worth of fuel
+  - [x] Simple implementation which checks if the required fuel is less than the 5 Lap AVG burn rate
+  - [x] Information message will show your target burn rate when you go over the start/finish line
+  - [x] It will stop updating if you have conserved enough or you pit for fuel
+  - [x] Information message shows your last lap burn rate and the green text indicates you are under your target burn
+  - [x] Information message shows your last lap burn rate and the yellow text indicates you are over your target burn
+ - [x] Issue 24 created on the git hub site for the following request mentioned on the iRacing forums
+   - [x] Make it optional to show the amount that should be in your tank when you leave the pits
+
+###### Changed
+- [x] Enhanced logging to help with analysis
+
+___
