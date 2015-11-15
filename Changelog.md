@@ -1,7 +1,7 @@
 ### Changelog:
-#### Version 1.4 - 2015-11-15
-##### Front End (Arduino)
 
+#### Front End (Arduino)
+##### Version 1.0 - 2015-11-15
 **WARNING: The latest front end update is not optional for this release.**  *If you use v1.4 of the backend without updating the Arduino front end to v0.8, it will most likely crash when green information messages are received.*
 
 ###### Added
@@ -13,7 +13,9 @@
 ###### Changed
 - [x] 'FUEL REQUIRED' cell title has now been changed to 'FUEL TO ADD'
 
-##### Back End (Python)
+
+#### Back End (Python)
+##### Version 1.4 - 2015-11-15
 ###### Fixed 
 - [x] Fixed an issue where a log file would not be created when going from qualify to race
 - [x] Removed a duplicate "On Pit Road" information message
