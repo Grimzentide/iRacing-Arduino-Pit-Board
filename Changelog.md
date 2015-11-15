@@ -18,7 +18,7 @@
 
 ###### Added
 - [x] Issue 20 - Show the amount that should be in your tank when you leave the pits (added as information message)
-- [x] Target burn rate added if you require a stop to add less than 1.1 laps worth of fuel
+- [x] Target burn rate added if you require a stop to add less than 1 lap worth of fuel
 - [x] Green information message indicates you are under your target burn
 - [x] Yellow information message indicates over your target burn
 
