@@ -1,5 +1,3 @@
-// 
-
 #include "SPI.h"
 #include "Adafruit_GFX.h"
 #include "Adafruit_ILI9341.h"
@@ -517,6 +515,11 @@ void updateInfoMessage(String infoMessage1, String infoMessage2, String infoMess
     tft.setTextColor(RED, BLACK);     
     tft.print(infoMessage1.substring(1));
   }
+  else if (infoMessage1.charAt(0) == '%')
+  {
+    tft.setTextColor(DARKGREEN, BLACK);     
+    tft.print(infoMessage1.substring(1));
+  }
 
 
   // Process 2nd infoMessage Colour
@@ -534,6 +537,11 @@ void updateInfoMessage(String infoMessage1, String infoMessage2, String infoMess
   else if (infoMessage2.charAt(0) == '$')
   {
     tft.setTextColor(RED, BLACK);     
+    tft.print(infoMessage2.substring(1));
+  }
+  else if (infoMessage2.charAt(0) == '%')
+  {
+    tft.setTextColor(DARKGREEN, BLACK);     
     tft.print(infoMessage2.substring(1));
   }
 
@@ -555,7 +563,11 @@ void updateInfoMessage(String infoMessage1, String infoMessage2, String infoMess
     tft.setTextColor(RED, BLACK);     
     tft.print(infoMessage3.substring(1));
   }
-
+  else if (infoMessage3.charAt(0) == '%')
+  {
+    tft.setTextColor(DARKGREEN, BLACK);     
+    tft.print(infoMessage3.substring(1));
+  }
 
   // Process 4th infoMessage Colour
   tft.setCursor(5, 153);
@@ -574,7 +586,11 @@ void updateInfoMessage(String infoMessage1, String infoMessage2, String infoMess
     tft.setTextColor(RED, BLACK);     
     tft.print(infoMessage4.substring(1));
   }
-
+  else if (infoMessage4.charAt(0) == '%')
+  {
+    tft.setTextColor(DARKGREEN, BLACK);     
+    tft.print(infoMessage4.substring(1));
+  }
 
   // Process 5th infoMessage Colour
   tft.setCursor(5, 169);
@@ -593,6 +609,16 @@ void updateInfoMessage(String infoMessage1, String infoMessage2, String infoMess
     tft.setTextColor(RED, BLACK);     
     tft.print(infoMessage5.substring(1));
   } 
+  else if (infoMessage5.charAt(0) == '%')
+  {
+    tft.setTextColor(DARKGREEN, BLACK);     
+    tft.print(infoMessage5.substring(1));
+  }
+
+  if (infoMessage1.charAt(0) == '$')
+  {
+    flashRed();
+  }
 }
 
 
@@ -653,7 +679,7 @@ void resetScreen()
   tft.println(titleString);  
 
   // FUEL REQUIRED
-  titleString = "FUEL REQUIRED";
+  titleString = "FUEL TO ADD";
   fieldLimitLeft = 4;
   fieldLimitRight = 100;  
   pixelsReqForString = (titleString.length() * (6 * textSize));  
@@ -705,4 +731,48 @@ void resetScreen()
   stringStartPos = (((fieldLimitRight - fieldLimitLeft) - pixelsReqForString) /2);
   tft.setCursor(fieldLimitLeft + stringStartPos, 192);
   tft.println(titleString);   
+}
+
+
+void flashRed()
+{
+
+  int flashThisManyTimes = 0;
+  while(flashThisManyTimes < 10)
+  {
+    tft.drawRect(2, 0, 317, 50, RED);              //Box Row 1
+    tft.drawFastVLine(101, 0, 50, RED);
+    tft.drawFastVLine(207, 0, 50, RED);
+    tft.drawRect(2, 52, 317, 50, RED);             //Box Row 2
+    tft.drawFastVLine(101, 52, 50, RED);
+    tft.drawFastVLine(207, 52, 50, RED);
+    tft.drawRect(2, 104, 317, 84, RED);            //Box Row 3
+    tft.drawRect(2, 190, 317, 50, RED);            //Box Row 4
+    tft.drawFastVLine(101, 190, 50, RED);
+    tft.drawFastVLine(207, 190, 50, RED);
+    delay(100);
+    tft.drawRect(2, 0, 317, 50, ORANGE);              //Box Row 1
+    tft.drawFastVLine(101, 0, 50, ORANGE);
+    tft.drawFastVLine(207, 0, 50, ORANGE);
+    tft.drawRect(2, 52, 317, 50, ORANGE);             //Box Row 2
+    tft.drawFastVLine(101, 52, 50, ORANGE);
+    tft.drawFastVLine(207, 52, 50, ORANGE);
+    tft.drawRect(2, 104, 317, 84, ORANGE);            //Box Row 3
+    tft.drawRect(2, 190, 317, 50, ORANGE);            //Box Row 4
+    tft.drawFastVLine(101, 190, 50, ORANGE);
+    tft.drawFastVLine(207, 190, 50, ORANGE);
+    delay(100);
+    flashThisManyTimes++;
+  }
+ 
+  tft.drawRect(2, 0, 317, 50, DARKGREY);              //Box Row 1
+  tft.drawFastVLine(101, 0, 50, DARKGREY);
+  tft.drawFastVLine(207, 0, 50, DARKGREY);
+  tft.drawRect(2, 52, 317, 50, DARKGREY);             //Box Row 2
+  tft.drawFastVLine(101, 52, 50, DARKGREY);
+  tft.drawFastVLine(207, 52, 50, DARKGREY);
+  tft.drawRect(2, 104, 317, 84, DARKGREY);            //Box Row 3
+  tft.drawRect(2, 190, 317, 50, DARKGREY);            //Box Row 4
+  tft.drawFastVLine(101, 190, 50, DARKGREY);
+  tft.drawFastVLine(207, 190, 50, DARKGREY);
 }
