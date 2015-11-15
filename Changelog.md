@@ -8,14 +8,17 @@
 - [x] Green text information messages can now be used
 - [x] Screen lines now flash red and orange to indicate a critical (red) information message
 
+###### Changed
+- [x] 'FUEL REQUIRED' cell title has now been changed to 'FUEL TO ADD'
+
 ##### Back End (Python)
 ###### Fixed 
 - [x] Fixed an issue where a log file would not be created when going from qualify to race
 - [x] Removed a duplicate "On Pit Road" information message
 
 ###### Added
-- [x] Issue 20 - Show the amount that should be in your tank when you leave the pits
-- [x] Target burn rate added if you require a stop to add less than 1 lap worth of fuel
+- [x] Issue 20 - Show the amount that should be in your tank when you leave the pits (added as information message)
+- [x] Target burn rate added if you require a stop to add less than 1.1 laps worth of fuel
 - [x] Green information message indicates you are under your target burn
 - [x] Yellow information message indicates over your target burn
 
