@@ -1,12 +1,14 @@
 ### Changelog:
-#### Version 1.4 - UNRELEASED
+#### Version 1.4 - 2015-11-15
 ##### Front End (Arduino)
 
-***Note: The front update is not optional.  If you use v1.4 of the backend without updating the Arduino front end, it may crash when green information messages are received.***
+**WARNING: The latest front end update is not optional for this release.**  *If you use v1.4 of the backend without updating the Arduino front end to v0.8, it will most likely crash when green information messages are received.*
 
 ###### Added
 - [x] Green text information messages can now be used
-- [x] Screen lines now flash red and orange to indicate a critical (red) information message
+- [x] Issue 19: Make the screen flash to grab your attention when the BOX BOX BOX message comes up
+  - [x] Screen lines now flash red and orange to indicate a critical (aka red) information message
+  - [x] Works for all critical (aka red) messages
 
 ###### Changed
 - [x] 'FUEL REQUIRED' cell title has now been changed to 'FUEL TO ADD'
@@ -15,12 +17,22 @@
 ###### Fixed 
 - [x] Fixed an issue where a log file would not be created when going from qualify to race
 - [x] Removed a duplicate "On Pit Road" information message
+- [x] Issue 23: Fuel required in a timed race was incorrect
+  - [x] It was possible for a negative burn rate to be used causing all average calculations to be incorrect
+- [x] Issue 14: Earliest stop number in pit window often in the past when first calculated 
+  - [x] The earliest lap to stop increments each lap if you do not stop for fuel
 
 ###### Added
 - [x] Issue 20 - Show the amount that should be in your tank when you leave the pits (added as information message)
+  - [x] An information message will be displayed once you enter pit lane.
 - [x] Target burn rate added if you require a stop to add less than 1 lap worth of fuel
-- [x] Green information message indicates you are under your target burn
-- [x] Yellow information message indicates over your target burn
+  - [x] Simple implementation which checks if the required fuel is less than the 5 Lap AVG burn rate
+  - [x] Information message will show your target burn rate when you go over the start/finish line
+  - [x] It will stop updating if you have conserved enough or you pit for fuel
+  - [x] Information message shows your last lap burn rate and the green text indicates you are under your target burn
+  - [x] Information message shows your last lap burn rate and the yellow text indicates you are over your target burn
+ - [x] Issue 24 created on the git hub site for the following request mentioned on the iRacing forums
+   - [x] Make it optional to show the amount that should be in your tank when you leave the pits
 
 ###### Changed
 - [x] Enhanced logging to help with analysis
