@@ -10,6 +10,18 @@ There are no updates to the front end Arduino code in this release which means y
 - [x] Issue #12: Those cars that require fuel in KG's still uses Litres/Gallons
   - [x] KGs or lbs now used for calculations on the HPD and F1 cars
 
+###### Added   
+- [x] Logs can now be pushed to the cloud for fuel burn data modelling across all Pit Board users
+  - [x] use the -c argument to disable this feature
+  - [ ] Still yet to implement the data modelling side of the cloud
+- [x] Added optional arguments to turn off and on certain features
+  - `optional arguments:`
+  - `-h, --help  show this help message and exit`
+  - `-g          This option will use imperial measurements for weight, temperature and volume`
+  - `-c          This option will disable the uploading of logs to the cloud`
+  - `-sfr        This option will disable the show fuel required on exit informational messages`
+  - `--version   show program's version number and exit`
+  
 ___
 
 #### Front End (Arduino)
