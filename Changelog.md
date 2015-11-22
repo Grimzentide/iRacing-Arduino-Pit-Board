@@ -1,11 +1,15 @@
 ### Changelog:
 
-#### Version 1.5 - UNRELEASED
-##### Front End (Arduino)
+#### Front End (Arduino)
 
 There are no updates to the front end Arduino code in this release which means you do not need to re-upload the code to the arduino device.  Only the back end files in the release section need to be updated by you.
 
-##### Back End
+#### Back End (Python)
+##### Version 1.5 - UNRELEASED
+
+###### Minimum Requirements
+- Front End v1.0
+
 ###### Fixed 
 - [x] Issue #12: Those cars that require fuel in KG's still uses Litres/Gallons
   - [x] KGs or lbs now used for calculations on the HPD and F1 cars
