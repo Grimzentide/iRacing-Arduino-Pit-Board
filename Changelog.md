@@ -5,7 +5,9 @@
 There are no updates to the front end Arduino code in this release which means you do not need to re-upload the code to the arduino device.  Only the back end files in the release section need to be updated by you.
 
 #### Back End (Python)
-##### Version 1.5 - UNRELEASED
+##### Version 1.5 - 2015-11-15
+
+Note: The argument for imperial has changed from -gallons to -g . 
 
 ###### Minimum Requirements
 - Front End v1.0
