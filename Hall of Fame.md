@@ -1,4 +1,4 @@
-### Arduino Pit Board Hall of Fame
+### iRacing Arduino Pit Board Hall of Fame
 
 ##### The following people have been kind enough to donate money to this project.
 
