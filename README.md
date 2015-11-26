@@ -2,6 +2,8 @@
 
 The iRacing Arduino Pit Board is an Arduino based device that can help with pit strategies by giving you live up to date information about your fuel requirements in any session online or offline, including those races that require one or more pit stops. An executable program (based on python) runs in the background and reads the live telemetry data coming out of any iRacing session and calculates when you should and/or need to stop and how much fuel you need to add to finish. The application then sends updates to the Arduino Uno via the USB serial port and displays the information on a small touch screen. It is designed to work on a 2.8 inch (320 x 240) TFT or LCD screen or shield that is supported by the Adafruit graphics library and works out to be around $12 to $13 in hardware costs.
 
+<a href="https://www.paypal.me/BrockCremer"><img src="https://www.paypal.com/en_GB/i/btn/x-click-butcc-donate.gif"></a>
+
 #### Features:
 * session laps / time
 * laps completed
@@ -45,6 +47,10 @@ Click the above image to watch the video on youtube
 A number of people are coming up with creative ways to mount the device including using 3D printers. The [**Mounting Options Page**](https://github.com/Grimzentide/iRacing-Arduino-Pit-Board/blob/master/Mounting%20Options.md) lists out the options as well as a link to the 3D printer object files.
 
 ![](http://i1201.photobucket.com/albums/bb350/jdrobbie41/24081267-400a-43a6-a625-b680936a3782_zpsetkzyjey.jpg)![](http://i.imgur.com/HT7e6C7m.jpg)
+___
+
+<a href="https://www.paypal.me/BrockCremer"><img src="https://www.paypal.com/en_GB/i/btn/x-click-butcc-donate.gif"></a>
+
 ___
 
 ### Changelog: ([Full Changelog](https://github.com/Grimzentide/iRacing-Arduino-Pit-Board/blob/master/Changelog.md))
