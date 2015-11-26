@@ -50,43 +50,30 @@ ___
 ### Changelog: ([Full Changelog](https://github.com/Grimzentide/iRacing-Arduino-Pit-Board/blob/master/Changelog.md))
 
 #### Front End (Arduino)
-##### Version 1.0 - 2015-11-15
 
-**WARNING: The latest front end update is not optional for this release.**  *If you use v1.4 of the backend without updating the Arduino front end to v1.0, it will most likely crash when green information messages are received.*
+There are no updates to the front end Arduino code in this release which means you do not need to re-upload the code to the arduino device.  Only the back end files in the release section need to be updated by you.
 
-###### Added
-- [x] Green text information messages can now be used
-- [x] Issue 19: Make the screen flash to grab your attention when the BOX BOX BOX message comes up
-  - [x] Screen lines now flash red and orange to indicate a critical (aka red) information message
-  - [x] Works for all critical (aka red) messages
+#### Back End (Python)
+##### Version 1.5 - 2015-11-15
 
-###### Changed
-- [x] 'FUEL REQUIRED' cell title has now been changed to 'FUEL TO ADD'
+Note: The argument for imperial has changed from -gallons to -g . 
 
+###### Minimum Requirements
+- Front End v1.0
 
-#### Back End
-##### Version 1.4 - 2015-11-15
 ###### Fixed 
-- [x] Fixed an issue where a log file would not be created when going from qualify to race
-- [x] Removed a duplicate "On Pit Road" information message
-- [x] Issue 23: Fuel required in a timed race was incorrect
-  - [x] It was possible for a negative burn rate to be used causing all average calculations to be incorrect
-- [x] Issue 14: Earliest stop number in pit window often in the past when first calculated 
-  - [x] The earliest lap to stop increments each lap if you do not stop for fuel
+- [x] Issue #12: Those cars that require fuel in KG's still uses Litres/Gallons
+  - [x] KGs or lbs now used for calculations on the HPD and F1 cars
 
-###### Added
-- [x] Issue 20 - Show the amount that should be in your tank when you leave the pits (added as information message)
-  - [x] An information message will be displayed once you enter pit lane.
-- [x] Target burn rate added if you require a stop to add less than 1 lap worth of fuel
-  - [x] Simple implementation which checks if the required fuel is less than the 5 Lap AVG burn rate
-  - [x] Information message will show your target burn rate when you go over the start/finish line
-  - [x] It will stop updating if you have conserved enough or you pit for fuel
-  - [x] Information message shows your last lap burn rate and the green text indicates you are under your target burn
-  - [x] Information message shows your last lap burn rate and the yellow text indicates you are over your target burn
- - [x] Issue 24 created on the git hub site for the following request mentioned on the iRacing forums
-   - [x] Make it optional to show the amount that should be in your tank when you leave the pits
-
-###### Changed
-- [x] Enhanced logging to help with analysis
-
-___
+###### Added   
+- [x] Flag state added to log file
+- [x] Logs can now be pushed to the cloud for fuel burn data modelling across all Pit Board users
+  - [x] use the -c argument to disable this feature
+  - [ ] Still yet to implement the data modelling side in the cloud
+- [x] Added optional arguments to turn off and on certain features
+  - `optional arguments:`
+  - `-h, --help  show this help message and exit`
+  - `-g          This option will use imperial measurements for weight, temperature and volume`
+  - `-c          This option will disable the uploading of logs to the cloud`
+  - `-sfr        This option will disable the show fuel required on exit informational messages`
+  - `--version   show program's version number and exit`
