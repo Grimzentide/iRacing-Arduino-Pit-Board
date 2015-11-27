@@ -324,7 +324,7 @@ while True:
                 uploadedLogs = 1
                 uploadLogsToCloud()	
 		
-        if (ir['SessionFlags']&irsdk_checkered > 0 and ir['SessionTimeRemain'] < 0 and currentSurface == 1 or ir['IsInGarage'] == 1):
+        if (ir['SessionFlags']&irsdk_checkered > 0 and ir['SessionTimeRemain'] < 0):
             if (uploadedLogs == 0):
                 writeToLog (logFileName, "Flag: Checkered")
                 sendInfoMessage("@" + "Flag: Checkered")
