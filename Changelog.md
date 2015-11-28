@@ -5,7 +5,7 @@
 There are no updates to the front end Arduino code in this release which means you do not need to re-upload the code to the arduino device.  Only the back end files in the release section need to be updated by you...
 
 #### Back End (Python)
-##### Version 1.8 - UNRELEASED
+##### Version 1.8 - 2015-11-28
 
 ###### Minimum Requirements
 - Front End v1.0
@@ -13,6 +13,7 @@ There are no updates to the front end Arduino code in this release which means y
 ###### Fixed 
 - [x] Issue #28 - Suppress the yellow "in pit lane" messages
  - [x] Use the `-spl` argument to supress pit lane messages
+- [x] Issue #27 - The device sometimes thinks you are using the pace car in a team session
 
 ___
 
