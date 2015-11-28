@@ -1,4 +1,4 @@
-### iRacing Arduino Pit Board Hall of Fame
+![](http://www.lions2e2.org/wp-content/uploads/2015/08/hall_of_fame_lions.jpg)
 
 ##### The following people have been kind enough to donate money to this project.
 
