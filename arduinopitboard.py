@@ -21,7 +21,7 @@ s3Bucket = ''
 
 
 #####################################################################################
-versionNumber = 1.6
+versionNumber = 1.7
 #####################################################################################
  
 now = datetime.datetime.now()
@@ -57,14 +57,12 @@ if (str(results.comport)[2:5].upper() != "COM"):                                
 else:
     ser = serial.Serial(str(results.comport)[2:6], arduinoSerialSpeed, timeout=arduinoSerialTimeout) # set up the serial port
 	
-if (results.uploadToCloud == True):
-    conn = tinys3.Connection(s3AccessKey,s3SecretKey,tls=True,endpoint=s3Region)
-
 	
 # Upload to Cloud
 #####################################################################################
 def uploadLogsToCloud():
     if (results.uploadToCloud == True):
+        conn = tinys3.Connection(s3AccessKey,s3SecretKey,tls=True,endpoint=s3Region)
         uploadedLogs = 1
         f = open(logFileName,'rb')
         conn.upload(logFileName,f,s3Bucket)	
@@ -317,19 +315,15 @@ while True:
         if (currentFlagStatus&irsdk_repair > 0):
         	writeToLog (logFileName, ("Flag: Repair"))
 
-        if (ir['SessionFlags']&irsdk_checkered > 0 and currentDistance <= 0.20):
-            if (uploadedLogs == 0):
-                writeToLog (logFileName, "Flag: Checkered")
-                sendInfoMessage("@" + "Flag: Checkered")
-                uploadedLogs = 1
-                uploadLogsToCloud()	
-		
+
         if (ir['SessionFlags']&irsdk_checkered > 0 and ir['SessionTimeRemain'] < 0):
             if (uploadedLogs == 0):
                 writeToLog (logFileName, "Flag: Checkered")
                 sendInfoMessage("@" + "Flag: Checkered")
                 uploadedLogs = 1
-                uploadLogsToCloud()		
+                sendInfoMessage("@Uploading logs to the cloud")
+                uploadLogsToCloud()
+                sendInfoMessage("@Upload complete")				
         
         if(ir['IsOnTrack'] == 1):
             fuelTankCapacity = ((ir['FuelLevel'] / ir['FuelLevelPct'])*carClassMaxFuel)         # Calculate the fuel tank capacity 
@@ -348,6 +342,16 @@ while True:
                 flag70pct = 0
                 flag80pct = 0
                 flag90pct = 0
+				
+                if (ir['SessionFlags']&irsdk_checkered):
+                    if (uploadedLogs == 0):
+                        writeToLog (logFileName, "Flag: Checkered")
+                        sendInfoMessage("@" + "Flag: Checkered")
+                        uploadedLogs = 1
+                        sendInfoMessage("@Uploading logs to the cloud")
+                        uploadLogsToCloud()
+                        sendInfoMessage("@Upload complete")	
+						
         if 0.10 <= currentDistance <= 0.20:
             if flag10pct == 0:
                 flag10pct = 1
@@ -525,11 +529,12 @@ while True:
             sendViaSerial('(       !') # 5 lap avg
             sendViaSerial(')       !') # race avg
             if (uploadedLogs == 0):
+                writeToLog (logFileName, "Flag: Checkered")
+                sendInfoMessage("@" + "Flag: Checkered")
+                uploadedLogs = 1
+                sendInfoMessage("@Uploading logs to the cloud")
                 uploadLogsToCloud()
-            logFileName = createLogFile()
-            uploadedLogs = 0
-            sendInfoMessage("@Session: " + sessionType)                                # If the session goes from practice to qualify, update the info box on the arduino  
-            writeSessionInfoToLog()
+                sendInfoMessage("@Upload complete")	
 			
         if ir['IsInGarage'] == 1:
             writeToLog (logFileName, "In Garage")
@@ -714,7 +719,9 @@ while True:
 						
     else:
         if (uploadedLogs == 0):
+            sendInfoMessage("@Uploading logs to the cloud")
             uploadLogsToCloud()
+            sendInfoMessage("@Upload complete")
             uploadedLogs = 1
         count = 5
         sessionExitFlag = 1
