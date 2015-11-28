@@ -21,7 +21,7 @@ s3Bucket = ''
 
 
 #####################################################################################
-versionNumber = 1.7
+versionNumber = 1.8
 #####################################################################################
  
 now = datetime.datetime.now()
@@ -43,6 +43,7 @@ parser.add_argument('comport', nargs="+", help='This is the port of your Arduino
 parser.add_argument('-g', action='store_false', default=True,dest='useMetric',help='This option will use imperial measurements for weight, temperature and volume')
 parser.add_argument('-c', action='store_false', default=True,dest='uploadToCloud',help='This option will disable the uploading of logs to the cloud')
 parser.add_argument('-sfr', action='store_false', default=True,dest='showRequiredFuel',help='This option will disable the show fuel required on pit exit informational messages')
+parser.add_argument('-spl', action='store_false', default=True,dest='supressPitLane',help='This option will supress the in pit lane messages')
 parser.add_argument('--version', action='version', version='iRacing Arduino Pit Board v' + str(versionNumber))
 
 results = parser.parse_args()
@@ -57,16 +58,6 @@ if (str(results.comport)[2:5].upper() != "COM"):                                
 else:
     ser = serial.Serial(str(results.comport)[2:6], arduinoSerialSpeed, timeout=arduinoSerialTimeout) # set up the serial port
 	
-	
-# Upload to Cloud
-#####################################################################################
-def uploadLogsToCloud():
-    if (results.uploadToCloud == True):
-        conn = tinys3.Connection(s3AccessKey,s3SecretKey,tls=True,endpoint=s3Region)
-        uploadedLogs = 1
-        f = open(logFileName,'rb')
-        conn.upload(logFileName,f,s3Bucket)	
- 
 
 # Clear the command prompt \ console screen function in Windows
 #####################################################################################
@@ -162,6 +153,7 @@ def welcomeScreen():
 	sendInfoMessage("@Weather: " + trackWeatherType)                                    # Send the Weather as an information message in white text (Constant or Realistic)
 	sendInfoMessage("@Session: " + sessionType)                                         # Send the current session as an information message in white text (Offline Testing, Practice, Qualify, Race)
 	sendInfoMessage("@" + trackDisplayName)                                             # Send the track name as an information message in white text
+	writeSessionInfoToLog()
 
 
 estimatedLaps = 0
@@ -237,7 +229,6 @@ else:
     writeToLog (logFileName, "Measurements: Metric")	
 
 
-writeSessionInfoToLog()
 welcomeScreen()  
 
 if((((ir['DriverInfo']['Drivers'][driverID]['CarScreenName']) == "HPD ARX-01c")) or ((ir['DriverInfo']['Drivers'][driverID]['CarScreenName']) == "Williams-Toyota FW31")):
@@ -246,7 +237,22 @@ if((((ir['DriverInfo']['Drivers'][driverID]['CarScreenName']) == "HPD ARX-01c"))
 	    fuelMultiplier = fuelMultiplier * ir['DriverInfo']['DriverCarFuelKgPerLtr']                                  
     else:
         fuelMultiplier = (1 * ir['DriverInfo']['DriverCarFuelKgPerLtr'])* 2.20462
-	
+		
+		
+# Upload to Cloud
+#####################################################################################
+def uploadLogsToCloud():
+    writeToLog (logFileName, "results.uploadToCloud = " + str(results.uploadToCloud))
+    if (results.uploadToCloud == True):
+        writeToLog (logFileName, "Connecting to cloud provider")
+        conn = tinys3.Connection(s3AccessKey,s3SecretKey,tls=True,endpoint=s3Region)
+        writeToLog (logFileName, "Opening log file: " + logFileName)
+        f = open(logFileName,'rb')
+        writeToLog (logFileName, "Uploading log file: " + logFileName)
+        conn.upload(logFileName,f,s3Bucket)	
+		
+		
+		
 while True:    
     if ir.startup():        
 		
@@ -321,7 +327,7 @@ while True:
                 writeToLog (logFileName, "Flag: Checkered")
                 sendInfoMessage("@" + "Flag: Checkered")
                 uploadedLogs = 1
-                sendInfoMessage("@Uploading logs to the cloud")
+                sendInfoMessage("@Uploading logs")
                 uploadLogsToCloud()
                 sendInfoMessage("@Upload complete")				
         
@@ -348,7 +354,7 @@ while True:
                         writeToLog (logFileName, "Flag: Checkered")
                         sendInfoMessage("@" + "Flag: Checkered")
                         uploadedLogs = 1
-                        sendInfoMessage("@Uploading logs to the cloud")
+                        sendInfoMessage("@Uploading logs")
                         uploadLogsToCloud()
                         sendInfoMessage("@Upload complete")	
 						
@@ -493,7 +499,8 @@ while True:
  
         if (ir['OnPitRoad'] == 1 and ir['IsOnTrack'] == 1):
             if onPitRoadFlag == 0 and currentLap >= 1:                                  # If I have already sent the pit lane message once, ignore that I am on pit road
-                sendInfoMessage("#" + "On Pit Road: Lap " + str(currentLap))            # Display an info message on the arduino in Yellow
+                if (results.supressPitLane == True):
+                    sendInfoMessage("#" + "On Pit Road: Lap " + str(currentLap))            # Display an info message on the arduino in Yellow
                 writeToLog (logFileName, "On Pit Road: Lap " + str(currentLap))
                 onPitRoadFlag = 1                                                       # Change the flag status to prevent spamming of the info messages
  
@@ -532,7 +539,7 @@ while True:
                 writeToLog (logFileName, "Flag: Checkered")
                 sendInfoMessage("@" + "Flag: Checkered")
                 uploadedLogs = 1
-                sendInfoMessage("@Uploading logs to the cloud")
+                sendInfoMessage("@Uploading logs")
                 uploadLogsToCloud()
                 sendInfoMessage("@Upload complete")	
 			
@@ -719,10 +726,11 @@ while True:
 						
     else:
         if (uploadedLogs == 0):
-            sendInfoMessage("@Uploading logs to the cloud")
+            uploadedLogs = 1
+            sendInfoMessage("@Uploading logs")
             uploadLogsToCloud()
             sendInfoMessage("@Upload complete")
-            uploadedLogs = 1
+            
         count = 5
         sessionExitFlag = 1
         sendInfoMessage("@Connection Lost: Retrying")
