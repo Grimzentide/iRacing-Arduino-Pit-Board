@@ -5,6 +5,23 @@
 There are no updates to the front end Arduino code in this release which means you do not need to re-upload the code to the arduino device.  Only the back end files in the release section need to be updated by you...
 
 #### Back End (Python)
+##### Version 1.8 - UNRELEASED
+
+###### Minimum Requirements
+- Front End v1.0
+
+###### Fixed 
+- [x] Issue #28 - Suppress the yellow "in pit lane" messages
+ - [x] Use the `-spl` argument to supress pit lane messages
+
+___
+
+
+#### Front End (Arduino)
+
+There are no updates to the front end Arduino code in this release which means you do not need to re-upload the code to the arduino device.  Only the back end files in the release section need to be updated by you...
+
+#### Back End (Python)
 ##### Version 1.7 - 2015-11-28
 
 ###### Minimum Requirements
