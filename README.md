@@ -57,29 +57,15 @@ ___
 
 #### Front End (Arduino)
 
-There are no updates to the front end Arduino code in this release which means you do not need to re-upload the code to the arduino device.  Only the back end files in the release section need to be updated by you.
+There are no updates to the front end Arduino code in this release which means you do not need to re-upload the code to the arduino device.  Only the back end files in the release section need to be updated by you...
 
 #### Back End (Python)
-##### Version 1.5 - 2015-11-15
-
-Note: The argument for imperial has changed from -gallons to -g . 
+##### Version 1.7 - 2015-11-28
 
 ###### Minimum Requirements
 - Front End v1.0
 
 ###### Fixed 
-- [x] Issue #12: Those cars that require fuel in KG's still uses Litres/Gallons
-  - [x] KGs or lbs now used for calculations on the HPD and F1 cars
+- [x] Issue where the uploading of logs at the end of a session would crash the backend
 
-###### Added   
-- [x] Flag state added to log file
-- [x] Logs can now be pushed to the cloud for fuel burn data modelling across all Pit Board users
-  - [x] use the -c argument to disable this feature
-  - [ ] Still yet to implement the data modelling side in the cloud
-- [x] Added optional arguments to turn off and on certain features
-  - `optional arguments:`
-  - `-h, --help  show this help message and exit`
-  - `-g          This option will use imperial measurements for weight, temperature and volume`
-  - `-c          This option will disable the uploading of logs to the cloud`
-  - `-sfr        This option will disable the show fuel required on exit informational messages`
-  - `--version   show program's version number and exit`
+___
