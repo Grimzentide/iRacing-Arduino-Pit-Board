@@ -1,4 +1,28 @@
 ### Changelog:
+#### Front End (Arduino)
+
+There are no updates to the front end Arduino code in this release which means you do not need to re-upload the code to the arduino device.  Only the back end files in the release section need to be updated by you...
+
+#### Back End
+##### Version 2.0 - UNRELEASED
+
+###### Minimum Requirements
+- Front End v1.0
+
+###### Added 
+- [x] New SessionLapsRemainEx parameter is now used and more accurately reflects the laps remaining in the current session.
+- [x] New TrackCleanup parameter is now logged indicating if the track is cleaned between sessions 
+- [x] New TrackDynamicTrack parameter is now logged indicating if the track uses the dynamic surface model 
+- [x] New SessionTrackRubberState parameter is now logged indicating if the track uses the dynamic surface mode
+- [x] Track rubber state is now shown in the information message box on device load
+- [x] Wind information is now shown in the information message box on device load
+
+###### Removed 
+- [x] All uploading to the cloud features have been removed until the performance issues are resolved
+- [x] Removed the track name from the information message box on device load
+- [x] Removed the session type from the information message box on device load
+
+___
 
 #### Front End (Arduino)
 
