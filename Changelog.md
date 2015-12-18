@@ -4,7 +4,7 @@
 There are no updates to the front end Arduino code in this release which means you do not need to re-upload the code to the arduino device.  Only the back end files in the release section need to be updated by you...
 
 #### Back End
-##### Version 2.0 - UNRELEASED
+##### Version 2.0 - 2015-12-18
 
 ###### Minimum Requirements
 - Front End v1.0
