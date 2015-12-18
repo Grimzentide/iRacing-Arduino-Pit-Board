@@ -22,6 +22,9 @@ There are no updates to the front end Arduino code in this release which means y
 - [x] Removed the track name from the information message box on device load
 - [x] Removed the session type from the information message box on device load
 
+###### Known Issues
+- [x] Wind direction is incorrect in sessions where dynamic weather is enabled
+
 ___
 
 #### Front End (Arduino)
