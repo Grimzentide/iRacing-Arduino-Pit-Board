@@ -4,13 +4,14 @@
 There are no updates to the front end Arduino code in this release which means you do not need to re-upload the code to the arduino device.  Only the back end files in the release section need to be updated by you...
 
 #### Back End
-##### Version 2.1 - UNRELEASED
+##### Version 2.1 - 2016-01-01
 
 ###### Minimum Requirements
 - Front End v1.0
 
 ###### Fixed 
 - [x] Timed sessions now calculate the requried fuel by total time + 1 lap
+- [x] COM ports 10 and greater no longer cause an error on the back end 
 
 ###### Known Issues
 - [x] Wind direction is incorrect in sessions where dynamic weather is enabled
