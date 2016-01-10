@@ -4,28 +4,6 @@
 There are no updates to the front end Arduino code in this release which means you do not need to re-upload the code to the arduino device.  Only the back end files in the release section need to be updated by you...
 
 #### Back End
-##### Version 2.3 - UNRELEASED
-
-###### Minimum Requirements
-- Front End v1.0
-
-###### Fixed 
-- [x] Fixed issue where time remaining would not clear a previous value correctly
-- [x] Fixed issue where laps completed would not clear a previous value correctly
-
-###### Added 
-- [x] Implemented new telemetry item "LapCompleted" has been added (introduced in latest iRacing patch 2016-01-07) which contains the number of laps completed by your car (Similar to "Lap" which contains your car's currently started lap).
-
-###### Known Issues
-- [x] Wind direction is incorrect in sessions where dynamic weather is enabled
-
-___
-
-#### Front End (Arduino)
-
-There are no updates to the front end Arduino code in this release which means you do not need to re-upload the code to the arduino device.  Only the back end files in the release section need to be updated by you...
-
-#### Back End
 ##### Version 2.2 Beta 2 - Pre-Release
 
 ###### Minimum Requirements
