@@ -4,6 +4,28 @@
 There are no updates to the front end Arduino code in this release which means you do not need to re-upload the code to the arduino device.  Only the back end files in the release section need to be updated by you...
 
 #### Back End
+##### Version 2.2 - 2016-01-15
+
+###### Minimum Requirements
+- Front End v1.0
+
+###### Added 
+- [x] A completely new way to capture the fuel and distance telemetry data out of iRacing has been written and implemented allowing for more accurate fuel usage and estimation calculations
+
+###### Fixed 
+- [x] The new addition in this release fixes an issue where it would be possible to go faster and further than the back end would calculate causing incorrect fuel burn data to be displayed.
+
+###### Known Issues
+- [x] Wind direction is incorrect in sessions where dynamic weather is enabled
+- [x] I broke the code where changing from a qualifying to a race session no longer creates a new log file. The data is in the practice prior sessions log file.
+
+___
+
+#### Front End (Arduino)
+
+There are no updates to the front end Arduino code in this release which means you do not need to re-upload the code to the arduino device.  Only the back end files in the release section need to be updated by you...
+
+#### Back End
 ##### Version 2.2 Beta 2 - Pre-Release
 
 ###### Minimum Requirements
