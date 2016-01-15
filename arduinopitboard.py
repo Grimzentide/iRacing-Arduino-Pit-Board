@@ -12,7 +12,7 @@ import math
 
 
 #####################################################################################
-versionNumber = 2.1
+versionNumber = 2.3
 #####################################################################################
  
 now = datetime.datetime.now()
@@ -34,6 +34,7 @@ parser.add_argument('comport', help='This is the port of your Arduino eg. COM6')
 parser.add_argument('-g', action='store_false', default=True,dest='useMetric',help='This option will use imperial measurements for weight, temperature and volume')
 parser.add_argument('-sfr', action='store_false', default=True,dest='showRequiredFuel',help='This option will disable the show fuel required on pit exit informational messages')
 parser.add_argument('-spl', action='store_false', default=True,dest='supressPitLane',help='This option will supress the in pit lane messages')
+parser.add_argument('-sws', action='store_false', default=True,dest='supressWelcomeScreen',help='This option will supress the welcome screen')
 parser.add_argument('--version', action='version', version='iRacing Arduino Pit Board v' + str(versionNumber))
 
 results = parser.parse_args()
@@ -153,34 +154,24 @@ def welcomeScreen():
 		windDirection = (float(windDirection) * (180/pi))
 		windDirection = "%.2f" % round(windDirection,2)
 		windDirection = winddir_text(float(windDirection))
-		
-	sendInfoMessage("@")
-	sendInfoMessage("@     By Brock Cremer")                                    
-	sendInfoMessage("@")                                    
-	sendInfoMessage("@      Version: " + str(versionNumber))                                    
-	sendInfoMessage("@iRacing Arduino Pit Board")                                   
-	time.sleep(5)
+	
+	if (results.supressWelcomeScreen):	
+	    sendInfoMessage("@")
+	    sendInfoMessage("@     By Brock Cremer")                                    
+	    sendInfoMessage("@")                                    
+	    sendInfoMessage("@      Version: " + str(versionNumber))                                    
+	    sendInfoMessage("@iRacing Arduino Pit Board")                                   
+	    time.sleep(5)
 	 
-	sendInfoMessage("@Surface: " + trackRubber) #Indicating how much rubber is on the track at the start of the session 
-	sendInfoMessage("@Track Temp: " + trackTemp)                                        # Send the track temperature as an information message in white text
-	sendInfoMessage("@Wind: " + str(windDirection) + " at " + str(windSpeed))
-	sendInfoMessage("@Sky: " + trackSkies)                                              # Send the cloud cover as an information message in white text
-	sendInfoMessage("@Weather: " + trackWeatherType)	 
+	    sendInfoMessage("@Surface: " + trackRubber) #Indicating how much rubber is on the track at the start of the session 
+	    sendInfoMessage("@Track Temp: " + trackTemp)                                        # Send the track temperature as an information message in white text
+	    sendInfoMessage("@Wind: " + str(windDirection) + " at " + str(windSpeed))
+	    sendInfoMessage("@Sky: " + trackSkies)                                              # Send the cloud cover as an information message in white text
+	    sendInfoMessage("@Weather: " + trackWeatherType)	 
 
 	writeSessionInfoToLog()
 
-
 estimatedLaps = 0
-flagNewLap = 0
-flag10pct = 0
-flag20pct = 0
-flag30pct = 0
-flag40pct = 0
-flag50pct = 0
-flag60pct = 0
-flag70pct = 0
-flag80pct = 0
-flag90pct = 0
 boxThisLap = 0
 pitWindowOpen = 0
 onPitRoadFlag = 0
@@ -193,8 +184,14 @@ carClassMaxFuel = float(str(ir['DriverInfo']['Drivers'][driverID]['CarClassMaxFu
 lastFuelRemaining = ir['FuelLevel']
 sessionType = (ir['SessionInfo']['Sessions'][sessionNum]['SessionType'])
 fuelBurn = []
+distanceRead = []
 startSavingFuelFlag = 0
 startSavingFuelTargetFlag = 0
+currentDistance = 0
+lastDistance = 0
+distance = 0
+currentFuel = 0
+currentLap = 0
 
 #global flags
 irsdk_checkered = 0x00000001
@@ -255,12 +252,15 @@ else:
 
 welcomeScreen()  
 
-if((((ir['DriverInfo']['Drivers'][driverID]['CarScreenName']) == "HPD ARX-01c")) or ((ir['DriverInfo']['Drivers'][driverID]['CarScreenName']) == "Williams-Toyota FW31")):
+if((((ir['DriverInfo']['Drivers'][driverID]['CarScreenName']) == "HPD ARX-01c")) or ((ir['DriverInfo']['Drivers'][driverID]['CarScreenName']) == "Williams-Toyota FW31") or ((ir['DriverInfo']['Drivers'][driverID]['CarScreenName']) == "McLaren MP4-30")):
     writeToLog (logFileName, "Information: Using weight for fuel")
     if(fuelMultiplier == 1):
 	    fuelMultiplier = fuelMultiplier * ir['DriverInfo']['DriverCarFuelKgPerLtr']                                  
     else:
         fuelMultiplier = (1 * ir['DriverInfo']['DriverCarFuelKgPerLtr'])* 2.20462
+
+
+
 		
 while True:    
     if ir.startup():        
@@ -268,25 +268,130 @@ while True:
         if sessionExitFlag == 1:
             sessionExitFlag = 0
             logFileName = createLogFile()
-            welcomeScreen()
+            welcomeScreen()	
 		
-        sessionNum = ir['SessionNum']
-        currentDistance = ir['LapDistPct']
-        fuelRemaining = ir['FuelLevel']
-        fuelRemainingVar = ('*' + str(format(fuelRemaining*fuelMultiplier, '.2f') + '!'))
-        sendViaSerial(str = fuelRemainingVar)
-        lastSurface = currentSurface
-        currentSurface = ir['CarIdxTrackSurface'][0]         
+        sessionNum = ir['SessionNum']        
+		
+        if (currentLap != ir['Lap']):
+            currentLap = ir['Lap']
+            writeToLog (logFileName, "Lap: " + str(currentLap))
+			
         currentLap = ir['Lap']
+        #currentLap = ir['LapCompleted']	
+	
         currentLapVar = ('#' + str(format(currentLap, '.0f') + '!'))
         sendViaSerial(str = currentLapVar)  
 
-        writeToLog (logFileName, "Lap: " + str(currentLap))
-        writeToLog (logFileName, "Fuel Remaining: " + str(format(fuelRemaining*fuelMultiplier, '.2f')))
+        if(ir['IsOnTrack'] == 1):
+            fuelTankCapacity = ((ir['FuelLevel'] / ir['FuelLevelPct'])*carClassMaxFuel)         # Calculate the fuel tank capacity 
+     
+        currentDistance = ir['LapDistPct']
+        fuelRemaining = ir['FuelLevel']
+        
+        # NEW FUEL CALCULATION CODE as at v2.3
+		###################################################################################################################
+        if (ir['IsOnTrack'] == 1):
+            if (lastDistance == 0):
+                lastDistance = currentDistance
+                distance = -1
+            elif (currentDistance > lastDistance):
+                distance = currentDistance - lastDistance
+                distanceRead.append(distance)
+                currentFuel = lastFuelRemaining - fuelRemaining                
+                fuelPer1Pct = currentFuel / (distance * 100)
+                writeToLog (logFileName, "Current Distance: " + str(currentDistance))
+                writeToLog (logFileName, "Last Distance: " + str(lastDistance))
+                writeToLog (logFileName, "Distance: " + str(distance))
+                writeToLog (logFileName, "Last Fuel: " + str(lastFuelRemaining))					
+                writeToLog (logFileName, "Fuel Remaining: " + str(fuelRemaining*fuelMultiplier))
+                writeToLog (logFileName, "Fuel Burn: " + str(currentFuel))					
+                writeToLog (logFileName, "Fuel per 1 Pct: " + str(fuelPer1Pct))
+                if (fuelPer1Pct > 0):
+                    fuelBurn.append(fuelPer1Pct)	
+                lastFuelRemaining = fuelRemaining
+                lastDistance = currentDistance
+            elif (currentDistance < lastDistance):
+                distance = (1 - lastDistance) + currentDistance
+                distanceRead.append(distance)				
+                lastDistance = currentDistance
+                currentFuel = lastFuelRemaining - fuelRemaining
+                lastFuelRemaining = fuelRemaining
+                fuelPer1Pct = currentFuel / (distance * 100)
+                if (fuelPer1Pct > 0):
+                    fuelBurn.append(fuelPer1Pct)
+                    writeToLog (logFileName, "Current Distance: " + str(currentDistance))
+                    writeToLog (logFileName, "Last Distance: " + str(lastDistance))
+                    writeToLog (logFileName, "Distance: " + str(distance))
+                    writeToLog (logFileName, "Fuel Remaining: " + str(fuelRemaining*fuelMultiplier))
+                    writeToLog (logFileName, "Fuel Burn: " + str(currentFuel))
+                    writeToLog (logFileName, "Fuel per 1 Pct: " + str(fuelPer1Pct))
+					
+            fuelRemainingVar = ('*' + str(format(fuelRemaining*fuelMultiplier, '.2f') + '!'))		
+            sendViaSerial(str = fuelRemainingVar)
 		
-        currentFlagStatus = ir['SessionFlags']
-	
-        #if (currentFlagStatus&irsdk_checkered > 0):
+		###################################################################################################################		
+		
+        if 0.00 <= currentDistance <= 0.100:
+                startSavingFuelTargetFlag = 0	
+				
+                if (ir['SessionFlags']&irsdk_checkered):
+                    writeToLog (logFileName, "Flag: Checkered")
+                    sendInfoMessage("@" + "Flag: Checkered")
+ 
+        lastSurface = currentSurface
+        currentSurface = ir['CarIdxTrackSurface'][0]      
+		
+        if (currentSurface == 1) and ((lastSurface > 2) or (lastSurface == 0)):	 # reset button used
+            writeToLog (logFileName, "Car Reset")
+            del fuelBurn[:]
+            del distanceRead[:]			
+            boxThisLap = 0                                                              
+            pitWindowOpen = 0
+            estimatedLaps = 0
+            pitWindowOpen = 0
+            onPitRoadFlag = 0
+            startSavingFuelFlag = 0
+            startSavingFuelTargetFlag = 0 
+            currentDistance = 0
+            lastDistance = 0
+            distance = 0
+            currentFuel = 0
+            currentLap = 0
+            sendViaSerial('^       !') # fuel required
+            sendViaSerial('%       !') # pit window
+            sendViaSerial('&       !') # laps until empty
+            sendViaSerial('(       !') # 5 lap avg
+            sendViaSerial(')       !') # race avg
+ 
+        if (ir['IsInGarage'] == 0 and ir['IsOnTrack'] == 0):
+            writeToLog (logFileName, "In Pit Box")
+            del fuelBurn[:]			
+            del distanceRead[:]			
+            boxThisLap = 0                                                             
+            pitWindowOpen = 0
+            estimatedLaps = 0
+            pitWindowOpen = 0
+            onPitRoadFlag = 0
+            startSavingFuelFlag = 0
+            startSavingFuelTargetFlag = 0
+            currentDistance = 0
+            lastDistance = 0
+            distance = 0
+            currentFuel = 0
+            sendViaSerial('^       !') # fuel required
+            sendViaSerial('%       !') # pit window
+            sendViaSerial('&       !') # laps until empty
+            sendViaSerial('(       !') # 5 lap avg
+            sendViaSerial(')       !') # race avg
+         
+        currentFlagStatus = ir['SessionFlags']	
+        
+        if (ir['SessionFlags']&irsdk_checkered > 0 and ir['SessionTimeRemain'] < 0):
+            writeToLog (logFileName, "Flag: Checkered")
+            sendInfoMessage("@" + "Flag: Checkered")
+			
+			
+		#if (currentFlagStatus&irsdk_checkered > 0):
         #	writeToLog (logFileName, ("Flag: Checkered"))
         if (currentFlagStatus&irsdk_white > 0):
         	writeToLog (logFileName, ("Flag: White"))
@@ -328,173 +433,8 @@ while True:
         	writeToLog (logFileName, ("Flag: Furled"))
         if (currentFlagStatus&irsdk_repair > 0):
         	writeToLog (logFileName, ("Flag: Repair"))
-
-
-        if (ir['SessionFlags']&irsdk_checkered > 0 and ir['SessionTimeRemain'] < 0):
-            writeToLog (logFileName, "Flag: Checkered")
-            sendInfoMessage("@" + "Flag: Checkered")			
-        
-        if(ir['IsOnTrack'] == 1):
-            fuelTankCapacity = ((ir['FuelLevel'] / ir['FuelLevelPct'])*carClassMaxFuel)         # Calculate the fuel tank capacity 
-     
-        if 0.00 <= currentDistance <= 0.100:
-            if flagNewLap == 0 and flag90pct == 1:
-                fuelBurn.append(lastFuelRemaining - fuelRemaining)
-                lastFuelRemaining = fuelRemaining
-                flagNewLap = 1     
-                flag10pct = 0
-                flag20pct = 0
-                flag30pct = 0
-                flag40pct = 0
-                flag50pct = 0
-                flag60pct = 0
-                flag70pct = 0
-                flag80pct = 0
-                flag90pct = 0
-				
-                if (ir['SessionFlags']&irsdk_checkered):
-                    writeToLog (logFileName, "Flag: Checkered")
-                    sendInfoMessage("@" + "Flag: Checkered")
-						
-        if 0.10 <= currentDistance <= 0.20:
-            if flag10pct == 0:
-                flag10pct = 1
-                if lastFuelRemaining - fuelRemaining > 0:
-                    fuelBurn.append(lastFuelRemaining - fuelRemaining)
-                lastFuelRemaining = fuelRemaining
-                flagNewLap = 0
-                startSavingFuelTargetFlag = 0
-        if 0.20 <= currentDistance <= 0.30:
-            if flag20pct == 0 and flag10pct == 1:
-                flag20pct = 1
-                if lastFuelRemaining - fuelRemaining > 0:
-                    fuelBurn.append(lastFuelRemaining - fuelRemaining)
-                lastFuelRemaining = fuelRemaining
-                flagNewLap = 0
-                startSavingFuelTargetFlag = 0
-        if 0.30 <= currentDistance <= 0.40:
-            if flag30pct == 0 and flag20pct == 1:
-                flag30pct = 1
-                if lastFuelRemaining - fuelRemaining > 0:
-                    fuelBurn.append(lastFuelRemaining - fuelRemaining)
-                lastFuelRemaining = fuelRemaining
-                flagNewLap = 0
-                startSavingFuelTargetFlag = 0
-        if 0.40 <= currentDistance <= 0.50:
-            if flag40pct == 0 and flag30pct == 1:
-                flag40pct = 1
-                if lastFuelRemaining - fuelRemaining > 0:
-                    fuelBurn.append(lastFuelRemaining - fuelRemaining)
-                lastFuelRemaining = fuelRemaining
-                flagNewLap = 0
-                startSavingFuelTargetFlag = 0
-        if 0.50 <= currentDistance <= 0.60:
-            if flag50pct == 0 and flag40pct == 1:
-                flag50pct = 1
-                if lastFuelRemaining - fuelRemaining > 0:
-                    fuelBurn.append(lastFuelRemaining - fuelRemaining)
-                lastFuelRemaining = fuelRemaining
-                flagNewLap = 0
-                startSavingFuelTargetFlag = 0
-                onPitRoadFlag = 0
-        if 0.60 <= currentDistance <= 0.70:
-            if flag60pct == 0 and flag50pct == 1:
-                flag60pct = 1
-                if lastFuelRemaining - fuelRemaining > 0:
-                    fuelBurn.append(lastFuelRemaining - fuelRemaining)
-                lastFuelRemaining = fuelRemaining
-                flagNewLap = 0
-                startSavingFuelTargetFlag = 0
-        if 0.70 <= currentDistance <= 0.80:
-            if flag70pct == 0 and flag60pct == 1:
-                flag70pct = 1
-                if lastFuelRemaining - fuelRemaining > 0:
-                    fuelBurn.append(lastFuelRemaining - fuelRemaining)
-                lastFuelRemaining = fuelRemaining
-                flagNewLap = 0
-                startSavingFuelTargetFlag = 0
-        if 0.80 <= currentDistance <= 0.90:
-            if flag80pct == 0 and flag70pct == 1:
-                flag80pct = 1
-                if lastFuelRemaining - fuelRemaining > 0:
-                    fuelBurn.append(lastFuelRemaining - fuelRemaining)
-                lastFuelRemaining = fuelRemaining
-                flagNewLap = 0
-                startSavingFuelTargetFlag = 0
-        if 0.90 <= currentDistance <= 1.000:
-            if flag90pct == 0 and flag80pct == 1:
-                flag90pct = 1
-                if lastFuelRemaining - fuelRemaining > 0:
-                    fuelBurn.append(lastFuelRemaining - fuelRemaining)
-                lastFuelRemaining = fuelRemaining
-                flagNewLap = 0    
-                startSavingFuelTargetFlag = 0				
- 
- 
-        if (currentSurface == 1) and ((lastSurface > 2) or (lastSurface == 0)):	 # reset button used
-            writeToLog (logFileName, "Car Reset")
-            del fuelBurn[:]
-            boxThisLap = 0                                                              
-            pitWindowOpen = 0
-            estimatedLaps = 0
-            flagNewLap = 0
-            flag10pct = 0
-            flag20pct = 0
-            flag30pct = 0
-            flag40pct = 0
-            flag50pct = 0
-            flag60pct = 0
-            flag70pct = 0
-            flag80pct = 0
-            flag90pct = 0
-            boxThisLap = 0
-            pitWindowOpen = 0
-            onPitRoadFlag = 0
-            startSavingFuelFlag = 0
-            startSavingFuelTargetFlag = 0                
-            fuelRemaining = ir['FuelLevel']
-            lastFuelRemaining = ir['FuelLevel']
-            fuelRemainingVar = ('*' + str(format(fuelRemaining*fuelMultiplier, '.2f') + '!'))
-            sendViaSerial(str = currentLapVar);
-            sendViaSerial(str = fuelRemainingVar);     
-            sendViaSerial('^       !') # fuel required
-            sendViaSerial('%       !') # pit window
-            sendViaSerial('&       !') # laps until empty
-            sendViaSerial('(       !') # 5 lap avg
-            sendViaSerial(')       !') # race avg
- 
-        if (ir['IsInGarage'] == 0 and ir['IsOnTrack'] == 0):
-            writeToLog (logFileName, "Tow")
-            del fuelBurn[:]
-            boxThisLap = 0                                                             
-            pitWindowOpen = 0
-            estimatedLaps = 0
-            flagNewLap = 0
-            flag10pct = 0
-            flag20pct = 0
-            flag30pct = 0
-            flag40pct = 0
-            flag50pct = 0
-            flag60pct = 0
-            flag70pct = 0
-            flag80pct = 0
-            flag90pct = 0
-            boxThisLap = 0
-            pitWindowOpen = 0
-            onPitRoadFlag = 0
-            startSavingFuelFlag = 0
-            startSavingFuelTargetFlag = 0			
-            fuelRemaining = ir['FuelLevel']
-            lastFuelRemaining = ir['FuelLevel']
-            fuelRemainingVar = ('*' + str(format(fuelRemaining*fuelMultiplier, '.2f') + '!'))
-            sendViaSerial(str = currentLapVar);
-            sendViaSerial(str = fuelRemainingVar);     
-            sendViaSerial('^       !') # fuel required
-            sendViaSerial('%       !') # pit window
-            sendViaSerial('&       !') # laps until empty
-            sendViaSerial('(       !') # 5 lap avg
-            sendViaSerial(')       !') # race avg
- 
+			
+			
         if (ir['OnPitRoad'] == 1 and ir['IsOnTrack'] == 1):
             if onPitRoadFlag == 0 and currentLap >= 1:                                  # If I have already sent the pit lane message once, ignore that I am on pit road
                 if (results.supressPitLane == True):
@@ -506,25 +446,20 @@ while True:
             sessionType = ((ir['SessionInfo']['Sessions'][sessionNum]['SessionType']))  # Re-set the sessionType variable
             writeToLog (logFileName, "Session Type Changed To " + sessionType)
             del fuelBurn[:]                                                             # Erase current fuel usage data
+            del distanceRead[:]
             boxThisLap = 0                                                              # Remove the box this lap flag
             pitWindowOpen = 0
             estimatedLaps = 0
-            flagNewLap = 0
-            flag10pct = 0
-            flag20pct = 0
-            flag30pct = 0
-            flag40pct = 0
-            flag50pct = 0
-            flag60pct = 0
-            flag70pct = 0
-            flag80pct = 0
-            flag90pct = 0
-            boxThisLap = 0
             pitWindowOpen = 0
             onPitRoadFlag = 0
             isTimedSession = 0
             startSavingFuelFlag = 0
-            startSavingFuelTargetFlag = 0			
+            startSavingFuelTargetFlag = 0
+            currentDistance = 0
+            lastDistance = 0
+            distance = 0
+            currentFuel = 0
+            currentLap = 0
             sendViaSerial('@       !') # session laps
             sendViaSerial('#       !') # completed laps
             sendViaSerial('$       !') # remaining laps
@@ -538,29 +473,18 @@ while True:
         if ir['IsInGarage'] == 1:
             writeToLog (logFileName, "In Garage")
             del fuelBurn[:]
+            del distanceRead[:]			
             boxThisLap = 0                                                              # Remove the box this lap flag
             pitWindowOpen = 0
             estimatedLaps = 0
-            flagNewLap = 0
-            flag10pct = 0
-            flag20pct = 0
-            flag30pct = 0
-            flag40pct = 0
-            flag50pct = 0
-            flag60pct = 0
-            flag70pct = 0
-            flag80pct = 0
-            flag90pct = 0
-            boxThisLap = 0
             pitWindowOpen = 0
             onPitRoadFlag = 0
             startSavingFuelFlag = 0
-            startSavingFuelTargetFlag = 0			
-            fuelRemaining = ir['FuelLevel']
-            lastFuelRemaining = ir['FuelLevel']
-            fuelRemainingVar = ('*' + str(format(fuelRemaining*fuelMultiplier, '.2f') + '!'))
-            sendViaSerial(str = currentLapVar);
-            sendViaSerial(str = fuelRemainingVar);     
+            startSavingFuelTargetFlag = 0	
+            currentDistance = 0
+            lastDistance = 0
+            distance = 0
+            currentFuel = 0
             sendViaSerial('^       !') # fuel required
             sendViaSerial('%       !') # pit window
             sendViaSerial('&       !') # laps until empty
@@ -599,12 +523,18 @@ while True:
                 m, s = divmod(sessionTimeRemain, 60)
                 h, m = divmod(m, 60)                 
                 sessionTimeRemainVar = ('$' + "%d:%02d" % (h, m) + '!')
-                sendViaSerial(str = sessionTimeRemainVar);
+                if (sessionTimeRemain < 0):
+                    sendViaSerial('$       !')
+                else:
+                    sendViaSerial(str = sessionTimeRemainVar);
                 
         else:
             remainingLap = ir['SessionLapsRemainEx']
-            remainingLapVar = ('$' + str(format(remainingLap, '.0f') + '!'))
-            sendViaSerial(str = remainingLapVar);
+            if (remainingLap < 0):
+                sendViaSerial('$       !')
+            else:
+                remainingLapVar = ('$' + str(format(remainingLap, '.0f') + '!'))
+                sendViaSerial(str = remainingLapVar);
              
             SessionLaps = (ir['SessionInfo']['Sessions'][sessionNum]['SessionLaps'])
             SessionLapsVar = ('@' + str(SessionLaps) + '!')
@@ -614,30 +544,40 @@ while True:
 
             if(fuelBurn[-1] < 0):
                 writeToLog (logFileName, "Removed negative fuel burn figure: " + str(fuelBurn[-1]))
-                del fuelBurn[-1]
-		
-            averageFuelBurnRace = (sum(fuelBurn)/len(fuelBurn)*10)
-            averageFuelBurn5Lap = (sum(fuelBurn[-50:])/len(fuelBurn[-50:])*10)
-            averageFuelBurn1Lap = (sum(fuelBurn[-10:])/len(fuelBurn[-10:])*10)
-            estimatedLaps = (fuelRemaining / averageFuelBurn5Lap)               
+                del fuelBurn[-1]			
+			
+            averageDistanceRead = (sum(distanceRead)/len(distanceRead))
+            writeToLog (logFileName, "Average Distance: " + str(averageDistanceRead))
+			
+            readingsReqFor5Laps = int(5 / averageDistanceRead)
+            writeToLog (logFileName, "Readings Required for 5 Laps: " + str(readingsReqFor5Laps))
+			
+            readingsReqFor1Laps = int(1 / averageDistanceRead)
+            writeToLog (logFileName, "Readings Required for 1 Lap: " + str(readingsReqFor1Laps))
+			
+            averageFuelBurnRace = (sum(fuelBurn)/len(fuelBurn)*100)
+            averageFuelBurn5Lap = (sum(fuelBurn[-readingsReqFor5Laps:])/len(fuelBurn[-readingsReqFor5Laps:])*100)
+            averageFuelBurn1Lap = (sum(fuelBurn[-readingsReqFor1Laps:])/len(fuelBurn[-readingsReqFor1Laps:])*100)
+
+            estimatedLaps = (fuelRemaining / averageFuelBurn5Lap)
  
             averageFuelBurn5LapVar = ('(' + str(format(averageFuelBurn5Lap*fuelMultiplier, '.2f') + '!'))
             averageFuelBurnRaceVar = (')' + str(format(averageFuelBurnRace*fuelMultiplier, '.2f') + '!'))
             estimatedLapsVar = ('&' + str(format(estimatedLaps, '.2f') + '!'))
- 
+			
             sendViaSerial(str = averageFuelBurn5LapVar);
             sendViaSerial(str = averageFuelBurnRaceVar);
             sendViaSerial(str = estimatedLapsVar);
 			
+            writeToLog (logFileName, "Estimated Laps: " + str(estimatedLaps))
+            writeToLog (logFileName, "Race Burn: " + str(averageFuelBurnRace))			
+            writeToLog (logFileName, "5 Lap Burn: " + str(averageFuelBurn5Lap))
+            writeToLog (logFileName, "1 Lap Burn: " + str(averageFuelBurn1Lap))
              
             if (estimatedLaps <= remainingLap):
  
                 fuelRequiredAtPitstop = (((remainingLap * float(averageFuelBurn5Lap))-fuelRemaining) + (float(averageFuelBurn5Lap) /2))     
- 
-                writeToLog (logFileName, "5 Lap Burn: " + str(averageFuelBurn5Lap))
-                writeToLog (logFileName, "Race Burn: " + str(averageFuelBurnRace))
-                writeToLog (logFileName, "Estimated Laps: " + str(estimatedLaps))
-
+                 
                 if(fuelRequiredAtPitstop <= float(averageFuelBurn5Lap) and currentDistance <= 0.100):
                     if (startSavingFuelFlag == 0):
                         sendInfoMessage("#Start Saving Fuel!")
@@ -712,7 +652,7 @@ while True:
                 sendViaSerial('^       !')
              
             if (fuelRemaining < float(averageFuelBurn5Lap) * 2):
-                if boxThisLap == 0:
+                if(len(fuelBurn) > 20) and (boxThisLap == 0):
                     sendInfoMessage("$Box Box Box (Lap " + str(format(currentLap, '.0f')) + ")")
                     writeToLog (logFileName, "Box Box Box (Lap " + str(format(currentLap, '.0f')) + ")")
                     boxThisLap = 1
