@@ -1,3 +1,5 @@
+<img src="http://i.imgur.com/doQ4Kyf.jpg">
+
 <img src="http://i.imgur.com/MtPBUsV.png">
 ## iRacing Arduino Pit Board
 
