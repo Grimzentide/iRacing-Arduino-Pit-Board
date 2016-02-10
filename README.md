@@ -33,7 +33,7 @@ If you have a feature request or an problem with the code, please [create an ent
 #### Demonstration of v2.4 (beta 1)
 
 <a href="http://www.youtube.com/watch?feature=player_embedded&v=LxTdiZzA7dQ
-" target="_blank"><img src="http://img.youtube.com/vi/LxTdiZzA7dQ8/0.jpg" 
+" target="_blank"><img src="http://img.youtube.com/vi/LxTdiZzA7dQ/hqdefault.jpg" 
 alt="IMAGE ALT TEXT HERE" width="240" height="180" border="10" /></a>
 
 Click the above image to watch the video on youtube
