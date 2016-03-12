@@ -30,7 +30,7 @@
 
 If you have a feature request or an problem with the code, please [create an entry in the issue section](https://github.com/Grimzentide/iRacing-Arduino-Pit-Board/issues)
 
-#### Demonstration of v2.4 (beta 1)
+#### Demonstration of v2.4 (Alpha)
 
 <a href="http://www.youtube.com/watch?feature=player_embedded&v=LxTdiZzA7dQ
 " target="_blank"><img src="http://img.youtube.com/vi/LxTdiZzA7dQ/hqdefault.jpg" 
