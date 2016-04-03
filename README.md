@@ -38,6 +38,15 @@ alt="IMAGE ALT TEXT HERE" width="240" height="180" border="10" /></a>
 
 Click the above image to watch the video on youtube
 
+#### Optional arguments: 
+-h, --help show this help message and exit 
+-g This option will use imperial measurements for weight, temperature and volume 
+-sfr This option will disable the show fuel required on pit exit informational messages 
+-spl This option will supress the in pit lane messages 
+-c This option will disable the uploading of logs to the cloud 
+--version show program's version number and exit
+
+
 #### Hardware
 * [Arduino Uno or Uno Clone](https://www.arduino.cc/en/Main/arduinoBoardUno)
 * [2.8" TFT Shield via eBay](http://www.ebay.com.au/itm/381238351575?_trksid=p2060353.m2749.l2648&ssPageName=STRK%3AMEBIDX%3AIT) <-- This is the actual TFT I purchased on eBay Australia.
