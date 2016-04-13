@@ -12,7 +12,7 @@ import math
 import tinys3
 
 #####################################################################################
-versionNumber = 2.4
+versionNumber = 2.5
 #####################################################################################
 
 #####################################################################################
@@ -315,6 +315,7 @@ while True:
             sessionExitFlag = 0
             logFileName = createLogFile()
             uploadedLogs = 0
+            sendViaSerial('?!')
             welcomeScreen()	
 		
         sessionNum = ir['SessionNum']        
@@ -546,7 +547,7 @@ while True:
                     pittedUnderFlag = "Caution"                    
                     sendViaSerial('C' + pittedUnderFlag + "!")	# GREEN OR CAUTION PIT STOP	
                 else:
-                    pittedUnderFlag = " "                    
+                    pittedUnderFlag = "Green"                    
                     sendViaSerial('C' + pittedUnderFlag + "!")	# GREEN OR CAUTION PIT STOP			
 					
                 writeToLog (logFileName, "Pitted Under: " + pittedUnderFlag)					
@@ -787,7 +788,7 @@ while True:
                             onPitRoadFlag = 1                                                       # Change the flag status to prevent spamming of the info messages
                             if (results.showRequiredFuel == True):
                                 #sendInfoMessage("@" + "Fuel Needed: Fill Tank")
-                                writeToLog (logFileName, "Fuel Needed: Fill Tank (" + fuelTankCapacity*fuelMultiplier + "L)")
+                                writeToLog (logFileName, "Fuel Needed: Fill Tank (" + str(format(fuelTankCapacity*fuelMultiplier,'.2f')) + "L)")
                                 fuelToLeaveWith = fuelTankCapacity
 								
                             
