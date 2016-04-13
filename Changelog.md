@@ -4,6 +4,63 @@
 There are no updates to the front end Arduino code in this release which means you do not need to re-upload the code to the arduino device.  Only the back end files in the release section need to be updated by you...
 
 #### Back End
+##### Version 2.5 - 2016-04-13
+
+###### Minimum Requirements
+- Front End v1.1
+
+###### Fixed 
+- [x] Fixed a crash bug when entering pit lane.
+
+###### Known Issues
+- [x] Wind direction is incorrect in sessions where dynamic weather is enabled
+
+___
+#### Front End (Arduino)
+
+v1.1 of the front end has been released which is a mandatory upgrade for v2.4 of the back end.  It contains the new pit information screens when you enter pit lane after completing more than 1 lap.
+
+###### Added 
+- [x] Added new screen when entering pit lane
+- [x] Added laps on tires
+- [x] Added last lap you stopped
+- [x] Added optional repairs left when leaving the pits
+- [x] Added fuel added last stop
+- [x] Added tire wear as a percentage
+- [x] Added tire temperatures as colors (blue, green, orange, red)
+- [x] Added fuel stint burn rates
+- [x] Added last pitted under flag status
+- [x] Added fuel to add indicator
+- [x] Added fuel to leave with indicator
+- [x] Added tire change indicators
+- [x] Added quick repair indicator
+
+![](https://camo.githubusercontent.com/546341224edc5caf9741fac26ef90906d7f79f6d/687474703a2f2f696d672e796f75747562652e636f6d2f76692f4c785464695a7a413764512f687164656661756c742e6a7067)
+
+#### Back End
+##### Version 2.4 - 2016-04-08
+
+###### Minimum Requirements
+- Front End v1.1
+
+###### Added 
+- [x] Issue 41: Added circuit layout to log files
+- [x] Issue 40: Removed C/F on temperatures in log and create separate entry for measurement
+- [x] Issue 35: When on pit road, change to a secondary screen that shows the current stop settings (**requires v1.1 of front end**)
+- [x] Re-added the upload burn data to cloud option.  Use -c to disable. Upload occur after each session has ended.
+
+###### Fixed 
+- [x] Issue 38: New log file is not created when the session changes
+
+###### Known Issues
+- [ ] Wind direction is incorrect in sessions where dynamic weather is enabled
+
+___
+#### Front End (Arduino)
+
+There are no updates to the front end Arduino code in this release which means you do not need to re-upload the code to the arduino device.  Only the back end files in the release section need to be updated by you...
+
+#### Back End
 ##### Version 2.2 - 2016-01-15
 
 ###### Minimum Requirements
