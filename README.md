@@ -25,6 +25,16 @@
 * shows the amount that should be in your tank when you leave the pits
 * target burn rate if you need a splash and dash for less than 1 lap worth of fuel
 * Warning flashes to help inform the driver that something critical has happened
+* laps on tires 
+* last lap you stopped 
+* optional repairs left when leaving the pits 
+* fuel added last stop 
+* tire wear as a percentage 
+* tire temperatures as colors (blue, green, orange, red) 
+* fuel stint burn rates 
+* last pitted under flag status 
+* fuel to add indicator 
+* fuel to leave with indicator 
 
 **Note:** The calculations for required fuel automatically includes an extra half of a lap to ensure you can cross the finish line. The half lap fuel addition is calculated using half of the current 5 lap average fuel burn rate and is automatically included in the required fuel figure.
 
@@ -60,24 +70,3 @@ A number of people are coming up with creative ways to mount the device includin
 ___
 
 <a href="https://www.paypal.me/BrockCremer"><img src="https://www.paypal.com/en_GB/i/btn/x-click-butcc-donate.gif"></a>
-
-___
-
-### Changelog: ([Full Changelog](https://github.com/Grimzentide/iRacing-Arduino-Pit-Board/blob/master/Changelog.md))
-
-#### Front End (Arduino)
-
-There are no updates to the front end Arduino code in this release which means you do not need to re-upload the code to the arduino device.  Only the back end files in the release section need to be updated by you...
-
-#### Back End
-##### Version 2.1 - 2016-01-01
-
-###### Minimum Requirements
-- Front End v1.0
-
-###### Fixed 
-- [x] Timed sessions now calculate the requried fuel by total time + 1 lap
-- [x] COM ports 10 and greater no longer cause an error on the back end 
-
-###### Known Issues
-- [x] Wind direction is incorrect in sessions where dynamic weather is enabled
