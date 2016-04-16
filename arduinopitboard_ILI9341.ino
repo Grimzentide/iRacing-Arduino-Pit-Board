@@ -69,8 +69,9 @@ void setup(void)
   // OPEN SERIAL CONNECTION
   Serial.begin(250000);  
   //tft.reset();
-  //uint16_t identifier = 0x9341;
+ // uint16_t identifier = 0x9325;
   //tft.begin(identifier);
+  tft.begin();
   tft.setRotation(3);
   tft.setTextColor(WHITE, BLACK);
   resetScreen(); 
