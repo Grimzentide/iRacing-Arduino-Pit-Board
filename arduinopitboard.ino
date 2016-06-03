@@ -1,4 +1,4 @@
-#include <Adafruit_GFX.h>	 // Core graphics library
+#include <Adafruit_GFX.h>	// Core graphics library
 //#include <Adafruit_TFTLCD.h> // Hardware-specific library
 #include <MCUFRIEND_kbv.h>
 
@@ -29,18 +29,18 @@
 #define ROW_1_HDR_TXT_YVAL			4
 #define ROW_1_INFO_TXT_YVAL			30
 #define ROW_2_HDR_TXT_YVAL			71
-#define ROW_2_INFO_TXT_YVAL			102
+#define ROW_2_INFO_TXT_YVAL			97
 #define ROW_4_HDR_TXT_YVAL			255
-#define ROW_4_INFO_TXT_YVAL			278
+#define ROW_4_INFO_TXT_YVAL			281
 #define INFO_TXT_SIZE				3
 
 #else
 
-#define ROW_1_HDR_TXT_YVAL			2	  
-#define ROW_1_INFO_TXT_YVAL			19	  
-#define ROW_2_HDR_TXT_YVAL			55	  
-#define ROW_2_INFO_TXT_YVAL			68	  
-#define ROW_4_HDR_TXT_YVAL			192	  
+#define ROW_1_HDR_TXT_YVAL			2	
+#define ROW_1_INFO_TXT_YVAL			19	
+#define ROW_2_HDR_TXT_YVAL			55	
+#define ROW_2_INFO_TXT_YVAL			68	
+#define ROW_4_HDR_TXT_YVAL			192	
 #define ROW_4_INFO_TXT_YVAL			209		
 #define INFO_TXT_SIZE				2		
 
@@ -49,17 +49,17 @@
 MCUFRIEND_kbv tft;
 //Adafruit_TFTLCD tft(LCD_CS, LCD_CD, LCD_WR, LCD_RD, LCD_RESET);
 
-String sessionLaps = "";	   // SESSION LAPS
-String completedLaps = "";	   // COMPLETED LAPS
-String remainingLaps = "";	   // REMAINING LAPS
-String pitOnLap = "";		   // PIT ON LAP	 
-String lastPitOnLap = "Default";	  // LAST PIT ON LAP	 
-String fuelRequired = "";	   // FUEL REQUIRED
-String lapsUntilEmpty = "";	   // LAPS UNTIL EMPTY
-String fuelRemaining = "";	   // FUEL REMAINING
-String fiveLapAvg = "";		   // 5 LAP AVG
-String raceAVG = "";		   // RACE AVG
-String str = "";			   // INBOUND SERIAL STRING	 
+String sessionLaps = "";			// SESSION LAPS
+String completedLaps = "";			// COMPLETED LAPS
+String remainingLaps = "";			// REMAINING LAPS
+String pitOnLap = "";				// PIT ON LAP	
+String lastPitOnLap = "Default";	// LAST PIT ON LAP	
+String fuelRequired = "";			// FUEL REQUIRED
+String lapsUntilEmpty = "";			// LAPS UNTIL EMPTY
+String fuelRemaining = "";			// FUEL REMAINING
+String fiveLapAvg = "";				// 5 LAP AVG
+String raceAVG = "";				// RACE AVG
+String str = "";					// INBOUND SERIAL STRING	
 
 String infoMessage[5];
 int clearFuelRemainingTag = 0;
@@ -82,7 +82,7 @@ String fuelRequiredAtPitstopVarPitScreen = "";
 String averageFuelBurnStint = "";
 String fuelToLeaveWith = "";
 String fuelAdded = "";
-String fastRepair = "";	 
+String fastRepair = "";	
 String lfTireChange = "";  
 String rfTireChange = "";
 String lrTireChange = "";
@@ -106,7 +106,7 @@ void loop(void)
 {
 	while (Serial.available())
 	{
-		String content = "";		 // INBOUND SERIAL STRING
+		String content = "";			// INBOUND SERIAL STRING
 		str = Serial.readStringUntil('!');
 		content.concat(str);
 
@@ -114,12 +114,12 @@ void loop(void)
 		{
 		case '@':
 			str.remove(0, 1);
-			sessionLaps = str;		   // SESSION LAPS
+			sessionLaps = str;			// SESSION LAPS
 			updateTitleSessionTime = updateSessionLaps(sessionLaps, updateTitleSessionTime);
 			break;
 		case '#':
 			str.remove(0, 1);
-			completedLaps = str;	   // COMPLETED LAPS
+			completedLaps = str;		// COMPLETED LAPS
 			updateCompletedLaps(completedLaps);
 			break;
 		case '$':
@@ -129,32 +129,32 @@ void loop(void)
 			break;
 		case '%':
 			str.remove(0, 1);
-			pitOnLap = str;			   // PIT ON LAP  
+			pitOnLap = str;				// PIT ON LAP  
 			lastPitOnLap = updatePitOnLap(pitOnLap, lastPitOnLap);
 			break;
 		case '^':
 			str.remove(0, 1);
-			fuelRequired = str;		 // FUEL REQUIRED
+			fuelRequired = str;			// FUEL REQUIRED
 			updateFuelRequired(fuelRequired);
 			break;	
 		case '&':
 			str.remove(0, 1);
-			lapsUntilEmpty = str;	// LAPS UNTIL EMPTY
+			lapsUntilEmpty = str;		// LAPS UNTIL EMPTY
 			clearLapsUntilEmptyTag = updateLapsUntilEmpty(lapsUntilEmpty, clearLapsUntilEmptyTag);
 			break;
 		case '*':
 			str.remove(0, 1);
-			fuelRemaining = str;	// FUEL REMAINING
+			fuelRemaining = str;		// FUEL REMAINING
 			clearFuelRemainingTag = updateFuelRemaining(fuelRemaining, fiveLapAvg.toInt(), clearFuelRemainingTag);
 			break;
 		case '(':
 			str.remove(0, 1);
-			fiveLapAvg = str;		// 5 LAP AVG
+			fiveLapAvg = str;			// 5 LAP AVG
 			updateFiveLapAvg(fiveLapAvg);
 			break;
 		case ')':
 			str.remove(0, 1);
-			raceAVG = str;			// RACE AVG
+			raceAVG = str;				// RACE AVG
 			updateRaceAVG(raceAVG);
 			break;
 		case '?':
@@ -162,16 +162,16 @@ void loop(void)
 			break;
 		case '~':
 			pitLaneScreen(); 
-			break;										  
+			break;										
 		case '-':
-			str.remove(0, 1);	   
+			str.remove(0, 1);	
 			infoMessage[4] = infoMessage[3];
 			infoMessage[3] = infoMessage[2];
 			infoMessage[2] = infoMessage[1];
 			infoMessage[1] = infoMessage[0];
 			infoMessage[0] = str;
 			updateInfoMessage(infoMessage[0], infoMessage[1], infoMessage[2], infoMessage[3], infoMessage[4]);
-			break;				  
+			break;				
 		case 'A':
 			str.remove(0, 1);
 			lastPitStopOnLap = str; 
@@ -206,7 +206,7 @@ void loop(void)
 			str.remove(0, 1);
 			fuelToLeaveWith = str;
 			updateFuelToLeaveWith(fuelToLeaveWith);
-			break;													  
+			break;													
 		case 'H':
 			str.remove(0, 1);
 			fuelAdded = str;
@@ -241,7 +241,7 @@ void loop(void)
 			str.remove(0, 1);
 			wear = str;
 			updateWear(wear);
-			break;				 
+			break;				
 		}
 	}
 }
@@ -260,9 +260,9 @@ int updateSessionLaps(String sessionLaps, int updateTitleSessionTime)
 
 	// SESSION LAPS
 	int isTimeNotLaps = sessionLaps.indexOf(':');
-	if (isTimeNotLaps >= 1)								  // ':' exists
+	if (isTimeNotLaps >= 1)								// ':' exists
 	{
-		if (updateTitleSessionTime == 0)					// Change default title from 'Session Laps' to 'Session Time'
+		if (updateTitleSessionTime == 0)				// Change default title from 'Session Laps' to 'Session Time'
 		{
 			tft.setTextSize(1);
 			tft.setTextColor(LIGHTGREY, BLACK);
@@ -271,8 +271,8 @@ int updateSessionLaps(String sessionLaps, int updateTitleSessionTime)
 			#else
 			tft.setCursor(16, ROW_1_HDR_TXT_YVAL);
 			#endif
-			tft.println("SESSION TIME");	   
-			updateTitleSessionTime = 1;	 
+			tft.println("SESSION TIME");	
+			updateTitleSessionTime = 1;	
 			tft.setTextColor(WHITE, BLACK);
 		} 
 	}
@@ -286,8 +286,8 @@ int updateSessionLaps(String sessionLaps, int updateTitleSessionTime)
 		#else
 		tft.setCursor(16, ROW_1_HDR_TXT_YVAL);
 		#endif
-		tft.println("SESSION LAPS");	   
-		updateTitleSessionTime = 0;	 
+		tft.println("SESSION LAPS");	
+		updateTitleSessionTime = 0;	
 		tft.setTextColor(WHITE, BLACK);
 	} 
 
@@ -295,7 +295,7 @@ int updateSessionLaps(String sessionLaps, int updateTitleSessionTime)
 	tft.setCursor(calculateStringStartPosition(sessionLaps, fieldLimitLeft, fieldLimitRight, textSize), ROW_1_INFO_TXT_YVAL);  
 	tft.println(sessionLaps); 
 
-	return updateTitleSessionTime;	  
+	return updateTitleSessionTime;	
 }
 
 void updateCompletedLaps(String completedLaps)
@@ -313,7 +313,7 @@ void updateCompletedLaps(String completedLaps)
 	if (completedLaps.toInt() < 10 )					// clear to avoid overlap
 	{
 		#ifdef HDGFX
-		tft.setCursor(195, ROW_1_INFO_TXT_YVAL);
+		tft.setCursor(164, ROW_1_INFO_TXT_YVAL);
 		#else
 		tft.setCursor(132, ROW_1_INFO_TXT_YVAL);
 		#endif
@@ -338,11 +338,11 @@ void updateRemainingLaps(String remainingLaps)
 	int isTimeNotLaps = remainingLaps.indexOf(':');
 	if (isTimeNotLaps == -1)							// ':' does not exist in remaining laps. eg: Unlimited or an Int
 	{
-		if (remainingLaps.toInt() == 9)					  // 9 laps remaining in the race
+		if (remainingLaps.toInt() == 9)					// 9 laps remaining in the race
 		{
 			
 			#ifdef HDGFX
-			tft.setCursor(352, ROW_1_INFO_TXT_YVAL);
+			tft.setCursor(323, ROW_1_INFO_TXT_YVAL);
 			#else
 			tft.setCursor(241, ROW_1_INFO_TXT_YVAL);
 			#endif
@@ -357,7 +357,7 @@ String updatePitOnLap(String pitOnLap, String lastPitOnLap)
 {
 	tft.setTextColor(YELLOW, BLACK);
 
-	tft.setTextSize(textSize);	  
+	tft.setTextSize(textSize);	
 	#ifdef HDGFX
 	fieldLimitLeft = 162;
 	fieldLimitRight = 317; 
@@ -369,7 +369,7 @@ String updatePitOnLap(String pitOnLap, String lastPitOnLap)
 	if (pitOnLap != lastPitOnLap)
 	{
 		#ifdef HDGFX
-		tft.setCursor(221, ROW_2_INFO_TXT_YVAL);
+		tft.setCursor(164, ROW_2_INFO_TXT_YVAL);
 		#else
 		tft.setCursor(132, ROW_2_INFO_TXT_YVAL):
 		#endif
@@ -398,7 +398,7 @@ void updateFuelRequired(String fuelRequired)
 	{
 		
 		#ifdef HDGFX
-		tft.setCursor(63, ROW_2_INFO_TXT_YVAL);
+		tft.setCursor(6, ROW_2_INFO_TXT_YVAL);
 		#else
 		tft.setCursor(28, ROW_2_INFO_TXT_YVAL);
 		#endif
@@ -429,7 +429,7 @@ int updateLapsUntilEmpty(String lapsUntilEmpty, int clearlapsUntilEmptyTag)
 	{
 		
 		#ifdef HDGFX
-		tft.setCursor(380, ROW_2_INFO_TXT_YVAL);
+		tft.setCursor(323, ROW_2_INFO_TXT_YVAL);
 		#else
 		tft.setCursor(239, ROW_2_INFO_TXT_YVAL);
 		#endif
@@ -444,7 +444,7 @@ int updateLapsUntilEmpty(String lapsUntilEmpty, int clearlapsUntilEmptyTag)
 
 	if (lapsUntilEmpty.toInt() < 4)
 	{
-		tft.setTextColor(RED, BLACK);	 
+		tft.setTextColor(RED, BLACK);	
 	}
 	else
 	{
@@ -475,11 +475,11 @@ int updateFuelRemaining(String fuelRemaining, int fiveLapAvg, int clearFuelRemai
 	{
 		
 		#ifdef HDGFX
-		tft.setCursor(63, ROW_4_INFO_TXT_YVAL);
+		tft.setCursor(6, ROW_4_INFO_TXT_YVAL);
 		#else
 		tft.setCursor(28, ROW_4_INFO_TXT_YVAL);
 		#endif
-		tft.println("      ");	  
+		tft.println("      ");	
 		clearFuelRemainingTag = 1;
 	}
 
@@ -519,11 +519,11 @@ void updateFiveLapAvg(String fiveLapAvg)
 	{
 		
 		#ifdef HDGFX
-		tft.setCursor(221, ROW_4_INFO_TXT_YVAL);
+		tft.setCursor(166, ROW_4_INFO_TXT_YVAL);
 		#else
 		tft.setCursor(132, ROW_4_INFO_TXT_YVAL);
 		#endif
-		tft.println("      ");	  
+		tft.println("      ");	
 		clearFiveLapAvgTag = 1;
 	}
 
@@ -553,11 +553,11 @@ void updateRaceAVG(String raceAVG)
 	{
 		
 		#ifdef HDGFX
-		tft.setCursor(381, ROW_4_INFO_TXT_YVAL);
+		tft.setCursor(323, ROW_4_INFO_TXT_YVAL);
 		#else
 		tft.setCursor(241, ROW_4_INFO_TXT_YVAL);
 		#endif
-		tft.println("      ");	  
+		tft.println("      ");	
 		clearRaceAvgTag = 1;
 	}
 
@@ -585,7 +585,7 @@ void updateInfoMessage(String infoMessage1, String infoMessage2, String infoMess
 	
 	// Process 1st infoMessage Colour
 	#ifdef HDGFX
-	tft.setCursor(7, 142); 
+	tft.setCursor(9, 142); 
 	#else
 	tft.setCursor(5, 105);
 	#endif
@@ -596,12 +596,12 @@ void updateInfoMessage(String infoMessage1, String infoMessage2, String infoMess
 	}
 	else if (infoMessage1.charAt(0) == '#')
 	{
-		tft.setTextColor(YELLOW, BLACK);	 
+		tft.setTextColor(YELLOW, BLACK);	
 		tft.print(infoMessage1.substring(1));
 	}
 	else if (infoMessage1.charAt(0) == '$')
 	{
-		tft.setTextColor(RED, BLACK);	  
+		tft.setTextColor(RED, BLACK);	
 		tft.print(infoMessage1.substring(1));
 	}
 	else if (infoMessage1.charAt(0) == '%')
@@ -612,7 +612,7 @@ void updateInfoMessage(String infoMessage1, String infoMessage2, String infoMess
 
 	// Process 2nd infoMessage Colour
 	#ifdef HDGFX
-	tft.setCursor(7, 163); 
+	tft.setCursor(9, 163); 
 	#else
 	tft.setCursor(5, 121);
 	#endif 
@@ -623,12 +623,12 @@ void updateInfoMessage(String infoMessage1, String infoMessage2, String infoMess
 	}
 	else if (infoMessage2.charAt(0) == '#')
 	{
-		tft.setTextColor(YELLOW, BLACK);	 
+		tft.setTextColor(YELLOW, BLACK);	
 		tft.print(infoMessage2.substring(1));
 	}
 	else if (infoMessage2.charAt(0) == '$')
 	{
-		tft.setTextColor(RED, BLACK);	  
+		tft.setTextColor(RED, BLACK);	
 		tft.print(infoMessage2.substring(1));
 	}
 	else if (infoMessage2.charAt(0) == '%')
@@ -639,7 +639,7 @@ void updateInfoMessage(String infoMessage1, String infoMessage2, String infoMess
 
 	// Process 3rd infoMessage Colour
 	#ifdef HDGFX
-	tft.setCursor(7, 184); 
+	tft.setCursor(9, 184); 
 	#else
 	tft.setCursor(5, 137);
 	#endif
@@ -650,12 +650,12 @@ void updateInfoMessage(String infoMessage1, String infoMessage2, String infoMess
 	}
 	else if (infoMessage3.charAt(0) == '#')
 	{
-		tft.setTextColor(YELLOW, BLACK);	 
+		tft.setTextColor(YELLOW, BLACK);	
 		tft.print(infoMessage3.substring(1));
 	}
 	else if (infoMessage3.charAt(0) == '$')
 	{
-		tft.setTextColor(RED, BLACK);	  
+		tft.setTextColor(RED, BLACK);	
 		tft.print(infoMessage3.substring(1));
 	}
 	else if (infoMessage3.charAt(0) == '%')
@@ -666,7 +666,7 @@ void updateInfoMessage(String infoMessage1, String infoMessage2, String infoMess
 
 	// Process 4th infoMessage Colour
 	#ifdef HDGFX
-	tft.setCursor(7, 205); 
+	tft.setCursor(9, 205); 
 	#else
 	tft.setCursor(5, 153);
 	#endif
@@ -677,12 +677,12 @@ void updateInfoMessage(String infoMessage1, String infoMessage2, String infoMess
 	}
 	else if (infoMessage4.charAt(0) == '#')
 	{
-		tft.setTextColor(YELLOW, BLACK);	 
+		tft.setTextColor(YELLOW, BLACK);	
 		tft.print(infoMessage4.substring(1));
 	}
 	else if (infoMessage4.charAt(0) == '$')
 	{
-		tft.setTextColor(RED, BLACK);	  
+		tft.setTextColor(RED, BLACK);	
 		tft.print(infoMessage4.substring(1));
 	}
 	else if (infoMessage4.charAt(0) == '%')
@@ -693,7 +693,7 @@ void updateInfoMessage(String infoMessage1, String infoMessage2, String infoMess
 
 	// Process 5th infoMessage Colour
 	#ifdef HDGFX
-	tft.setCursor(7, 226); 
+	tft.setCursor(9, 226); 
 	#else
 	tft.setCursor(5, 169);
 	#endif
@@ -704,12 +704,12 @@ void updateInfoMessage(String infoMessage1, String infoMessage2, String infoMess
 	}
 	else if (infoMessage5.charAt(0) == '#')
 	{
-		tft.setTextColor(YELLOW, BLACK);	 
+		tft.setTextColor(YELLOW, BLACK);	
 		tft.print(infoMessage5.substring(1));
 	}
 	else if (infoMessage5.charAt(0) == '$')
 	{
-		tft.setTextColor(RED, BLACK);	  
+		tft.setTextColor(RED, BLACK);	
 		tft.print(infoMessage5.substring(1));
 	} 
 	else if (infoMessage5.charAt(0) == '%')
@@ -725,7 +725,7 @@ void updateInfoMessage(String infoMessage1, String infoMessage2, String infoMess
 }
 
 void resetScreen()
-{	 
+{	
 	tft.setTextColor(LIGHTGREY, BLACK);
 	tft.setTextSize(1);
 
@@ -741,7 +741,7 @@ void resetScreen()
 	tft.drawRect(1, 69, 478, 67, DARKGREY);				//Box Row 2
 	tft.drawFastVLine(160, 69, 65, DARKGREY);
 	tft.drawFastVLine(319, 69, 65, DARKGREY);
-	tft.drawRect(1, 137, 478, 114, DARKGREY);			 //Box Row 3
+	tft.drawRect(1, 137, 478, 114, DARKGREY);			//Box Row 3
 	tft.drawRect(1, 252, 478, 67, DARKGREY);			//Box Row 4
 	tft.drawFastVLine(160, 253, 65, DARKGREY);
 	tft.drawFastVLine(319, 253, 65, DARKGREY);
@@ -752,7 +752,7 @@ void resetScreen()
 	
 	// COMPLETED
 	tft.setCursor(213, ROW_1_HDR_TXT_YVAL);
-	tft.println("COMPLETED");	  
+	tft.println("COMPLETED");	
 	
 	// REMAINING
 	tft.setCursor(371, ROW_1_HDR_TXT_YVAL);
@@ -802,7 +802,7 @@ void resetScreen()
 	
 	// COMPLETED
 	tft.setCursor(129, ROW_1_HDR_TXT_YVAL);
-	tft.println("COMPLETED");	  
+	tft.println("COMPLETED");	
 	
 	// REMAINING
 	tft.setCursor(238, ROW_1_HDR_TXT_YVAL);
@@ -833,7 +833,7 @@ void resetScreen()
 	tft.println("RACE AVG"); 
 	
 	#endif
-	tft.setTextSize(textSize);	  
+	tft.setTextSize(textSize);	
 	tft.setTextColor(WHITE, BLACK);
 }
 
@@ -843,14 +843,14 @@ void flashRed()
 	while(flashThisManyTimes < 10)
 	{
 		#ifdef HDGFX
-		tft.drawRect(1, 1, 478, 67, RED);	 
+		tft.drawRect(1, 1, 478, 67, RED);	
 		tft.drawFastVLine(160, 2, 65, RED);
 		tft.drawFastVLine(319, 2, 65, RED);
-		tft.drawRect(1, 69, 478, 67, RED);	 
+		tft.drawRect(1, 69, 478, 67, RED);	
 		tft.drawFastVLine(160, 69, 65, RED);
 		tft.drawFastVLine(319, 69, 65, RED);
 		tft.drawRect(1, 137, 478, 114, RED); 
-		tft.drawRect(1, 252, 478, 67, RED);	 
+		tft.drawRect(1, 252, 478, 67, RED);	
 		tft.drawFastVLine(160, 253, 65, RED);
 		tft.drawFastVLine(319, 253, 65, RED);
 		delay(100);
@@ -866,25 +866,25 @@ void flashRed()
 		tft.drawFastVLine(319, 253, 65, ORANGE);
 		delay(100);
 		#else
-		tft.drawRect(2, 0, 317, 50, RED);			   //Box Row 1
+		tft.drawRect(2, 0, 317, 50, RED);			//Box Row 1
 		tft.drawFastVLine(101, 0, 50, RED);
 		tft.drawFastVLine(207, 0, 50, RED);
-		tft.drawRect(2, 52, 317, 50, RED);			   //Box Row 2
+		tft.drawRect(2, 52, 317, 50, RED);			//Box Row 2
 		tft.drawFastVLine(101, 52, 50, RED);
 		tft.drawFastVLine(207, 52, 50, RED);
-		tft.drawRect(2, 104, 317, 84, RED);			   //Box Row 3
-		tft.drawRect(2, 190, 317, 50, RED);			   //Box Row 4
+		tft.drawRect(2, 104, 317, 84, RED);			//Box Row 3
+		tft.drawRect(2, 190, 317, 50, RED);			//Box Row 4
 		tft.drawFastVLine(101, 190, 50, RED);
 		tft.drawFastVLine(207, 190, 50, RED);
 		delay(100);
-		tft.drawRect(2, 0, 317, 50, ORANGE);			  //Box Row 1
+		tft.drawRect(2, 0, 317, 50, ORANGE);			//Box Row 1
 		tft.drawFastVLine(101, 0, 50, ORANGE);
 		tft.drawFastVLine(207, 0, 50, ORANGE);
-		tft.drawRect(2, 52, 317, 50, ORANGE);			  //Box Row 2
+		tft.drawRect(2, 52, 317, 50, ORANGE);			//Box Row 2
 		tft.drawFastVLine(101, 52, 50, ORANGE);
 		tft.drawFastVLine(207, 52, 50, ORANGE);
-		tft.drawRect(2, 104, 317, 84, ORANGE);			  //Box Row 3
-		tft.drawRect(2, 190, 317, 50, ORANGE);			  //Box Row 4
+		tft.drawRect(2, 104, 317, 84, ORANGE);			//Box Row 3
+		tft.drawRect(2, 190, 317, 50, ORANGE);			//Box Row 4
 		tft.drawFastVLine(101, 190, 50, ORANGE);
 		tft.drawFastVLine(207, 190, 50, ORANGE);
 		delay(100);
@@ -893,10 +893,10 @@ void flashRed()
 	}
 
 	#ifdef HDGFX
-	tft.drawRect(1, 1, 478, 67, DARKGREY);	  
+	tft.drawRect(1, 1, 478, 67, DARKGREY);	
 	tft.drawFastVLine(160, 1, 65, DARKGREY);
 	tft.drawFastVLine(319, 1, 65, DARKGREY);
-	tft.drawRect(1, 69, 478, 67, DARKGREY);	  
+	tft.drawRect(1, 69, 478, 67, DARKGREY);	
 	tft.drawFastVLine(160, 69, 65, DARKGREY);
 	tft.drawFastVLine(319, 69, 65, DARKGREY);
 	tft.drawRect(1, 137, 478, 114, DARKGREY); 
@@ -918,7 +918,7 @@ void flashRed()
 }
 
 void pitLaneScreen()
-{	 
+{	
 	tft.setTextColor(LIGHTGREY, BLACK);
 	tft.setTextSize(1);
 
@@ -927,8 +927,8 @@ void pitLaneScreen()
 
 #ifdef HDGFX
 	// DRAW BOXES
-	tft.drawRect(1, 15, 318, 304, DARKGREY);			  //Left Box
-	tft.drawRect(320, 15, 158, 304, DARKGREY);			  //Right Box
+	tft.drawRect(1, 15, 318, 304, DARKGREY);			//Left Box
+	tft.drawRect(320, 15, 158, 304, DARKGREY);			//Right Box
 	
 	// LAST STINT
 	tft.setCursor(121, 2);
@@ -984,8 +984,8 @@ void pitLaneScreen()
 
 #else
 	// DRAW BOXES
-	tft.drawRect(1, 15, 196, 224, DARKGREY);			  //Left Box
-	tft.drawRect(198, 15, 122, 224, DARKGREY);			  //Right Box
+	tft.drawRect(1, 15, 196, 224, DARKGREY);			//Left Box
+	tft.drawRect(198, 15, 122, 224, DARKGREY);			//Right Box
 	
 	// LAST STINT
 	tft.setCursor(64, 2);
@@ -1080,7 +1080,7 @@ void updateOptRepairLeft(String optRepairLeft)
 	fieldLimitRight = 100;
 	tft.setCursor(calculateStringStartPosition(optRepairLeft, fieldLimitLeft, fieldLimitRight, textSize), 72);
 	#endif
-	tft.println(optRepairLeft);	 
+	tft.println(optRepairLeft);	
 }
 
 void updatePittedUnderFlag(String pittedUnderFlag)
@@ -1141,7 +1141,7 @@ void updateFuelRequiredAtPitstopVarPitScreen(String fuelRequiredAtPitstopVarPitS
 	tft.setCursor(calculateStringStartPosition(fuelRequiredAtPitstopVarPitScreen, fieldLimitLeft, fieldLimitRight, textSize), 31);
 	#endif
 
-	tft.println(fuelRequiredAtPitstopVarPitScreen);	 
+	tft.println(fuelRequiredAtPitstopVarPitScreen);	
 }
 
 void updateAverageFuelBurnStint(String averageFuelBurnStint)
@@ -1197,7 +1197,7 @@ void updateFuelAdded(String fuelAdded)
 	fieldLimitRight = 195;	
 	tft.setCursor(calculateStringStartPosition(fuelAdded, fieldLimitLeft, fieldLimitRight, textSize), 31);
 	#endif
-	tft.println(fuelAdded);	 
+	tft.println(fuelAdded);	
 }
 
 void updateFastRepair(String fastRepair)
@@ -1235,7 +1235,7 @@ void updateLFTireChange(String lfTireChange)
 	}
 	else
 	{
-		tft.setTextColor(WHITE, BLACK);	 
+		tft.setTextColor(WHITE, BLACK);	
 		#ifdef HDGFX
 		tft.fillRoundRect(323,191,74,59,8,BLACK);
 		tft.drawRoundRect(323,191,74,59,8,DARKGREEN); 
@@ -1273,10 +1273,10 @@ void updateRFTireChange(String rfTireChange)
 	}
 	else
 	{
-		tft.setTextColor(WHITE, BLACK);	 
+		tft.setTextColor(WHITE, BLACK);	
 		#ifdef HDGFX
 		tft.fillRoundRect(400,191,74,59,8,BLACK);
-		tft.drawRoundRect(400,191,74,59,8,DARKGREEN);	 
+		tft.drawRoundRect(400,191,74,59,8,DARKGREEN);	
 		#else
 		tft.fillRoundRect(259,150,56,41,8,BLACK);
 		tft.drawRoundRect(259,150,56,41,8,DARKGREEN);  
@@ -1310,7 +1310,7 @@ void updateLRTireChange(String lrTireChange)
 	}
 	else
 	{
-		tft.setTextColor(WHITE, BLACK);	   
+		tft.setTextColor(WHITE, BLACK);	
 		#ifdef HDGFX
 		tft.fillRoundRect(323,255,74,59,8,BLACK);
 		tft.drawRoundRect(323,255,74,59,8,DARKGREEN);  
@@ -1348,7 +1348,7 @@ void updateRRTireChange(String rrTireChange)
 	}
 	else
 	{
-		tft.setTextColor(WHITE, BLACK);	   
+		tft.setTextColor(WHITE, BLACK);	
 		#ifdef HDGFX
 		tft.fillRoundRect(400,255,74,59,8,BLACK);  
 		tft.drawRoundRect(400,255,74,59,8,DARKGREEN);
