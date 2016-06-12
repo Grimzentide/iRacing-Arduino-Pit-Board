@@ -12,7 +12,7 @@ import math
 import tinys3
 
 #####################################################################################
-versionNumber = 2.5
+versionNumber = 2.5.1
 #####################################################################################
 
 #####################################################################################
@@ -42,10 +42,11 @@ parser = argparse.ArgumentParser(epilog="Visit http://github.com/Grimzentide for
 parser.add_argument('comport', help='This is the port of your Arduino eg. COM6')
 parser.add_argument('-g', action='store_false', default=True,dest='useMetric',help='This option will use imperial measurements for weight, temperature and volume')
 parser.add_argument('-sfr', action='store_false', default=True,dest='showRequiredFuel',help='This option will disable the show fuel required on pit exit informational messages')
-parser.add_argument('-spl', action='store_false', default=True,dest='supressPitLane',help='This option will supress the in pit lane messages')
-parser.add_argument('-sws', action='store_false', default=True,dest='supressWelcomeScreen',help='This option will supress the welcome screen')
+parser.add_argument('-spl', action='store_false', default=True,dest='suppressPitLane',help='This option will suppress the in pit lane messages')
+parser.add_argument('-sws', action='store_false', default=True,dest='suppressWelcomeScreen',help='This option will suppress the welcome screen')
 parser.add_argument('-c', action='store_false', default=True,dest='uploadToCloud',help='This option will disable the uploading of logs to the cloud')
 parser.add_argument('--version', action='version', version='iRacing Arduino Pit Board v' + str(versionNumber))
+parser.add_argument('-hdmsg', action='store_true', default=False,dest='longMessages',help='This option extends the messages to fill a 480x320 screen')
 
 results = parser.parse_args()
 os.system('cls')
@@ -94,7 +95,10 @@ def sendViaSerial(str):                                                         
 #####################################################################################
 def sendInfoMessage(str):                                                           # Function to construct an informational message and limit the characters to 26
     # 1st char in str (set elswhere) defines the colour on the Arduino end          # @ = White; # = Yellow; $ = Red
-    infoMessageVar = ('-' + str[:26] + '!')                                         # '-' tells the Arduino that it is an info message, '!' tells the arduino that its the end of the message
+    if (parser.longMessages == true):
+		infoMessageVar = ('-' + str[:39] + '!')                                     # '-' tells the Arduino that it is an info message, '!' tells the arduino that its the end of the message
+	else:
+		infoMessageVar = ('-' + str[:26] + '!')                                     # '-' tells the Arduino that it is an info message, '!' tells the arduino that its the end of the message
     time.sleep(0.3)                                                					# A delay after sending the string via serial to the Arduino prevents the arduino from getting confused
     sendViaSerial(str = infoMessageVar);                                            # Send the string to the Ardunio using the sendViaSerial function
 
@@ -180,7 +184,7 @@ def welcomeScreen():
 		windDirection = "%.2f" % round(windDirection,2)
 		windDirection = winddir_text(float(windDirection))
 	
-	if (results.supressWelcomeScreen):	
+	if (results.suppressWelcomeScreen):	
 	    sendInfoMessage("@")
 	    sendInfoMessage("@     By Brock Cremer")                                    
 	    sendInfoMessage("@")                                    
@@ -850,8 +854,8 @@ while True:
         count = 5
         sessionExitFlag = 1
         if (uploadedLogs == 0):
-                uploadedLogs = 1
-                uploadLogsToCloud()
+            uploadedLogs = 1
+            uploadLogsToCloud()
         writeToLog (logFileName, "Connection Lost: Retrying")
         sendInfoMessage("@Connection Lost: Retrying")
         while (count > 0):
