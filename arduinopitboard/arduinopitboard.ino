@@ -23,6 +23,7 @@
 #define YELLOW			0xFFE0
 #define WHITE			0xFFFF
 #define ORANGE			0xFD20 
+#define MAGENTA			0xF81F
 
 #ifdef HDGFX 
 
@@ -241,7 +242,12 @@ void loop(void)
 			str.remove(0, 1);
 			wear = str;
 			updateWear(wear);
-			break;				
+			break;
+		case 'Z':
+			str.remove(0, 1);
+      int pxCol = str.toInt();
+			tft.drawFastVLine(pxCol, 2, 318, MAGENTA);
+			break;
 		}
 	}
 }
@@ -292,6 +298,14 @@ int updateSessionLaps(String sessionLaps, int updateTitleSessionTime)
 	} 
 
 	tft.setTextSize(textSize);
+	
+	#ifdef HDGFX
+	tft.setCursor(8, ROW_1_INFO_TXT_YVAL);			// clear text box, just in case
+	#else
+	tft.setCursor(28, ROW_1_INFO_TXT_YVAL);
+	#endif
+	tft.println("        ");
+	
 	tft.setCursor(calculateStringStartPosition(sessionLaps, fieldLimitLeft, fieldLimitRight, textSize), ROW_1_INFO_TXT_YVAL);  
 	tft.println(sessionLaps); 
 
@@ -313,11 +327,11 @@ void updateCompletedLaps(String completedLaps)
 	if (completedLaps.toInt() < 10 )					// clear to avoid overlap
 	{
 		#ifdef HDGFX
-		tft.setCursor(164, ROW_1_INFO_TXT_YVAL);
+		tft.setCursor(167, ROW_1_INFO_TXT_YVAL);
 		#else
-		tft.setCursor(132, ROW_1_INFO_TXT_YVAL);
+		tft.setCursor(129, ROW_1_INFO_TXT_YVAL);
 		#endif
-		tft.println("      ");
+		tft.println("        ");
 	} 
 	tft.setCursor(calculateStringStartPosition(completedLaps, fieldLimitLeft, fieldLimitRight, textSize), ROW_1_INFO_TXT_YVAL);
 	tft.println(completedLaps);
@@ -342,11 +356,11 @@ void updateRemainingLaps(String remainingLaps)
 		{
 			
 			#ifdef HDGFX
-			tft.setCursor(323, ROW_1_INFO_TXT_YVAL);
+			tft.setCursor(326, ROW_1_INFO_TXT_YVAL);
 			#else
-			tft.setCursor(241, ROW_1_INFO_TXT_YVAL);
+			tft.setCursor(238, ROW_1_INFO_TXT_YVAL);
 			#endif
-			tft.println("      ");		// clear over the display so that the double-digit numbers can't be seen
+			tft.println("        ");		// clear over the display so that the double-digit numbers can't be seen
 		} 
 	}
 	tft.setCursor(calculateStringStartPosition(remainingLaps, fieldLimitLeft, fieldLimitRight, textSize), ROW_1_INFO_TXT_YVAL);
@@ -369,11 +383,11 @@ String updatePitOnLap(String pitOnLap, String lastPitOnLap)
 	if (pitOnLap != lastPitOnLap)
 	{
 		#ifdef HDGFX
-		tft.setCursor(164, ROW_2_INFO_TXT_YVAL);
+		tft.setCursor(167, ROW_2_INFO_TXT_YVAL);
 		#else
-		tft.setCursor(132, ROW_2_INFO_TXT_YVAL):
+		tft.setCursor(129, ROW_2_INFO_TXT_YVAL):
 		#endif
-		tft.println("      ");			// clear display	
+		tft.println("        ");			// clear display	
 	}
 
 	tft.setCursor(calculateStringStartPosition(pitOnLap, fieldLimitLeft, fieldLimitRight, textSize), ROW_2_INFO_TXT_YVAL);
@@ -398,11 +412,11 @@ void updateFuelRequired(String fuelRequired)
 	{
 		
 		#ifdef HDGFX
-		tft.setCursor(6, ROW_2_INFO_TXT_YVAL);
+		tft.setCursor(8, ROW_2_INFO_TXT_YVAL);
 		#else
 		tft.setCursor(28, ROW_2_INFO_TXT_YVAL);
 		#endif
-		tft.println("      ");
+		tft.println("        ");
 		clearFuelRequiredTag = 1;
 	}
 
@@ -429,11 +443,11 @@ int updateLapsUntilEmpty(String lapsUntilEmpty, int clearlapsUntilEmptyTag)
 	{
 		
 		#ifdef HDGFX
-		tft.setCursor(323, ROW_2_INFO_TXT_YVAL);
+		tft.setCursor(326, ROW_2_INFO_TXT_YVAL);
 		#else
 		tft.setCursor(239, ROW_2_INFO_TXT_YVAL);
 		#endif
-		tft.println("      ");
+		tft.println("        ");
 		clearLapsUntilEmptyTag = 1;
 	}
 
@@ -475,11 +489,11 @@ int updateFuelRemaining(String fuelRemaining, int fiveLapAvg, int clearFuelRemai
 	{
 		
 		#ifdef HDGFX
-		tft.setCursor(6, ROW_4_INFO_TXT_YVAL);
+		tft.setCursor(8, ROW_4_INFO_TXT_YVAL);
 		#else
 		tft.setCursor(28, ROW_4_INFO_TXT_YVAL);
 		#endif
-		tft.println("      ");	
+		tft.println("        ");	
 		clearFuelRemainingTag = 1;
 	}
 
@@ -519,11 +533,11 @@ void updateFiveLapAvg(String fiveLapAvg)
 	{
 		
 		#ifdef HDGFX
-		tft.setCursor(166, ROW_4_INFO_TXT_YVAL);
+		tft.setCursor(167, ROW_4_INFO_TXT_YVAL);
 		#else
 		tft.setCursor(132, ROW_4_INFO_TXT_YVAL);
 		#endif
-		tft.println("      ");	
+		tft.println("        ");	
 		clearFiveLapAvgTag = 1;
 	}
 
@@ -553,11 +567,11 @@ void updateRaceAVG(String raceAVG)
 	{
 		
 		#ifdef HDGFX
-		tft.setCursor(323, ROW_4_INFO_TXT_YVAL);
+		tft.setCursor(326, ROW_4_INFO_TXT_YVAL);
 		#else
 		tft.setCursor(241, ROW_4_INFO_TXT_YVAL);
 		#endif
-		tft.println("      ");	
+		tft.println("        ");	
 		clearRaceAvgTag = 1;
 	}
 
@@ -739,8 +753,8 @@ void resetScreen()
 	tft.drawFastVLine(160, 2, 65, DARKGREY);
 	tft.drawFastVLine(319, 2, 65, DARKGREY);
 	tft.drawRect(1, 69, 478, 67, DARKGREY);				//Box Row 2
-	tft.drawFastVLine(160, 69, 65, DARKGREY);
-	tft.drawFastVLine(319, 69, 65, DARKGREY);
+	tft.drawFastVLine(160, 70, 65, DARKGREY);
+	tft.drawFastVLine(319, 70, 65, DARKGREY);
 	tft.drawRect(1, 137, 478, 114, DARKGREY);			//Box Row 3
 	tft.drawRect(1, 252, 478, 67, DARKGREY);			//Box Row 4
 	tft.drawFastVLine(160, 253, 65, DARKGREY);
@@ -847,8 +861,8 @@ void flashRed()
 		tft.drawFastVLine(160, 2, 65, RED);
 		tft.drawFastVLine(319, 2, 65, RED);
 		tft.drawRect(1, 69, 478, 67, RED);	
-		tft.drawFastVLine(160, 69, 65, RED);
-		tft.drawFastVLine(319, 69, 65, RED);
+		tft.drawFastVLine(160, 70, 65, RED);
+		tft.drawFastVLine(319, 70, 65, RED);
 		tft.drawRect(1, 137, 478, 114, RED); 
 		tft.drawRect(1, 252, 478, 67, RED);	
 		tft.drawFastVLine(160, 253, 65, RED);
@@ -858,8 +872,8 @@ void flashRed()
 		tft.drawFastVLine(160, 2, 65, ORANGE);
 		tft.drawFastVLine(319, 2, 65, ORANGE);
 		tft.drawRect(1, 69, 478, 67, ORANGE);	
-		tft.drawFastVLine(160, 69, 65, ORANGE);
-		tft.drawFastVLine(319, 69, 65, ORANGE);
+		tft.drawFastVLine(160, 70, 65, ORANGE);
+		tft.drawFastVLine(319, 70, 65, ORANGE);
 		tft.drawRect(1, 137, 478, 114, ORANGE); 
 		tft.drawRect(1, 252, 478, 67, ORANGE);	
 		tft.drawFastVLine(160, 253, 65, ORANGE);
@@ -1093,13 +1107,13 @@ void updatePittedUnderFlag(String pittedUnderFlag)
 	fieldLimitLeft = 4;
 	fieldLimitRight = 158;
 	tft.setCursor(5, 166);		//clear overlap
-	tft.println("      ");
+	tft.println("        ");
 	tft.setCursor(calculateStringStartPosition(pittedUnderFlag, fieldLimitLeft, fieldLimitRight, textSize), 139);
 	#else
 	fieldLimitLeft = 5;
 	fieldLimitRight = 100;
 	tft.setCursor(29, 111);		//clear overlap
-	tft.println("      ");
+	tft.println("        ");
 	tft.setCursor(calculateStringStartPosition(pittedUnderFlag, fieldLimitLeft, fieldLimitRight, textSize), 112);
 	#endif
 
