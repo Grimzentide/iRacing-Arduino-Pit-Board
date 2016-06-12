@@ -28,7 +28,7 @@ now = datetime.datetime.now()
  
 arduinoSerialSpeed = 250000                                                         # Arduino connection speed (must match speed in Arduino code)
 arduinoSerialTimeout = 0                                                            # Timeout length when trying to establish serial connection
-waitAfterSerialWrite = .3                                                           # Time delay to ensure the data is written to the Arduino - Suggest not going below 0.2
+waitAfterSerialWrite = 0.3                                                           # Time delay to ensure the data is written to the Arduino - Suggest not going below 0.2
 fuelMultiplier = 1                                                                  # Use litres by default.  Changing this to 0.264172 will make Gallons the default and remove the need for the -gallons argument
 logFileName = None
 driverID = 0
@@ -84,14 +84,14 @@ while True:
             clearScreen()
 
 			
-# Send to serial port (ie. Ardunio)
+# Send to serial port (ie. Arduino)
 #####################################################################################
 def sendViaSerial(str):                                                             # Function to send data to the Arduino
         ser.write(bytes(str.encode('ascii')))                                       # Send the string to the Arduino 1 byte at a time.
         time.sleep(waitAfterSerialWrite)                                            # A delay after sending the string via serial to the Arduino prevents the arduino from getting confused
  
          
-# Setup information message and send to serial port (ie. Ardunio)
+# Setup information message and send to serial port (ie. Arduino)
 #####################################################################################
 def sendInfoMessage(str):                                                           # Function to construct an informational message and limit the characters to 26
     # 1st char in str (set elswhere) defines the colour on the Arduino end          # @ = White; # = Yellow; $ = Red
@@ -99,8 +99,8 @@ def sendInfoMessage(str):                                                       
 		infoMessageVar = ('-' + str[:39] + '!')                                     # '-' tells the Arduino that it is an info message, '!' tells the arduino that its the end of the message
 	else:
 		infoMessageVar = ('-' + str[:26] + '!')                                     # '-' tells the Arduino that it is an info message, '!' tells the arduino that its the end of the message
-    time.sleep(0.3)                                                					# A delay after sending the string via serial to the Arduino prevents the arduino from getting confused
-    sendViaSerial(str = infoMessageVar);                                            # Send the string to the Ardunio using the sendViaSerial function
+    time.sleep(waitAfterSerialWrite)                                                					# A delay after sending the string via serial to the Arduino prevents the arduino from getting confused
+    sendViaSerial(str = infoMessageVar);                                            # Send the string to the Arduino using the sendViaSerial function
 
 def createLogFile():
 	sessionNum = (ir['SessionNum'])
@@ -167,7 +167,7 @@ def welcomeScreen():
 	carClassMaxFuel = float(str(ir['DriverInfo']['Drivers'][driverID]['CarClassMaxFuelPct'])[:-2])# Get the class maximum fuel percentage
 	lastFuelRemaining = ir['FuelLevel']   												# Set the last fuel reading to the current level
 
-	# Get the full event information and send the details to the Ardunio    
+	# Get the full event information and send the details to the Arduino    
 	rawTrackDisplayName = (ir['WeekendInfo']['TrackDisplayName'])                          # Track Name
 	trackDisplayName = str(rawTrackDisplayName.encode('utf-8').decode('ascii', 'ignore'))
 	sessionNum = ir['SessionNum']                                                       # Current session number
