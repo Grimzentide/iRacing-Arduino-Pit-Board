@@ -70,7 +70,7 @@
 	int clearFiveLapAvgTag = 0;
 	int clearRaceAvgTag = 0;
 	int updateTitleSessionTime = 0;
-	int textSize = 2;
+	int textSize = INFO_TXT_SIZE;
 	int fieldLimitLeft;
 	int fieldLimitRight;
 
@@ -1110,7 +1110,6 @@ void updatePittedUnderFlag(String pittedUnderFlag)
 	fieldLimitRight = 158;
 	tft.setCursor(5, 139);		//clear overlap
 	tft.println("        ");
-  tft.drawRect(4, 139, 154, 32, YELLOW);
 	tft.setCursor(calculateStringStartPosition(pittedUnderFlag, fieldLimitLeft, fieldLimitRight, textSize), 139);
 	#else
 	fieldLimitLeft = 5;
