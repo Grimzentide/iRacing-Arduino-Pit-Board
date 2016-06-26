@@ -1,8 +1,7 @@
 // This switch provides compilation modes for 320x240 and 480x320 screens
 // Enable the HDGFX switch if you are compiling for 480x320
 
-#define HDGFX false
-#define COMPATMODE true
+#define HDGFX true
 
 #include <Adafruit_GFX.h>	// Core graphics library
 #if HDGFX == true
@@ -35,7 +34,7 @@
 	#define ROW_2_INFO_TXT_YVAL			97
 	#define ROW_4_HDR_TXT_YVAL			255
 	#define ROW_4_INFO_TXT_YVAL			281
-	#define INFO_TXT_SIZE				3
+	#define INFO_TXT_SIZE			    	3
 #else
 	#define ROW_1_HDR_TXT_YVAL			2
 	#define ROW_1_INFO_TXT_YVAL			19
@@ -43,7 +42,7 @@
 	#define ROW_2_INFO_TXT_YVAL			68
 	#define ROW_4_HDR_TXT_YVAL			192
 	#define ROW_4_INFO_TXT_YVAL			209
-	#define INFO_TXT_SIZE				2
+	#define INFO_TXT_SIZE		    		2
 #endif
 
 #if HDGFX == true
@@ -288,7 +287,7 @@ int updateSessionLaps(String sessionLaps, int updateTitleSessionTime)
 		}
 	}
 	else
-	if (updateTitleSessionTime == 1)					// Restore default title from 'Session Time' to 'Session Laps'
+	//if (updateTitleSessionTime == 1)					// Restore default title from 'Session Time' to 'Session Laps'
 	{
 		tft.setTextSize(1);
 		tft.setTextColor(LIGHTGREY, BLACK);
@@ -390,7 +389,7 @@ String updatePitOnLap(String pitOnLap, String lastPitOnLap)
 		#if HDGFX == true
 		tft.setCursor(167, ROW_2_INFO_TXT_YVAL);
 		#else
-		tft.setCursor(129, ROW_2_INFO_TXT_YVAL):
+		tft.setCursor(129, ROW_2_INFO_TXT_YVAL);
 		#endif
 		tft.println("        ");			// clear display
 	}
@@ -1071,16 +1070,14 @@ void updateLastPitStopOnLap(String lastPitStopOnLap)
 	tft.setTextSize(textSize);
 
 	#if HDGFX == true
-	fieldLimitLeft = 4;
-	fieldLimitRight = 158;
-	tft.setCursor(calculateStringStartPosition(lastPitStopOnLap, fieldLimitLeft, fieldLimitRight, textSize), 33);
+	  fieldLimitLeft = 4;
+	  fieldLimitRight = 158;
+	  tft.setCursor(calculateStringStartPosition(lastPitStopOnLap, fieldLimitLeft, fieldLimitRight, textSize), 33);
 	#else
-	fieldLimitLeft = 5;
-	fieldLimitRight = 100;
-	tft.setCursor(calculateStringStartPosition(lastPitStopOnLap, fieldLimitLeft, fieldLimitRight, textSize), 31);
+	  fieldLimitLeft = 5;
+	  fieldLimitRight = 100;
+	  tft.setCursor(calculateStringStartPosition(lastPitStopOnLap, fieldLimitLeft, fieldLimitRight, textSize), 31);
 	#endif
-
-
 	tft.println(lastPitStopOnLap);
 }
 
@@ -1111,8 +1108,9 @@ void updatePittedUnderFlag(String pittedUnderFlag)
 	#if HDGFX == true
 	fieldLimitLeft = 4;
 	fieldLimitRight = 158;
-	tft.setCursor(5, 166);		//clear overlap
+	tft.setCursor(5, 139);		//clear overlap
 	tft.println("        ");
+  tft.drawRect(4, 139, 154, 32, YELLOW);
 	tft.setCursor(calculateStringStartPosition(pittedUnderFlag, fieldLimitLeft, fieldLimitRight, textSize), 139);
 	#else
 	fieldLimitLeft = 5;
