@@ -563,6 +563,7 @@ void updateRaceAVG(String raceAVG)
 	#if HDGFX == true
 	fieldLimitLeft = 321;
 	fieldLimitRight = 476;
+
 	#else
 	fieldLimitLeft = 101;
 	fieldLimitRight = 211;
@@ -773,15 +774,15 @@ void resetScreen()
 	tft.println("COMPLETED");
 
 	// REMAINING
-	tft.setCursor(371, ROW_1_HDR_TXT_YVAL);
+	tft.setCursor(372, ROW_1_HDR_TXT_YVAL);
 	tft.println("REMAINING");
 
 	// FUEL REQUIRED
 	tft.setCursor(42, ROW_2_HDR_TXT_YVAL);
 	tft.println("FUEL REQUIRED");
 
-	// PIT ON 210
-	tft.setCursor(212, ROW_2_HDR_TXT_YVAL);
+	// PIT WINDOW
+	tft.setCursor(210, ROW_2_HDR_TXT_YVAL);
 	tft.println("PIT WINDOW");
 
 	// LAPS UNTIL EMPTY
@@ -1523,14 +1524,8 @@ void updateWear(String wear)
 	#endif
 	}
 
-	// Left
-	#if HDGFX == true
 	tft.fillRoundRect(s1_x,disp_y,s13_w,disp_h,8,tempColour(tempLeft));
 	tft.setCursor(s1_tx, text_y);
-	#else
-	tft.fillRoundRect(s1_x,disp_y,s13_w,disp_h,8,tempColour(tempLeft));
-	tft.setCursor(s1_tx, text_y);
-	#endif
 
 	tft.setTextColor(WHITE, tempColour(tempLeft));
 	if (wearLeft == 100)
@@ -1599,7 +1594,7 @@ uint16_t tempColour (int temp)
 
 int calculateStringStartPosition(String string, int left, int right, int textSize)
 {
-	int pixelsReqForString = (string.length() * (6 * textSize));
+	int pixelsReqForString = (string.length() * (6 * textSize))-1;
 	int stringStartPos = (((right - left)/2) - (pixelsReqForString /2) + left);
 	return stringStartPos;
 }
