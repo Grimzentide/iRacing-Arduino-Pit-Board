@@ -26,7 +26,7 @@
 8. Identify LCD Driver Chip
   * If the serial monitor says Unknown LCD driver chip: 0, you will manually need to test each driver chip identifier
 9. Download the iRacing Arduino Pit Board TFT Front End.ino sketch to your computer and open it in the Arduino IDE
-10. Ensure line 59 in the Arduino front end uses the correct identifier for your TFT Screen from step 8.  
+10. Ensure line 68 in the Arduino front end uses the correct identifier for your TFT Screen from step 8.  
   * eg: uint16_t identifier = 0x9325;
   * If Unknown lcd chip, test using each of the following until the sketch displays correctly
   * 0x9325, 0x9328, 0x7575, 0x9341 or 0x8357
