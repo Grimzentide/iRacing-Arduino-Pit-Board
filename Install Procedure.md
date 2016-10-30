@@ -1,5 +1,14 @@
 ### Install Procedure
 
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=_KcanO0e72s
+" target="_blank"><img src="http://img.youtube.com/vi/_KcanO0e72s/hqdefault.jpg" 
+alt="IMAGE ALT TEXT HERE" width="240" height="180" border="10" /></a>
+
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=R-eyylf9FOw
+" target="_blank"><img src="http://img.youtube.com/vi/R-eyylf9FOw/hqdefault.jpg" 
+alt="IMAGE ALT TEXT HERE" width="240" height="180" border="10" /></a>
+
+
 #### Hardware
 1. Clip TFT screen into Arduino Uno
 2. Insert USB cable into device and computer
