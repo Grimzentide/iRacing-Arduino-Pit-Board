@@ -48,12 +48,10 @@ Note: Once successfully installing and seeing the basic layout, the Arduino IDE 
 1. Download the current executable file from the [releases section](https://github.com/Grimzentide/iRacing-Arduino-Pit-Board/releases)
 2. Unzip the file to a location of your choice
 3. In Windows devices and printers, confirm the COM port number for your Arduino
-4. Open a command prompt and run the exe file with the com port argument
-  * eg: arduinopitboard_v0.8.exe com7
-  * eg: arduinopitboard_v0.8.exe com7 -gallons
-  * It is also possible to use [iAppStarter](http://www.fulhack.org/iappstarter/) to launch the pitboard back end -  [screenshot](http://i.imgur.com/2VIN3TU.png)
-
-#### What to do to actually use it all the time.
-1. If using iAppStarter, simply ensure the arduino is plugged into a USB port and launch iRacing
-2. If using a command prompt, run the exe (as shown in step 4 above) and launch iRacing.
+4. Download [iAppStarter](http://www.fulhack.org/iappstarter/) and then launch it
+5. Click browse and find the executable you downloaded and unzipped in [iAppStarter](http://www.fulhack.org/iappstarter/)
+6. Add the com port from step 3 in the arguments field and any other functions you desire
+  * eg: arduinopitboard_v2.8.exe com7
+  * eg: arduinopitboard_v2.8.exe com7 -gallons
+Example screenshot
 ![iAppStarter](http://i.imgur.com/C6O29zl.png)
