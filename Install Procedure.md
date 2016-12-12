@@ -53,5 +53,6 @@ Note: Once successfully installing and seeing the basic layout, the Arduino IDE 
 6. Add the com port from step 3 in the arguments field and any other functions you desire
   * eg: arduinopitboard_v2.8.exe com7
   * eg: arduinopitboard_v2.8.exe com7 -gallons
+
 Example screenshot
 ![iAppStarter](http://i.imgur.com/C6O29zl.png)
