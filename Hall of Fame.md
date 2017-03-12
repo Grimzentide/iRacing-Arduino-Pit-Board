@@ -12,3 +12,4 @@
 | Robert Pritchard  | Australia / NZ |
 | Christian Starkow | DE-AT-CH |
 | Franco Scuri | Italia |
+| Paul Searle | UK and I |
