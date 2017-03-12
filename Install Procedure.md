@@ -38,7 +38,7 @@ alt="IMAGE ALT TEXT HERE" width="240" height="180" border="10" /></a>
 10. Ensure line 68 in the Arduino front end uses the correct identifier for your TFT Screen from step 8.  
   * eg: uint16_t identifier = 0x9325;
   * If Unknown lcd chip, test using each of the following until the sketch displays correctly
-  * 0x9325, 0x9328, 0x7575, 0x9341 or 0x8357
+  * 0x9328, 0x9325, 0x9328, 0x7575, 0x9341, 0x8357, 0x9488, 0x9320 or 0x9481
 11. Upload the iRacing Arduino Pit Board TFT sketch onto your Arduino Uno
 12. If successful, you should see the basic layout of the device (lines, headings, etc) without any numbers
 
