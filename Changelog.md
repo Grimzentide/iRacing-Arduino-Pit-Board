@@ -1,4 +1,10 @@
 ### Changelog:
+
+All changelogs have now been moved to the releases section.
+
+
+
+
 #### Front End (Arduino)
 
 There are no updates to the front end Arduino code in this release which means you do not need to re-upload the code to the arduino device.  Only the back end files in the release section need to be updated by you...
