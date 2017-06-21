@@ -16,3 +16,4 @@
 | Franco Scuri | Italia |
 | Paul Searle | UK and I |
 | Marcos Otero Alvarez | Iberia |
+| Bryan Clark | tbd |
