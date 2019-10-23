@@ -16,10 +16,11 @@
 | Franco Scuri | Italia |
 | Paul Searle | UK and I |
 | Marcos Otero Alvarez | Iberia |
-| Bryan Clark | tbd |
+| Bryan Clark | TBD |
 | Mark Hertzog | California Club |
 | Mark Pickford | UK and I |
 | Finley Barrass | UK and I |
 | David Ross Smith | Australia / NZ |
 | Jeffrey Brown | US |
+| Stephen Westrip | TBD |
 | iRacing Fantasy Series | US |
