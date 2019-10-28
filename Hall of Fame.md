@@ -24,3 +24,4 @@
 | Jeffrey Brown | US |
 | Stephen Westrip | TBD |
 | iRacing Fantasy Series | US |
+| Ian Scott | TBD |
